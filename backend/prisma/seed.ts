@@ -3,8 +3,12 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  // Clear existing products
-  await prisma.product.deleteMany();
+  // Only seed if database is empty
+  const existingProducts = await prisma.product.count();
+  if (existingProducts > 0) {
+    console.log('⏭️  Database already seeded, skipping...');
+    return;
+  }
 
   // Create sample products with images from Unsplash
   const products = await prisma.product.createMany({
