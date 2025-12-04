@@ -35,7 +35,13 @@
             placeholder="999.99"
         />
 
-        <button @click="handleReset" class="py-3 px-6 bg-gradient-to-br from-[#e63946] to-[#d62839] text-white border-none rounded-lg font-sans text-sm font-semibold cursor-pointer transition-all duration-200 uppercase tracking-wider whitespace-nowrap hover:bg-gradient-to-br hover:from-[#d62839] hover:to-[#c91f2b] hover:scale-[1.02] active:scale-[0.98]">Reset Filters</button>
+        <Button 
+            @click="handleReset" 
+            type="secondary"
+            aria-label="click to reset all filters"
+        >
+            Reset Filters
+        </Button>
     </div>
 </template>
 
@@ -43,6 +49,7 @@
 import { ref, watch } from 'vue'
 import Input from '../atoms/Input.vue'
 import Select, { type SelectOption } from '../atoms/Select.vue'
+import Button from '../atoms/Button.vue'
 
 export interface ProductFilters {
     search: string

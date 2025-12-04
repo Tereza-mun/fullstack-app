@@ -16,12 +16,13 @@
                 <div class="p-6">
                     <h3 class="font-sans text-lg font-semibold text-[#1a1a2e] mb-2 leading-tight">{{ p.name }}</h3>
                     <p class="font-mono text-xl font-bold text-[#e63946] mb-4">€{{ p.price.toFixed(2) }}</p>
-                    <button 
-                        class="w-full py-3.5 px-6 bg-gradient-to-br from-[#1a1a2e] to-[#16213e] text-white border-none rounded-lg font-sans text-sm font-semibold cursor-pointer transition-all duration-200 uppercase tracking-wider hover:bg-gradient-to-br hover:from-[#e63946] hover:to-[#d62839] hover:scale-[1.02] active:scale-[0.98]"
-                        aria-label="Add to Cart"
+                    <Button
+                        class="w-full"
+                        type="primary"
+                        :aria-label="`click to add ${p.name} to cart`"
                     >
                         Add to Cart
-                    </button>
+                    </Button>
                 </div>
             </div>
         </div>
@@ -33,6 +34,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { api } from '../services/api'
 import ProductFilters, { type ProductFilters as Filters } from '../components/organisms/ProductFilters.vue'
+import Button from '../components/atoms/Button.vue'
 
 interface Product {
     id: number
