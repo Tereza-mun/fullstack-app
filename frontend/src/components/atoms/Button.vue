@@ -2,6 +2,7 @@
     <button
         :class="buttonClasses"
         :aria-label="ariaLabel"
+        :disabled="disabled"
     >
         <slot />
     </button>
@@ -13,10 +14,12 @@ import { computed } from 'vue'
 interface Props {
     type?: 'primary' | 'secondary' | 'home' | 'iconButton' | 'counterButton'
     ariaLabel?: string
+    disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    type: 'primary'
+    type: 'primary',
+    disabled: false
 })
 
 const buttonClasses = computed(() => {
@@ -28,6 +31,10 @@ const buttonClasses = computed(() => {
         counterButton: 'w-8 h-8 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer border-none'
     }
 
-    return variantClasses[props.type]
+    const disabledClasses = 'opacity-50 cursor-not-allowed hover:scale-100 active:scale-100'
+
+    return props.disabled
+        ? `${variantClasses[props.type]} ${disabledClasses}`
+        : variantClasses[props.type]
 })
 </script>

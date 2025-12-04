@@ -7,6 +7,12 @@
                 :options="categoryOptions"
             />
 
+            <Select
+                v-model="filtersStore.filters.sortBy"
+                label="Sort By"
+                :options="sortOptions"
+            />
+
             <Input
                 v-model="filtersStore.filters.search"
                 label="Search"
@@ -31,12 +37,7 @@
                 step="0.01"
                 placeholder="999.99"
             />
-
-            <Select
-                v-model="filtersStore.filters.sortBy"
-                label="Sort By"
-                :options="sortOptions"
-            />
+        
         </div>
 
         <div class="flex justify-center">
@@ -44,6 +45,7 @@
                 @click="filtersStore.resetFilters"
                 type="secondary"
                 aria-label="click to reset all filters"
+                :disabled="filtersStore.filters.category === '' && filtersStore.filters.search === '' && filtersStore.filters.minPrice === null && filtersStore.filters.maxPrice === null && filtersStore.filters.sortBy === ''"
             >
                 Reset Filters
             </Button>
