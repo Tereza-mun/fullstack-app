@@ -6,11 +6,11 @@ export default {
   ],
   theme: {
     extend: {
-      // Add your custom classes here
-      colors: {
-        // Example: 'brand': '#your-color',
+      fontFamily: {
+        sans: ['DM Sans', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
       },
-      // You can extend spacing, fonts, etc.
     },
   },
   plugins: [],
