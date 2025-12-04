@@ -19,7 +19,7 @@
                 <Button
                     @click="handleDecreaseQuantity"
                     type="counterButton"
-                    aria-label="Decrease quantity to {{ item.quantity - 1 }}"
+                    :aria-label="`${t('cart.decreaseQuantity')} ${item.quantity - 1}`"
                 >
                     -
                 </Button>
@@ -27,7 +27,7 @@
                 <Button
                     @click="handleIncreaseQuantity"
                     type="counterButton"
-                    aria-label="Increase quantity to {{ item.quantity + 1 }}"
+                    :aria-label="`${t('cart.increaseQuantity')} ${item.quantity + 1}`"
                 >
                     +
                 </Button>
@@ -40,7 +40,7 @@
             <Button
                 @click="handleRemove"
                 type="iconButton"
-                aria-label="Remove item {{ item.name }} from cart"
+                :aria-label="`${t('cart.removeItem')} ${item.name}`"
             >
                 <Trash fill="#e63946" />
             </Button>
@@ -49,6 +49,7 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Trash from '../atoms/icons/Trash.vue'
 import { useCartStore } from '../../stores/cart'
@@ -67,6 +68,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const { t } = useI18n()
 const cartStore = useCartStore()
 
 const handleDecreaseQuantity = () => {

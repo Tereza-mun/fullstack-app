@@ -57,6 +57,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export interface SelectOption {
     value: string | number
@@ -70,6 +71,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const { t } = useI18n()
 
 const emit = defineEmits<{
     'update:modelValue': [value: string | number]
@@ -80,7 +82,7 @@ const selectRef = ref<HTMLElement | null>(null)
 
 const selectedLabel = computed(() => {
     const selected = props.options.find(opt => opt.value === props.modelValue)
-    return selected ? selected.label : 'Select an option'
+    return selected ? selected.label : t('common.selectOption')
 })
 
 const toggleDropdown = () => {

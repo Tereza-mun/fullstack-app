@@ -13,10 +13,10 @@
             <Button
                 class="w-full"
                 :type="isInCart ? 'secondary' : 'primary'"
-                :aria-label="isInCart ? `click to remove ${product.name} from cart` : `click to add ${product.name} to cart`"
+                :aria-label="isInCart ? t('products.removeFromCartAria', { product: product.name }) : t('products.addToCartAria', { product: product.name })"
                 @click="handleButtonClick"
             >
-                {{ isInCart ? 'Remove from Cart' : 'Add to Cart' }}
+                {{ isInCart ? t('products.removeFromCart') : t('products.addToCart') }}
             </Button>
         </div>
     </div>
@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import { useCartStore } from '../../stores/cart'
 
@@ -40,6 +41,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const { t } = useI18n()
 const cartStore = useCartStore()
 
 const isInCart = computed(() => {

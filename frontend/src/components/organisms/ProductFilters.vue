@@ -3,39 +3,39 @@
         <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 items-end mb-4">
             <Select
                 v-model="filtersStore.filters.category"
-                label="Category"
+                :label="t('filters.category')"
                 :options="categoryOptions"
             />
 
             <Select
                 v-model="filtersStore.filters.sortBy"
-                label="Sort By"
+                :label="t('filters.sortBy')"
                 :options="sortOptions"
             />
 
             <Input
                 v-model="filtersStore.filters.search"
-                label="Search"
+                :label="t('filters.search')"
                 type="text"
-                placeholder="Search products..."
+                :placeholder="t('filters.searchPlaceholder')"
             />
 
             <Input
                 v-model="filtersStore.filters.minPrice"
-                label="Min Price (€)"
+                :label="t('filters.minPrice')"
                 type="number"
                 min="0"
                 step="0.01"
-                placeholder="0.00"
+                :placeholder="t('filters.minPricePlaceholder')"
             />
 
             <Input
                 v-model="filtersStore.filters.maxPrice"
-                label="Max Price (€)"
+                :label="t('filters.maxPrice')"
                 type="number"
                 min="0"
                 step="0.01"
-                placeholder="999.99"
+                :placeholder="t('filters.maxPricePlaceholder')"
             />
         
         </div>
@@ -44,16 +44,18 @@
             <Button
                 @click="filtersStore.resetFilters"
                 type="secondary"
-                aria-label="click to reset all filters"
+                :aria-label="t('filters.resetFiltersLabel')"
                 :disabled="filtersStore.filters.category === '' && filtersStore.filters.search === '' && filtersStore.filters.minPrice === null && filtersStore.filters.maxPrice === null && filtersStore.filters.sortBy === ''"
             >
-                Reset Filters
+                {{ t('filters.resetFilters') }}
             </Button>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useFiltersStore } from '../../stores/filters'
 import Input from '../atoms/Input.vue'
 import Select, { type SelectOption } from '../atoms/Select.vue'
@@ -67,24 +69,25 @@ export interface ProductFilters {
     sortBy: string
 }
 
+const { t } = useI18n()
 const filtersStore = useFiltersStore()
 
-const categoryOptions: SelectOption[] = [
-    { value: '', label: 'All Categories' },
-    { value: 'audio', label: 'Audio' },
-    { value: 'keyboardsAndMice', label: 'Keyboards & Mice' },
-    { value: 'monitors', label: 'Monitors & Displays' },
-    { value: 'accessories', label: 'Accessories' },
-    { value: 'storage', label: 'Storage' },
-    { value: 'cables', label: 'Cables & Adapters' }
-]
+const categoryOptions = computed<SelectOption[]>(() => [
+    { value: '', label: t('filters.categories.all') },
+    { value: 'audio', label: t('filters.categories.audio') },
+    { value: 'keyboardsAndMice', label: t('filters.categories.keyboardsAndMice') },
+    { value: 'monitors', label: t('filters.categories.monitors') },
+    { value: 'accessories', label: t('filters.categories.accessories') },
+    { value: 'storage', label: t('filters.categories.storage') },
+    { value: 'cables', label: t('filters.categories.cables') }
+])
 
-const sortOptions: SelectOption[] = [
-    { value: '', label: 'Default' },
-    { value: 'price-asc', label: 'Price: Low to High' },
-    { value: 'price-desc', label: 'Price: High to Low' },
-    { value: 'name-asc', label: 'Name: A to Z' },
-    { value: 'name-desc', label: 'Name: Z to A' }
-]
+const sortOptions = computed<SelectOption[]>(() => [
+    { value: '', label: t('filters.sort.default') },
+    { value: 'price-asc', label: t('filters.sort.priceAsc') },
+    { value: 'price-desc', label: t('filters.sort.priceDesc') },
+    { value: 'name-asc', label: t('filters.sort.nameAsc') },
+    { value: 'name-desc', label: t('filters.sort.nameDesc') }
+])
 </script>
 

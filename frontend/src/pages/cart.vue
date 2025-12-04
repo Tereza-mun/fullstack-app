@@ -1,10 +1,10 @@
 <template>
     <Container>
-        <h2 class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-center mb-8 text-primary-dark tracking-tight">Shopping Cart</h2>
+        <h2 class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-center mb-8 text-primary-dark tracking-tight">{{ t('cart.title') }}</h2>
 
         <div v-if="cartStore.items.length === 0" class="text-center py-16">
-            <p class="text-xl text-gray-600 mb-6">Your cart is empty</p>
-            <Button variant="primary" @click="goToProducts">Continue Shopping</Button>
+            <p class="text-xl text-gray-600 mb-6">{{ t('cart.empty') }}</p>
+            <Button variant="primary" @click="goToProducts">{{ t('cart.continueShopping') }}</Button>
         </div>
 
         <div v-else>
@@ -19,6 +19,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useCartStore } from '../stores/cart'
 import Button from '../components/atoms/Button.vue'
 import Container from '../components/molecules/Container.vue'
@@ -26,6 +27,7 @@ import CartItem from '../components/molecules/CartItem.vue'
 import CartSummary from '../components/molecules/CartSummary.vue'
 
 const router = useRouter()
+const { t } = useI18n()
 const cartStore = useCartStore()
 
 const goToProducts = () => {
@@ -34,6 +36,6 @@ const goToProducts = () => {
 
 const checkout = () => {
     // Implement checkout logic
-    alert('Checkout functionality coming soon!')
+    alert(t('cart.checkoutAlert'))
 }
 </script>
