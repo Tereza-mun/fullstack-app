@@ -36,11 +36,12 @@ const filters = ref<Filters>({
     search: '',
     category: '',
     minPrice: null,
-    maxPrice: null
+    maxPrice: null,
+    sortBy: ''
 })
 
 const filteredProducts = computed(() => {
-    return products.value.filter(product => {
+    let filtered = products.value.filter(product => {
         // Search filter
         if (filters.value.search) {
             const searchLower = filters.value.search.toLowerCase()
@@ -66,6 +67,26 @@ const filteredProducts = computed(() => {
 
         return true
     })
+
+    // Apply sorting
+    if (filters.value.sortBy) {
+        filtered = [...filtered].sort((a, b) => {
+            switch (filters.value.sortBy) {
+                case 'price-asc':
+                    return a.price - b.price
+                case 'price-desc':
+                    return b.price - a.price
+                case 'name-asc':
+                    return a.name.localeCompare(b.name)
+                case 'name-desc':
+                    return b.name.localeCompare(a.name)
+                default:
+                    return 0
+            }
+        })
+    }
+
+    return filtered
 })
 
 onMounted(async () => {
