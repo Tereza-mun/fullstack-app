@@ -1,7 +1,7 @@
 <template>
     <div class="min-h-screen">
         <Header />
-        <main class="py-8 px-4">
+        <main>
             <router-view />
         </main>
     </div>

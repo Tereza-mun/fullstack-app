@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-[1200px] mx-auto px-8 py-8">
+    <Container>
         <h2 class="font-serif text-[2.5rem] font-bold text-center mb-8 text-[#1a1a2e] tracking-tight">Our Products</h2>
 
         <ProductFilters v-model="filters" />
@@ -11,7 +11,7 @@
                 :product="product" 
             />
         </div>
-    </div>
+    </Container>
 </template>
     
     
@@ -20,6 +20,7 @@ import { ref, computed, onMounted } from 'vue'
 import { api } from '../services/api'
 import ProductFilters, { type ProductFilters as Filters } from '../components/organisms/ProductFilters.vue'
 import ProductItem from '../components/molecules/ProductItem.vue'
+import Container from '../components/molecules/Container.vue'
 
 interface Product {
     id: number
