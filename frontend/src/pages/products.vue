@@ -9,15 +9,17 @@
             <p class="text-gray-600">{{ t('products.loading') }}</p>
         </div>
 
-        <div v-else class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-8">
-            <ProductItem
-                v-for="product in paginatedProducts"
-                :key="product.id"
-                :product="product"
-            />
-        </div>
+        <div v-else>
+            <div class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-8">
+                <ProductItem
+                    v-for="product in paginatedProducts"
+                    :key="product.id"
+                    :product="product"
+                />
+            </div>
 
-        <Pagination v-model="currentPage" :totalPages="totalPages" />
+            <Pagination v-model="currentPage" :totalPages="totalPages" />
+        </div>
     </Container>
 </template>
     

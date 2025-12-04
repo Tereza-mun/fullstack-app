@@ -38,15 +38,21 @@ const emit = defineEmits<{
 
 const { t } = useI18n()
 
+const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
 const previousPage = () => {
     if (props.modelValue > 1) {
         emit('update:modelValue', props.modelValue - 1)
+        scrollToTop()
     }
 }
 
 const nextPage = () => {
     if (props.modelValue < props.totalPages) {
         emit('update:modelValue', props.modelValue + 1)
+        scrollToTop()
     }
 }
 </script>
