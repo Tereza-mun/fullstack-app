@@ -32,4 +32,6 @@ export const useFiltersStore = defineStore('filters', () => {
         filters,
         resetFilters
     }
+}, {
+    persist: true
 })
