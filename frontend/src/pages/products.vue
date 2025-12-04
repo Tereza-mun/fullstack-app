@@ -1,8 +1,8 @@
 <template>
     <Container>
-        <h2 class="font-serif text-[2.5rem] font-bold text-center mb-8 text-[#1a1a2e] tracking-tight">Our Products</h2>
+        <h2 class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-center mb-8 text-[#1a1a2e] tracking-tight">Our Products</h2>
 
-        <ProductFilters v-model="filters" />
+        <ProductFilters v-model="filtersStore.filters" />
 
         <div class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-8">
             <ProductItem 
@@ -16,24 +16,18 @@
     
     
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useProductsStore } from '../stores/products'
-import ProductFilters, { type ProductFilters as Filters } from '../components/organisms/ProductFilters.vue'
+import { useFiltersStore } from '../stores/filters'
+import ProductFilters from '../components/organisms/ProductFilters.vue'
 import ProductItem from '../components/molecules/ProductItem.vue'
 import Container from '../components/molecules/Container.vue'
 
 const productsStore = useProductsStore()
-
-const filters = ref<Filters>({
-    search: '',
-    category: '',
-    minPrice: null,
-    maxPrice: null,
-    sortBy: ''
-})
+const filtersStore = useFiltersStore()
 
 const filteredProducts = computed(() => {
-    return productsStore.getFilteredProducts(filters.value)
+    return productsStore.getFilteredProducts(filtersStore.filters)
 })
 
 onMounted(() => {

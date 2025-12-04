@@ -2,23 +2,20 @@
     <div class="bg-white rounded-xl p-6 mb-8 shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
         <div class="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-4 items-end mb-4">
             <Select
-                v-model="localFilters.category"
-                @update:modelValue="emitFilters"
+                v-model="filtersStore.filters.category"
                 label="Category"
                 :options="categoryOptions"
             />
 
             <Input
-                v-model="localFilters.search"
-                @update:modelValue="emitFilters"
+                v-model="filtersStore.filters.search"
                 label="Search"
                 type="text"
                 placeholder="Search products..."
             />
 
             <Input
-                v-model="localFilters.minPrice"
-                @update:modelValue="emitFilters"
+                v-model="filtersStore.filters.minPrice"
                 label="Min Price (€)"
                 type="number"
                 min="0"
@@ -27,8 +24,7 @@
             />
 
             <Input
-                v-model="localFilters.maxPrice"
-                @update:modelValue="emitFilters"
+                v-model="filtersStore.filters.maxPrice"
                 label="Max Price (€)"
                 type="number"
                 min="0"
@@ -37,8 +33,7 @@
             />
 
             <Select
-                v-model="localFilters.sortBy"
-                @update:modelValue="emitFilters"
+                v-model="filtersStore.filters.sortBy"
                 label="Sort By"
                 :options="sortOptions"
             />
@@ -46,7 +41,7 @@
 
         <div class="flex justify-center">
             <Button
-                @click="handleReset"
+                @click="filtersStore.resetFilters"
                 type="secondary"
                 aria-label="click to reset all filters"
             >
@@ -57,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { useFiltersStore } from '../../stores/filters'
 import Input from '../atoms/Input.vue'
 import Select, { type SelectOption } from '../atoms/Select.vue'
 import Button from '../atoms/Button.vue'
@@ -70,19 +65,7 @@ export interface ProductFilters {
     sortBy: string
 }
 
-interface Props {
-    modelValue?: ProductFilters
-}
-
-const props = withDefaults(defineProps<Props>(), {
-    modelValue: () => ({
-        search: '',
-        category: '',
-        minPrice: null,
-        maxPrice: null,
-        sortBy: ''
-    })
-})
+const filtersStore = useFiltersStore()
 
 const categoryOptions: SelectOption[] = [
     { value: '', label: 'All Categories' },
@@ -101,30 +84,5 @@ const sortOptions: SelectOption[] = [
     { value: 'name-asc', label: 'Name: A to Z' },
     { value: 'name-desc', label: 'Name: Z to A' }
 ]
-
-const emit = defineEmits<{
-    'update:modelValue': [value: ProductFilters]
-}>()
-
-const localFilters = ref<ProductFilters>({ ...props.modelValue })
-
-watch(() => props.modelValue, (newValue) => {
-    localFilters.value = { ...newValue }
-}, { deep: true })
-
-const emitFilters = () => {
-    emit('update:modelValue', { ...localFilters.value })
-}
-
-const handleReset = () => {
-    localFilters.value = {
-        search: '',
-        category: '',
-        minPrice: null,
-        maxPrice: null,
-        sortBy: ''
-    }
-    emitFilters()
-}
 </script>
 
