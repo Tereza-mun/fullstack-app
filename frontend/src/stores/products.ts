@@ -2,9 +2,14 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { api } from '../services/api'
 
+export interface ProductName {
+    en: string
+    cs: string
+}
+
 export interface Product {
     id: number
-    name: string
+    name: ProductName
     price: number
     category: string
     imageUrl?: string
@@ -36,12 +41,16 @@ export const useProductsStore = defineStore('products', () => {
         }
     }
 
-    const getFilteredProducts = (filters: ProductFilters) => {
+    const getFilteredProducts = (filters: ProductFilters, locale: string = 'en') => {
+        const lang = locale as keyof ProductName
+        
         let filtered = products.value.filter(product => {
-            // Search filter
+            // Search filter - search in both languages
             if (filters.search) {
                 const searchLower = filters.search.toLowerCase()
-                if (!product.name.toLowerCase().includes(searchLower)) {
+                const nameEn = product.name.en?.toLowerCase() || ''
+                const nameCs = product.name.cs?.toLowerCase() || ''
+                if (!nameEn.includes(searchLower) && !nameCs.includes(searchLower)) {
                     return false
                 }
             }
@@ -67,15 +76,17 @@ export const useProductsStore = defineStore('products', () => {
         // Apply sorting
         if (filters.sortBy) {
             filtered = [...filtered].sort((a, b) => {
+                const nameA = a.name[lang] || a.name.en
+                const nameB = b.name[lang] || b.name.en
                 switch (filters.sortBy) {
                     case 'price-asc':
                         return a.price - b.price
                     case 'price-desc':
                         return b.price - a.price
                     case 'name-asc':
-                        return a.name.localeCompare(b.name)
+                        return nameA.localeCompare(nameB)
                     case 'name-desc':
-                        return b.name.localeCompare(a.name)
+                        return nameB.localeCompare(nameA)
                     default:
                         return 0
                 }

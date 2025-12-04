@@ -4,14 +4,14 @@
             <div class="w-24 h-16 md:w-32 md:h-24 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-background-light to-background-lighter">
                 <img
                     :src="item.imageUrl || 'https://placehold.co/400x300?text=No+Image'"
-                    :alt="item.name"
+                    :alt="itemName"
                     class="w-full h-full object-cover"
                 />
             </div>
 
             <div class="flex-1">
-                <h3 class="font-sans text-lg font-semibold text-primary-dark mb-1">{{ item.name }}</h3>
-                <p class="text-sm text-gray-500">{{ item.category }}</p>
+                <h3 class="font-sans text-lg font-semibold text-primary-dark mb-1">{{ itemName }}</h3>
+                <p class="text-sm text-gray-500">{{ categoryName }}</p>
             </div>
         </div>
         <div class="flex items-center gap-2 md:gap-4">
@@ -40,7 +40,7 @@
             <Button
                 @click="handleRemove"
                 type="iconButton"
-                :aria-label="`${t('cart.removeItem')} ${item.name}`"
+                :aria-label="`${t('cart.removeItem')} ${itemName}`"
             >
                 <Trash fill="#e63946" />
             </Button>
@@ -49,14 +49,20 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Trash from '../atoms/icons/Trash.vue'
 import { useCartStore } from '../../stores/cart'
 
+interface ItemName {
+    en: string
+    cs: string
+}
+
 interface CartItem {
     id: number
-    name: string
+    name: ItemName
     price: number
     category: string
     imageUrl?: string
@@ -68,8 +74,17 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const cartStore = useCartStore()
+
+const itemName = computed(() => {
+    const lang = locale.value as keyof ItemName
+    return props.item.name[lang] || props.item.name.en
+})
+
+const categoryName = computed(() => {
+    return t(`filters.categories.${props.item.category}`)
+})
 
 const handleDecreaseQuantity = () => {
     cartStore.decreaseQuantity(props.item.id)

@@ -1,9 +1,14 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 
+export interface ItemName {
+    en: string
+    cs: string
+}
+
 export interface CartItem {
     id: number
-    name: string
+    name: ItemName
     price: number
     category: string
     imageUrl?: string
@@ -21,7 +26,7 @@ export const useCartStore = defineStore('cart', () => {
         return items.value.reduce((total, item) => total + (item.price * item.quantity), 0)
     })
 
-    const addToCart = (product: { id: number; name: string; price: number; category: string; imageUrl?: string }) => {
+    const addToCart = (product: { id: number; name: ItemName; price: number; category: string; imageUrl?: string }) => {
         const existingItem = items.value.find(item => item.id === product.id)
 
         if (existingItem) {

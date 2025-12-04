@@ -4,7 +4,7 @@
 
         <ProductFilters v-model="filtersStore.filters" />
 
-        <div v-if="productsStore.loading" class="flex flex-col justify-center items-center py-20 gap-4">
+        <div v-if="productsStore.loading" class="flex flex-col justify-center items-center py-10 md:py-20 gap-4">
             <Spinner size="md" />
             <p class="text-gray-600">{{ t('products.loading') }}</p>
         </div>
@@ -30,12 +30,12 @@ import ProductItem from '../components/molecules/ProductItem.vue'
 import Container from '../components/molecules/Container.vue'
 import Spinner from '../components/atoms/Spinner.vue'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const productsStore = useProductsStore()
 const filtersStore = useFiltersStore()
 
 const filteredProducts = computed(() => {
-    return productsStore.getFilteredProducts(filtersStore.filters)
+    return productsStore.getFilteredProducts(filtersStore.filters, locale.value)
 })
 
 onMounted(() => {
