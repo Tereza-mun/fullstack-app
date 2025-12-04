@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-2">
-        <label v-if="label" class="font-sans text-sm font-semibold text-[#1a1a2e] uppercase tracking-wider">{{ label }}</label>
+        <label v-if="label" class="font-sans text-sm font-semibold text-primary-dark uppercase tracking-wider">{{ label }}</label>
         <input
             :value="modelValue"
             @input="handleInput"

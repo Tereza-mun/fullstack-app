@@ -1,10 +1,10 @@
 <template>
-    <header class="bg-gradient-to-br from-[#1a1a2e] to-[#16213e] px-8 py-6 shadow-[0_4px_20px_rgba(26,26,46,0.3)]">
+    <header class="bg-gradient-to-br from-primary-dark to-primary-darker px-8 py-6 shadow-[0_4px_20px_rgba(26,26,46,0.3)]">
         <div class="max-w-[1200px] mx-auto flex justify-between items-center">
             <Button @click="goToHome" type="home">
                 TechStore
             </Button>
-            <Button @click="goToCart" type="navLink" aria-label="Go to cart">
+            <Button @click="goToCart" type="iconButton" aria-label="Go to cart">
                 <Cart stroke="#ffffff" />
             </Button>
         </div>

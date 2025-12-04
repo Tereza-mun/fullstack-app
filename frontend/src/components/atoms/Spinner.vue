@@ -2,7 +2,7 @@
     <div class="inline-block">
         <div
             :class="[
-                'border-[#1a1a2e]/10 border-t-[#1a1a2e] rounded-full animate-spin',
+                'border-primary-dark/10 border-t-primary-dark rounded-full animate-spin',
                 sizeClasses
             ]"
         ></div>
