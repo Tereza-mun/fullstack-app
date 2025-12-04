@@ -4,9 +4,12 @@
             <Button @click="goToHome" type="home">
                 TechStore
             </Button>
-            <Button @click="goToCart" type="iconButton" aria-label="Go to cart">
-                <Cart stroke="#ffffff" />
-            </Button>
+            <div class="relative">
+                <Button @click="goToCart" type="iconButton" aria-label="Go to cart">
+                    <Cart stroke="#ffffff" />
+                </Button>
+                <CartBadge :count="cartStore.totalItems" />
+            </div>
         </div>
     </header>
 </template>
@@ -15,8 +18,11 @@
 import { useRouter } from 'vue-router'
 import Button from '../atoms/Button.vue'
 import Cart from '../atoms/icons/Cart.vue'
+import CartBadge from '../atoms/CartBadge.vue'
+import { useCartStore } from '../../stores/cart'
 
 const router = useRouter()
+const cartStore = useCartStore()
 
 const goToHome = () => {
     router.push('/')
