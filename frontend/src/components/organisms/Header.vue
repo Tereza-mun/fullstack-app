@@ -19,7 +19,7 @@ import Cart from '../atoms/icons/Cart.vue'
 const router = useRouter()
 
 const goToHome = () => {
-    router.push('/products')
+    router.push('/')
 }
 
 const goToCart = () => {
