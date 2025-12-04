@@ -12,17 +12,18 @@
             <p class="font-mono text-xl font-bold text-accent mb-4">€{{ product.price.toFixed(2) }}</p>
             <Button
                 class="w-full"
-                variant="primary"
-                :aria-label="`click to add ${product.name} to cart`"
-                @click="handleAddToCart"
+                :type="isInCart ? 'secondary' : 'primary'"
+                :aria-label="isInCart ? `click to remove ${product.name} from cart` : `click to add ${product.name} to cart`"
+                @click="handleButtonClick"
             >
-                Add to Cart
+                {{ isInCart ? 'Remove from Cart' : 'Add to Cart' }}
             </Button>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import Button from '../atoms/Button.vue'
 import { useCartStore } from '../../stores/cart'
 
@@ -41,7 +42,15 @@ interface Props {
 const props = defineProps<Props>()
 const cartStore = useCartStore()
 
-const handleAddToCart = () => {
-    cartStore.addToCart(props.product)
+const isInCart = computed(() => {
+    return cartStore.items.some(item => item.id === props.product.id)
+})
+
+const handleButtonClick = () => {
+    if (isInCart.value) {
+        cartStore.removeFromCart(props.product.id)
+    } else {
+        cartStore.addToCart(props.product)
+    }
 }
 </script>
