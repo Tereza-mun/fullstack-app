@@ -14,6 +14,7 @@
                 class="w-full"
                 variant="primary"
                 :aria-label="`click to add ${product.name} to cart`"
+                @click="handleAddToCart"
             >
                 Add to Cart
             </Button>
@@ -23,6 +24,7 @@
 
 <script setup lang="ts">
 import Button from '../atoms/Button.vue'
+import { useCartStore } from '../../stores/cart'
 
 interface Product {
     id: number
@@ -36,5 +38,10 @@ interface Props {
     product: Product
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+const cartStore = useCartStore()
+
+const handleAddToCart = () => {
+    cartStore.addToCart(props.product)
+}
 </script>
