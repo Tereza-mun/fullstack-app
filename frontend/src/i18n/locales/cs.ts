@@ -117,5 +117,10 @@ export default {
             nameAsc: 'Název: A až Z',
             nameDesc: 'Název: Z až A'
         }
+    },
+    pagination: {
+        previous: 'Předchozí',
+        next: 'Další',
+        page: 'Stránka {current} z {total}'
     }
 }

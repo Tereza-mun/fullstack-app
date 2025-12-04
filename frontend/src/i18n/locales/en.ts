@@ -54,5 +54,10 @@ export default {
             nameAsc: 'Name: A to Z',
             nameDesc: 'Name: Z to A'
         }
+    },
+    pagination: {
+        previous: 'Previous',
+        next: 'Next',
+        page: 'Page {current} of {total}'
     }
 }

@@ -12,7 +12,7 @@
 import { computed } from 'vue'
 
 interface Props {
-    type?: 'primary' | 'secondary' | 'home' | 'iconButton' | 'counterButton' | 'languageSwitch'
+    type?: 'primary' | 'secondary' | 'home' | 'iconButton' | 'counterButton' | 'languageSwitch' | 'paginationButton'
     ariaLabel?: string
     disabled?: boolean
 }
@@ -29,7 +29,8 @@ const buttonClasses = computed(() => {
         home: 'font-serif text-[1.75rem] font-bold text-white tracking-wide bg-transparent border-none cursor-pointer p-0 transition-all duration-200 hover:scale-110 active:scale-95',
         iconButton: 'bg-transparent border-none cursor-pointer p-2 flex items-center justify-center transition-transform duration-200 hover:scale-110',
         counterButton: 'w-8 h-8 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer border-none',
-        languageSwitch: 'py-3 px-6 text-white border-none rounded-lg font-sans text-sm font-semibold cursor-pointer transition-all duration-200 uppercase tracking-wider whitespace-nowrap hover:scale-[1.02] active:scale-[0.98] bg-transparent border-none flex items-center gap-2'
+        languageSwitch: 'py-3 px-6 text-white border-none rounded-lg font-sans text-sm font-semibold cursor-pointer transition-all duration-200 uppercase tracking-wider whitespace-nowrap hover:scale-[1.02] active:scale-[0.98] bg-transparent border-none flex items-center gap-2',
+        paginationButton: 'px-4 py-2 rounded-lg border border-gray-300 text-gray-700 bg-white font-medium transition-colors hover:bg-gray-50 hover:border-gray-400'
     }
 
     const disabledClasses = 'opacity-50 cursor-not-allowed hover:scale-100 active:scale-100'
