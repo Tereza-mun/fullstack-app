@@ -55,8 +55,12 @@ export const useCartStore = defineStore('cart', () => {
 
     const decreaseQuantity = (itemId: number) => {
         const item = items.value.find(i => i.id === itemId)
-        if (item && item.quantity > 1) {
-            item.quantity--
+        if (item) {
+            if (item.quantity > 1) {
+                item.quantity--
+            } else {
+                removeFromCart(itemId)
+            }
         }
     }
 
