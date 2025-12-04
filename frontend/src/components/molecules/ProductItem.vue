@@ -1,0 +1,40 @@
+<template>
+    <div class="bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] group">
+        <div class="relative w-full aspect-[4/3] overflow-hidden bg-linear-to-br from-[#f5f7fa] to-[#e4e8ec]">
+            <img
+                :src="product.imageUrl || 'https://placehold.co/400x300?text=No+Image'"
+                :alt="product.name"
+                class="w-full h-full object-cover transition-transform duration-[400ms] group-hover:scale-[1.08]"
+            />
+        </div>
+        <div class="p-6">
+            <h3 class="font-sans text-lg font-semibold text-[#1a1a2e] mb-2 leading-tight">{{ product.name }}</h3>
+            <p class="font-mono text-xl font-bold text-[#e63946] mb-4">€{{ product.price.toFixed(2) }}</p>
+            <Button
+                class="w-full"
+                variant="primary"
+                :aria-label="`click to add ${product.name} to cart`"
+            >
+                Add to Cart
+            </Button>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import Button from '../atoms/Button.vue'
+
+interface Product {
+    id: number
+    name: string
+    price: number
+    category: string
+    imageUrl?: string
+}
+
+interface Props {
+    product: Product
+}
+
+defineProps<Props>()
+</script>
