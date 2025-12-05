@@ -12,7 +12,21 @@
                 </div>
             </div>
 
-            <div class="border-t-2 border-gray-200 pt-4 mb-6">
+            <div class="border-t border-gray-200 pt-3 mb-3">
+                <div class="flex justify-between text-sm">
+                    <span class="text-gray-600">{{ t('deliveryInfo.subtotal') }}</span>
+                    <span class="font-semibold">€{{ subtotalPrice.toFixed(2) }}</span>
+                </div>
+                <div class="flex justify-between text-sm mt-2">
+                    <span class="text-gray-600">{{ t('deliveryInfo.deliveryCost') }}</span>
+                    <span class="font-semibold">
+                        <span v-if="deliveryCost === 0">{{ t('deliveryInfo.free') }}</span>
+                        <span v-else>€{{ deliveryCost.toFixed(2) }}</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-200 pt-4 mb-6">
                 <div class="flex justify-between items-center">
                     <span class="text-lg font-semibold text-primary-dark">{{ t('deliveryInfo.total') }}</span>
                     <span class="font-mono text-2xl font-bold text-accent">€{{ totalPrice.toFixed(2) }}</span>
@@ -58,6 +72,8 @@ export interface CartItem {
 
 defineProps<{
     items: CartItem[]
+    subtotalPrice: number
+    deliveryCost: number
     totalPrice: number
     totalItems: number
     isSubmitting?: boolean

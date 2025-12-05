@@ -17,6 +17,8 @@
         <!-- Order Summary -->
         <OrderSummary
             :items="cartStore.items"
+            :subtotal-price="cartStore.subtotalPrice"
+            :delivery-cost="cartStore.deliveryCost"
             :total-price="cartStore.totalPrice"
             :total-items="cartStore.totalItems"
             :submit-disabled="!cartStore.isFormValid"

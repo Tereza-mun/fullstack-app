@@ -101,6 +101,8 @@
         <!-- Order Summary with Actions -->
         <OrderSummary
             :items="cartStore.items"
+            :subtotal-price="cartStore.subtotalPrice"
+            :delivery-cost="cartStore.deliveryCost"
             :total-price="cartStore.totalPrice"
             :total-items="cartStore.totalItems"
             :submit-button-text="t('deliveryInfo.placeOrder')"

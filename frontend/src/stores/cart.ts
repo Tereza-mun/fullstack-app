@@ -64,8 +64,16 @@ export const useCartStore = defineStore('cart', () => {
         return items.value.reduce((total, item) => total + item.quantity, 0)
     })
 
-    const totalPrice = computed(() => {
+    const subtotalPrice = computed(() => {
         return items.value.reduce((total, item) => total + (item.price * item.quantity), 0)
+    })
+
+    const deliveryCost = computed(() => {
+        return formData.value.deliveryMethod === 'delivery' ? 10 : 0
+    })
+
+    const totalPrice = computed(() => {
+        return subtotalPrice.value + deliveryCost.value
     })
 
     const validateEmail = (email: string): boolean => {
@@ -179,6 +187,8 @@ export const useCartStore = defineStore('cart', () => {
     return {
         items,
         totalItems,
+        subtotalPrice,
+        deliveryCost,
         totalPrice,
         formData,
         isFormValid,
