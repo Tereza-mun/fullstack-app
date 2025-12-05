@@ -14,7 +14,7 @@
                 <p class="text-sm text-gray-500">{{ categoryName }}</p>
             </div>
         </div>
-        <div class="flex items-center gap-2 md:gap-4">
+        <div class="flex items-center max-sm:justify-between gap-2 md:gap-4">
             <div class="flex items-center gap-1">
                 <Button
                     @click="handleDecreaseQuantity"
