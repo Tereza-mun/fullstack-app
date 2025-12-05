@@ -11,8 +11,20 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+type ButtonType =
+    | 'primary'
+    | 'secondary'
+    | 'home'
+    | 'iconButton'
+    | 'counterButton'
+    | 'languageSwitch'
+    | 'paginationButton'
+    | 'scrollToTop'
+    | 'addToCart'
+    | 'removeFromCart'
+
 interface Props {
-    type?: 'primary' | 'secondary' | 'home' | 'iconButton' | 'counterButton' | 'languageSwitch' | 'paginationButton' | 'scrollToTop'
+    type?: ButtonType
     ariaLabel?: string
     disabled?: boolean
 }
@@ -34,7 +46,9 @@ const buttonClasses = computed(() => {
         counterButton: `w-8 h-8 flex items-center justify-center rounded-md bg-gray-100 border-none transition-colors ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:bg-gray-200' : ''}`,
         languageSwitch: `pl-4 py-2 text-white border-none rounded-lg font-sans text-sm font-semibold tracking-wider whitespace-nowrap bg-transparent flex items-center gap-2 ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:scale-[1.02] active:scale-[0.98]' : ''}`,
         paginationButton: `px-4 py-2 rounded-lg border border-gray-300 text-gray-700 bg-white font-medium transition-colors ${disabledClasses} ${!props.disabled ? 'hover:bg-gray-50 hover:border-gray-400' : ''}`,
-        scrollToTop: `fixed bottom-6 right-6 z-40 w-12 h-12 bg-gradient-to-br from-primary-dark to-primary-darker text-white rounded-full shadow-lg flex items-center justify-center ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:scale-110 active:scale-95 hover:shadow-xl' : ''}`
+        scrollToTop: `fixed bottom-6 right-6 z-40 w-12 h-12 bg-gradient-to-br from-primary-dark to-primary-darker text-white rounded-full shadow-lg flex items-center justify-center ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:scale-110 active:scale-95 hover:shadow-xl' : ''}`,
+        addToCart: `flex items-center gap-1 px-2 py-1 rounded-lg text-white text-xs font-semibold bg-gradient-to-br from-primary-dark to-primary-darker ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer active:scale-95' : ''}`,
+        removeFromCart: `flex items-center gap-1 px-2 py-1 rounded-lg text-white text-xs font-semibold bg-gradient-to-br from-accent to-accent-dark ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer active:scale-95' : ''}`
     }
 
     return variantClasses[props.type]

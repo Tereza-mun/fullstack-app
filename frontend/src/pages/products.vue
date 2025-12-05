@@ -10,7 +10,7 @@
         </div>
 
         <div v-else>
-            <div class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-8">
+            <div class="grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-4 md:gap-8">
                 <ProductItem
                     v-for="product in paginatedProducts"
                     :key="product.id"
