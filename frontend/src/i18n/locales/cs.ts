@@ -70,6 +70,10 @@ export default {
         next: 'Další',
         page: 'Stránka {current} z {total}'
     },
+    validation: {
+        invalidEmail: 'Zadejte prosím platnou e-mailovou adresu',
+        invalidPhone: 'Telefonní číslo může obsahovat pouze číslice a znak +'
+    },
     deliveryInfo: {
         title: 'Dodací údaje',
         emptyCart: 'Váš košík je prázdný. Přidejte položky pro pokračování k pokladně.',
@@ -95,8 +99,8 @@ export default {
         orderSummary: 'Souhrn Objednávky',
         total: 'Celkem',
         itemsCount: '{count} položka | {count} položky | {count} položek',
-        backToCart: 'Zpět do Košíku',
-        placeOrder: 'Odeslat Objednávku',
+        back: 'Zpět',
+        placeOrder: 'Závazně Objednat',
         processing: 'Zpracování...',
         success: 'Objednávka byla úspěšně vytvořena! Číslo objednávky: #{orderId}',
         error: 'Nepodařilo se vytvořit objednávku. Zkuste to prosím znovu.',

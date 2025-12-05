@@ -70,6 +70,10 @@ export default {
         next: 'Next',
         page: 'Page {current} of {total}'
     },
+    validation: {
+        invalidEmail: 'Please enter a valid email address',
+        invalidPhone: 'Phone number can only contain digits and the + character'
+    },
     deliveryInfo: {
         title: 'Delivery Information',
         emptyCart: 'Your cart is empty. Add items to proceed with checkout.',
@@ -95,8 +99,8 @@ export default {
         orderSummary: 'Order Summary',
         total: 'Total',
         itemsCount: '{count} item | {count} items',
-        backToCart: 'Back to Cart',
-        placeOrder: 'Place Order',
+        back: 'Back',
+        placeOrder: 'Submit Order',
         processing: 'Processing...',
         success: 'Order placed successfully! Order ID: #{orderId}',
         error: 'Failed to place order. Please try again.',

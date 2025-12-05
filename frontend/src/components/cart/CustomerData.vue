@@ -18,24 +18,26 @@
             <!-- Email -->
             <Input
                 :model-value="cartStore.formData.customerEmail"
-                @update:model-value="cartStore.updateFormData({ customerEmail: String($event ?? '') })"
+                @update:model-value="handleEmailUpdate"
                 :label="t('deliveryInfo.email')"
                 type="email"
                 name="customerEmail"
                 :placeholder="t('deliveryInfo.emailPlaceholder')"
                 autocomplete="email"
+                :error="emailError"
                 required
             />
 
             <!-- Phone -->
             <Input
                 :model-value="cartStore.formData.phone"
-                @update:model-value="cartStore.updateFormData({ phone: String($event ?? '') })"
+                @update:model-value="handlePhoneUpdate"
                 :label="t('deliveryInfo.phone')"
                 type="tel"
                 name="phone"
                 :placeholder="t('deliveryInfo.phonePlaceholder')"
                 autocomplete="tel"
+                :error="phoneError"
                 required
             />
         </div>
@@ -43,10 +45,46 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useCartStore } from '../../stores/cart'
 import Input from '../atoms/Input.vue'
 
 const { t } = useI18n()
 const cartStore = useCartStore()
+
+const emailError = ref<string>('')
+const phoneError = ref<string>('')
+
+const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    return emailRegex.test(email)
+}
+
+const validatePhone = (phone: string): boolean => {
+    const phoneRegex = /^[\d+]+$/
+    return phoneRegex.test(phone)
+}
+
+const handleEmailUpdate = (value: string | number | null) => {
+    const email = String(value ?? '')
+    cartStore.updateFormData({ customerEmail: email })
+
+    if (email && !validateEmail(email)) {
+        emailError.value = t('validation.invalidEmail')
+    } else {
+        emailError.value = ''
+    }
+}
+
+const handlePhoneUpdate = (value: string | number | null) => {
+    const phone = String(value ?? '')
+    cartStore.updateFormData({ phone })
+
+    if (phone && !validatePhone(phone)) {
+        phoneError.value = t('validation.invalidPhone')
+    } else {
+        phoneError.value = ''
+    }
+}
 </script>
