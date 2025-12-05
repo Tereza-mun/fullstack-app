@@ -173,6 +173,7 @@ const handleCartClick = () => {
 }
 
 onMounted(() => {
+    window.scrollTo(0, 0)
     const productId = Number(route.params.id)
     if (productId) {
         productsStore.fetchProductById(productId)
