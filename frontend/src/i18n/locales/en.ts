@@ -48,6 +48,8 @@ export default {
         maxPricePlaceholder: '999.99',
         resetFilters: 'Reset Filters',
         resetFiltersLabel: 'click to reset all filters',
+        openFilters: 'Filters',
+        applyFilters: 'Apply Filters',
         categories: {
             all: 'All Categories',
             audio: 'Audio',

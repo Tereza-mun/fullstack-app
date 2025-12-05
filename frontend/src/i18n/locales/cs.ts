@@ -48,6 +48,8 @@ export default {
         maxPricePlaceholder: '999,99',
         resetFilters: 'Zrušit Filtry',
         resetFiltersLabel: 'klikněte pro resetování všech filtrů',
+        openFilters: 'Filtry',
+        applyFilters: 'Použít Filtry',
         categories: {
             all: 'Všechny Kategorie',
             audio: 'Audio',
