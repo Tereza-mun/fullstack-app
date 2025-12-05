@@ -17,3 +17,31 @@ category String @default("accessories")
 imageUrl String?
 createdAt DateTime @default(now())
 }
+
+model Order {
+id Int @id @default(autoincrement())
+customerName String
+customerEmail String
+phone String?
+address String?
+city String?
+postalCode String?
+country String?
+notes String?
+deliveryMethod String @default("delivery")
+paymentMethod String @default("cash")
+totalPrice Float
+status String @default("pending")
+items OrderItem[]
+createdAt DateTime @default(now())
+}
+
+model OrderItem {
+id Int @id @default(autoincrement())
+orderId Int
+order Order @relation(fields: [orderId], references: [id])
+productId Int
+productName Json
+productPrice Float
+quantity Int
+}

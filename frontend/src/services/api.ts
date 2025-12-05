@@ -1,5 +1,52 @@
 import axios, { type AxiosInstance } from "axios";
 
+interface OrderItem {
+  productId: number;
+  productName: any;
+  productPrice: number;
+  quantity: number;
+}
+
+interface CartItemInput {
+  id: number;
+  name: { en: string; cs: string };
+  price: number;
+  quantity: number;
+}
+
+interface CreateOrderDto {
+  customerName: string;
+  customerEmail: string;
+  phone: string;
+  address: string;
+  city: string;
+  postalCode: string;
+  country: string;
+  notes: string;
+  deliveryMethod: 'delivery' | 'pickup';
+  paymentMethod: 'cash' | 'bank_transfer';
+  totalPrice: number;
+  items: OrderItem[];
+}
+
+interface Order {
+  id: number;
+  customerName: string;
+  customerEmail: string;
+  phone?: string;
+  address?: string;
+  city?: string;
+  postalCode?: string;
+  country?: string;
+  notes?: string;
+  deliveryMethod: string;
+  paymentMethod: string;
+  totalPrice: number;
+  status: string;
+  createdAt: string;
+  items: OrderItem[];
+}
+
 class ApiService {
   private api: AxiosInstance;
 
@@ -24,6 +71,29 @@ class ApiService {
 
   delete<T>(url: string) {
     return this.api.delete<T>(url).then(res => res.data);
+  }
+
+  // Orders
+  createOrder(orderData: Omit<CreateOrderDto, 'items'> & { items: CartItemInput[] }) {
+    // Transform cart items to order items
+    const transformedData: CreateOrderDto = {
+      ...orderData,
+      items: orderData.items.map(item => ({
+        productId: item.id,
+        productName: item.name,
+        productPrice: item.price,
+        quantity: item.quantity
+      }))
+    };
+    return this.post<Order>('/orders', transformedData);
+  }
+
+  getOrders() {
+    return this.get<Order[]>('/orders');
+  }
+
+  getOrder(id: number) {
+    return this.get<Order>(`/orders/${id}`);
   }
 }
 
