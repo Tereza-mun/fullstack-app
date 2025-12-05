@@ -81,7 +81,7 @@ export default {
         addressInfo: 'Delivery Address',
         name: 'Full Name',
         namePlaceholder: 'John Doe',
-        email: 'Email Address',
+        email: 'Email',
         emailPlaceholder: "john.doe{'@'}example.com",
         phone: 'Phone Number',
         phonePlaceholder: '+1 (555) 123-4567',

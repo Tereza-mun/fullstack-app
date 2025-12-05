@@ -81,7 +81,7 @@ export default {
         addressInfo: 'Dodací Adresa',
         name: 'Celé Jméno',
         namePlaceholder: 'Jan Novák',
-        email: 'E-mailová Adresa',
+        email: 'Email',
         emailPlaceholder: "jan.novak{'@'}example.com",
         phone: 'Telefonní Číslo',
         phonePlaceholder: '+420 123 456 789',
