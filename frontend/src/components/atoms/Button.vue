@@ -23,16 +23,17 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const buttonClasses = computed(() => {
-    const baseDisabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100'
-    
+    const baseClasses = 'transition-all duration-200'
+    const disabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed'
+
     const variantClasses = {
-        primary: `py-3 px-6 text-white border-none rounded-lg font-sans text-sm font-semibold cursor-pointer transition-all duration-200 uppercase tracking-wider whitespace-nowrap hover:scale-[1.02] active:scale-[0.98] bg-gradient-to-br from-primary-dark to-primary-darker hover:bg-gradient-to-br hover:from-accent hover:to-accent-dark ${baseDisabledClasses}`,
-        secondary: `py-3 px-6 text-white border-none rounded-lg font-sans text-sm font-semibold cursor-pointer transition-all duration-200 uppercase tracking-wider whitespace-nowrap hover:scale-[1.02] active:scale-[0.98] bg-gradient-to-br from-accent to-accent-dark hover:bg-gradient-to-br hover:from-accent-dark hover:to-accent-darker ${baseDisabledClasses}`,
-        home: `font-serif text-[1.75rem] font-bold text-white tracking-wide bg-transparent border-none cursor-pointer p-0 transition-all duration-200 hover:scale-110 active:scale-95 ${baseDisabledClasses}`,
-        iconButton: `bg-transparent border-none cursor-pointer p-2 flex items-center justify-center transition-transform duration-200 hover:scale-110 ${baseDisabledClasses}`,
-        counterButton: `w-8 h-8 flex items-center justify-center rounded-md bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer border-none ${baseDisabledClasses}`,
-        languageSwitch: `py-3 px-6 text-white border-none rounded-lg font-sans text-sm font-semibold cursor-pointer transition-all duration-200 uppercase tracking-wider whitespace-nowrap hover:scale-[1.02] active:scale-[0.98] bg-transparent border-none flex items-center gap-2 ${baseDisabledClasses}`,
-        paginationButton: `px-4 py-2 rounded-lg border border-gray-300 text-gray-700 bg-white font-medium transition-colors hover:bg-gray-50 hover:border-gray-400 ${baseDisabledClasses}`
+        primary: `py-3 px-6 text-white border-none rounded-lg font-sans text-sm font-semibold uppercase tracking-wider whitespace-nowrap bg-gradient-to-br from-primary-dark to-primary-darker ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:scale-[1.02] active:scale-[0.98] hover:from-accent hover:to-accent-dark' : ''}`,
+        secondary: `py-3 px-6 text-white border-none rounded-lg font-sans text-sm font-semibold uppercase tracking-wider whitespace-nowrap bg-gradient-to-br from-accent to-accent-dark ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:scale-[1.02] active:scale-[0.98] hover:from-accent-dark hover:to-accent-darker' : ''}`,
+        home: `font-serif text-[1.75rem] font-bold text-white tracking-wide bg-transparent border-none p-0 ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:scale-110 active:scale-95' : ''}`,
+        iconButton: `bg-transparent border-none p-2 flex items-center justify-center transition-transform duration-200 ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:scale-110' : ''}`,
+        counterButton: `w-8 h-8 flex items-center justify-center rounded-md bg-gray-100 border-none transition-colors ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:bg-gray-200' : ''}`,
+        languageSwitch: `py-3 px-6 text-white border-none rounded-lg font-sans text-sm font-semibold uppercase tracking-wider whitespace-nowrap bg-transparent flex items-center gap-2 ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:scale-[1.02] active:scale-[0.98]' : ''}`,
+        paginationButton: `px-4 py-2 rounded-lg border border-gray-300 text-gray-700 bg-white font-medium transition-colors ${disabledClasses} ${!props.disabled ? 'hover:bg-gray-50 hover:border-gray-400' : ''}`
     }
 
     return variantClasses[props.type]
