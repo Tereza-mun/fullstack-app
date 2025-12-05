@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import products from '../pages/products.vue'
-import cart from '../pages/cart.vue'
+import cartId from '../pages/cart/[id].vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -11,9 +11,9 @@ const router = createRouter({
       component: products
     },
     {
-      path: '/cart',
+      path: '/cart/:id',
       name: 'cart',
-      component: cart
+      component: cartId
     }
   ]
 })

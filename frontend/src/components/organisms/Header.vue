@@ -48,7 +48,7 @@ const goToHome = () => {
 }
 
 const goToCart = () => {
-    router.push('/cart')
+    router.push('/cart/1')
 }
 
 const toggleLocale = () => {
