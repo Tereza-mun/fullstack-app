@@ -1,8 +1,8 @@
 <template>
-    <div class="min-h-screen">
+    <div class="min-h-screen flex flex-col">
         <Alert />
         <Header />
-        <main>
+        <main class="flex-1">
             <router-view />
         </main>
         <Footer />
