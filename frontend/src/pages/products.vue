@@ -20,6 +20,8 @@
 
             <Pagination v-model="currentPage" :totalPages="totalPages" />
         </div>
+
+        <ScrollToTop />
     </Container>
 </template>
     
@@ -34,6 +36,7 @@ import ProductItem from '../components/molecules/ProductItem.vue'
 import Container from '../components/molecules/Container.vue'
 import Pagination from '../components/molecules/Pagination.vue'
 import Spinner from '../components/atoms/Spinner.vue'
+import ScrollToTop from '../components/atoms/ScrollToTop.vue'
 
 const { t, locale } = useI18n()
 const productsStore = useProductsStore()
