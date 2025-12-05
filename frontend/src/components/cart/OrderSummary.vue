@@ -38,7 +38,7 @@
                     @click="$emit('back')" 
                     class="w-full"
                 >
-                    {{ backButtonText || t('deliveryInfo.backToCart') }}
+                    {{ backButtonText || t('deliveryInfo.back') }}
                 </Button>
             </div>
         </div>

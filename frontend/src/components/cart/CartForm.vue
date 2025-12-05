@@ -9,6 +9,7 @@
         <div class="mt-6">
             <CartForm1 v-if="currentId === '1'" />
             <CartForm2 v-if="currentId === '2'" />
+            <CartForm3 v-if="currentId === '3'" />
         </div>
     </div>
 </template>
@@ -19,6 +20,7 @@ import { useI18n } from 'vue-i18n'
 import Steps from './Steps.vue'
 import CartForm1 from './CartForm1.vue'
 import CartForm2 from './CartForm2.vue'
+import CartForm3 from './CartForm3.vue'
 
 const props = defineProps<{
     id: string | string[] | ComputedRef<string>
