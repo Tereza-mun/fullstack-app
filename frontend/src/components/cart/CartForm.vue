@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col justify-center">
-        <h2 v-if="currentId !== '4'" class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-center mb-8 text-primary-dark tracking-tight">
+        <h2 v-if="currentId !== '4'" class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-center mb-4 md:mb-8 text-primary-dark tracking-tight">
             {{ t('cart.title') }}
         </h2>
 
@@ -8,7 +8,7 @@
             :steps="steps" 
             :active-step="activeStep" />
 
-        <div class="mt-6">
+        <div class="mt-1 md:mt-6">
             <CartForm1 v-if="currentId === '1'" />
             <CartForm2 v-if="currentId === '2'" />
             <CartForm3 v-if="currentId === '3'" />
@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, type ComputedRef } from 'vue'
+import { ref, computed, watch, type ComputedRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Steps from './Steps.vue'
 import CartForm1 from './CartForm1.vue'
@@ -38,6 +38,10 @@ const currentId = computed(() => {
         return idValue.value
     }
     return idValue as string
+})
+
+watch(currentId, () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
 })
 
 const activeStep = computed(() => {
