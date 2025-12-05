@@ -1,5 +1,5 @@
 <template>
-    <header class="bg-gradient-to-br from-primary-dark to-primary-darker px-8 py-6 shadow-[0_4px_20px_rgba(26,26,46,0.3)]">
+    <header class="bg-gradient-to-br from-primary-dark to-primary-darker px-4 md:px-8 py-4 md:py-6 shadow-[0_4px_20px_rgba(26,26,46,0.3)]">
         <div class="max-w-[1200px] mx-auto flex justify-between items-center">
             <Button @click="goToHome" type="home">
                 {{ t('header.title') }}
@@ -14,7 +14,6 @@
                 <Button
                     @click="toggleLocale"
                     type="languageSwitch"
-                    class="!px-4 !py-2 text-sm font-semibold flex items-center gap-2"
                     :aria-label="t('header.switchLanguage', { language: locale === 'en' ? 'Čeština' : 'English' })"
                 >
                     <img 
