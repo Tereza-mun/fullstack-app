@@ -16,15 +16,22 @@ import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import { useCartStore } from '../../stores/cart'
+import { useAlertStore } from '../../stores/alert'
 
 const { t } = useI18n()
 
 const cartStore = useCartStore()
+const alertStore = useAlertStore()
 
 const totalPrice = computed(() => cartStore.totalPrice)
 
 const handleClearCart = () => {
     cartStore.clearCart()
+    alertStore.showAlert({
+        message: `${t('cart.clearedCart')}`,
+        bgColor: 'bg-red-500',
+        textColor: 'text-white'
+    })
 }
 
 const emit = defineEmits<{

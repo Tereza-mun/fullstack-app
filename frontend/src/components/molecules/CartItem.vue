@@ -54,6 +54,7 @@ import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Trash from '../atoms/icons/Trash.vue'
 import { useCartStore } from '../../stores/cart'
+import { useAlertStore } from '../../stores/alert'
 
 interface ItemName {
     en: string
@@ -76,6 +77,7 @@ interface Props {
 const props = defineProps<Props>()
 const { t, locale } = useI18n()
 const cartStore = useCartStore()
+const alertStore = useAlertStore()
 
 const itemName = computed(() => {
     const lang = locale.value as keyof ItemName
@@ -96,5 +98,10 @@ const handleIncreaseQuantity = () => {
 
 const handleRemove = () => {
     cartStore.removeFromCart(props.item.id)
+    alertStore.showAlert({
+        message: `${t('products.removedFromCart')} ${itemName.value}`,
+        bgColor: 'bg-red-500',
+        textColor: 'text-white'
+    })
 }
 </script>
