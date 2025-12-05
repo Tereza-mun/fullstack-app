@@ -1,5 +1,5 @@
 <template>
-    <div class="inline-flex items-center gap-2 bg-gray-100 rounded-full px-3 py-1.5 text-sm text-gray-700">
+    <div class="inline-flex items-center gap-2 bg-gray-200 rounded-lg px-3 py-1.5 text-sm text-gray-700">
         <span>{{ label }}</span>
         <button
             @click="$emit('remove')"
