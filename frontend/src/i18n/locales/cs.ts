@@ -17,6 +17,12 @@ export default {
         addedToCart: 'Přidáno do košíku:',
         removedFromCart: 'Odebráno z košíku:',
     },
+    productDetail: {
+        backToProducts: 'Zpět na Produkty',
+        notFound: 'Produkt nenalezen',
+        description: 'Popis',
+        specifications: 'Technické Specifikace',
+    },
     cart: {
         title: 'Nákupní Košík',
         empty: 'Váš košík je prázdný',

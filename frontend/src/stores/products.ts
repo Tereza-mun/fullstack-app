@@ -7,9 +7,20 @@ export interface ProductName {
     cs: string
 }
 
+export interface ProductDescription {
+    en: string
+    cs: string
+}
+
+export interface ProductSpecifications {
+    [key: string]: string | number
+}
+
 export interface Product {
     id: number
     name: ProductName
+    description?: ProductDescription
+    specifications?: ProductSpecifications
     price: number
     category: string
     imageUrl?: string
@@ -25,6 +36,7 @@ export interface ProductFilters {
 
 export const useProductsStore = defineStore('products', () => {
     const products = ref<Product[]>([])
+    const currentProduct = ref<Product | null>(null)
     const loading = ref(false)
     const error = ref<string | null>(null)
 
@@ -36,6 +48,20 @@ export const useProductsStore = defineStore('products', () => {
         } catch (e) {
             error.value = 'Failed to fetch products'
             console.error('Failed to fetch products:', e)
+        } finally {
+            loading.value = false
+        }
+    }
+
+    const fetchProductById = async (id: number) => {
+        loading.value = true
+        error.value = null
+        currentProduct.value = null
+        try {
+            currentProduct.value = await api.get<Product>(`/products/${id}`)
+        } catch (e) {
+            error.value = 'Failed to fetch product'
+            console.error('Failed to fetch product:', e)
         } finally {
             loading.value = false
         }
@@ -98,9 +124,11 @@ export const useProductsStore = defineStore('products', () => {
 
     return {
         products,
+        currentProduct,
         loading,
         error,
         fetchProducts,
+        fetchProductById,
         getFilteredProducts
     }
 }, {

@@ -8,4 +8,10 @@ export class ProductsService {
   getAll() {
     return this.prisma.product.findMany();
   }
+
+  getById(id: number) {
+    return this.prisma.product.findUnique({
+      where: { id },
+    });
+  }
 }

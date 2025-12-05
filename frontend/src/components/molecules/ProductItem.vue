@@ -1,7 +1,10 @@
 <template>
     <!-- Mobile: horizontal compact layout -->
     <div class="md:hidden flex bg-white rounded-xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.08)] transition-all duration-300 active:scale-[0.98] group">
-        <div class="relative w-28 h-20 flex-shrink-0 overflow-hidden bg-gradient-to-br from-background-light to-background-lighter">
+        <div 
+            class="relative w-28 h-20 flex-shrink-0 overflow-hidden bg-gradient-to-br from-background-light to-background-lighter cursor-pointer"
+            @click="goToProductDetail"
+        >
             <img
                 :src="product.imageUrl || 'https://placehold.co/400x300?text=No+Image'"
                 :alt="productName"
@@ -28,7 +31,10 @@
 
     <!-- Desktop: vertical card layout -->
     <div class="hidden md:flex h-full flex-col bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_12px_40px_rgba(0,0,0,0.15)] group">
-        <div class="relative w-full aspect-[4/3] overflow-hidden bg-gradient-to-br from-background-light to-background-lighter">
+        <div 
+            class="relative w-full aspect-[4/3] overflow-hidden bg-gradient-to-br from-background-light to-background-lighter cursor-pointer"
+            @click="goToProductDetail"
+        >
             <img
                 :src="product.imageUrl || 'https://placehold.co/400x300?text=No+Image'"
                 :alt="productName"
@@ -54,6 +60,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Cart from '../atoms/icons/Cart.vue'
@@ -78,9 +85,14 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const router = useRouter()
 const { t, locale } = useI18n()
 const cartStore = useCartStore()
 const alertStore = useAlertStore()
+
+const goToProductDetail = () => {
+    router.push(`/product/${props.product.id}`)
+}
 
 const productName = computed(() => {
     const lang = locale.value as keyof ProductName

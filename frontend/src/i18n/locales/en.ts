@@ -17,6 +17,12 @@ export default {
         addedToCart: 'Added to cart:',
         removedFromCart: 'Removed from cart:',
     },
+    productDetail: {
+        backToProducts: 'Back to Products',
+        notFound: 'Product not found',
+        description: 'Description',
+        specifications: 'Technical Specifications',
+    },
     cart: {
         title: 'Shopping Cart',
         empty: 'Your cart is empty',
