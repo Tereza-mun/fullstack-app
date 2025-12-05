@@ -1,6 +1,6 @@
 <template>
     <Container>
-        <h2 class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-center mb-8 text-primary-dark tracking-tight">{{ t('products.title') }}</h2>
+        <h2 class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-center mb-4 md:mb-8 text-primary-dark tracking-tight">{{ t('products.title') }}</h2>
 
         <ProductFilters v-model="filtersStore.filters" />
 
