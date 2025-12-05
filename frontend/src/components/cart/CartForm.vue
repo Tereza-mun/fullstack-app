@@ -1,15 +1,18 @@
 <template>
-    <div class="flex flex-col justify-center py-8">
-        <h2 class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-center mb-8 text-primary-dark tracking-tight">
+    <div class="flex flex-col justify-center">
+        <h2 v-if="currentId !== '4'" class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-center mb-8 text-primary-dark tracking-tight">
             {{ t('cart.title') }}
         </h2>
 
-        <Steps :steps="steps" :active-step="activeStep" />
+        <Steps 
+            :steps="steps" 
+            :active-step="activeStep" />
 
         <div class="mt-6">
             <CartForm1 v-if="currentId === '1'" />
             <CartForm2 v-if="currentId === '2'" />
             <CartForm3 v-if="currentId === '3'" />
+            <CartForm4 v-if="currentId === '4'" />
         </div>
     </div>
 </template>
@@ -21,6 +24,7 @@ import Steps from './Steps.vue'
 import CartForm1 from './CartForm1.vue'
 import CartForm2 from './CartForm2.vue'
 import CartForm3 from './CartForm3.vue'
+import CartForm4 from './CartForm4.vue'
 
 const props = defineProps<{
     id: string | string[] | ComputedRef<string>
@@ -40,6 +44,7 @@ const activeStep = computed(() => {
     if (currentId.value === '1') return '1'
     if (currentId.value === '2') return '2'
     if (currentId.value === '3') return '3'
+    if (currentId.value === '4') return '4'
     return '1'
 })
 

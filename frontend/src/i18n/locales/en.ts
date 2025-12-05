@@ -82,7 +82,7 @@ export default {
         name: 'Full Name',
         namePlaceholder: 'John Doe',
         email: 'Email Address',
-        emailPlaceholder: 'john.doe@example.com',
+        emailPlaceholder: "john.doe{'@'}example.com",
         phone: 'Phone Number',
         phonePlaceholder: '+1 (555) 123-4567',
         address: 'Street Address',
@@ -104,6 +104,7 @@ export default {
         processing: 'Processing...',
         success: 'Order placed successfully! Order ID: #{orderId}',
         error: 'Failed to place order. Please try again.',
+        orderError: 'Order Submission Failed',
         deliveryMethod: 'Delivery Method',
         delivery: 'Delivery',
         deliveryDescription: 'Have your order delivered to your address',
@@ -114,5 +115,13 @@ export default {
         cashDescription: 'Pay with cash upon delivery or pickup',
         bankTransfer: 'Bank Transfer',
         bankTransferDescription: 'Pay by bank transfer before delivery'
+    },
+    confirmation: {
+        title: 'Order Placed!',
+        thankYou: 'Thank you for your order',
+        orderNumber: 'Order Number',
+        demoNotice: 'This is a demo e-shop',
+        demoMessage: 'Please note that this is a demonstration project. No real items will be shipped and no payment is required. Your order has been recorded in our demo database for testing purposes only.',
+        backToShopping: 'Back to Products'
     }
 }

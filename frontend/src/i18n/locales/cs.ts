@@ -82,7 +82,7 @@ export default {
         name: 'Celé Jméno',
         namePlaceholder: 'Jan Novák',
         email: 'E-mailová Adresa',
-        emailPlaceholder: 'jan.novak@example.com',
+        emailPlaceholder: "jan.novak{'@'}example.com",
         phone: 'Telefonní Číslo',
         phonePlaceholder: '+420 123 456 789',
         address: 'Ulice a Číslo Popisné',
@@ -104,6 +104,7 @@ export default {
         processing: 'Zpracování...',
         success: 'Objednávka byla úspěšně vytvořena! Číslo objednávky: #{orderId}',
         error: 'Nepodařilo se vytvořit objednávku. Zkuste to prosím znovu.',
+        orderError: 'Odeslání Objednávky Selhalo',
         deliveryMethod: 'Způsob Doručení',
         delivery: 'Doručení',
         deliveryDescription: 'Nechte si objednávku doručit na vaši adresu',
@@ -114,5 +115,13 @@ export default {
         cashDescription: 'Plaťte hotově při doručení nebo odběru',
         bankTransfer: 'Bankovní Převod',
         bankTransferDescription: 'Zaplaťte bankovním převodem před doručením'
+    },
+    confirmation: {
+        title: 'Objednávka Odeslána!',
+        thankYou: 'Děkujeme za Vaši objednávku',
+        orderNumber: 'Číslo Objednávky',
+        demoNotice: 'Toto je demo e-shop',
+        demoMessage: 'Upozorňujeme, že se jedná o demonstrační projekt. Žádné skutečné položky nebudou odeslány a není vyžadována žádná platba. Vaše objednávka byla zaznamenána v naší demo databázi pouze pro testovací účely.',
+        backToShopping: 'Zpět na Produkty'
     }
 }

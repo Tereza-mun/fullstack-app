@@ -4,7 +4,26 @@
         <Button variant="primary" @click="goToProducts">{{ t('cart.continueShopping') }}</Button>
     </div>
 
-    <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div v-else class="space-y-6">
+        <!-- Error Alert -->
+        <div v-if="errorMessage" class="bg-red-50 border-2 border-red-200 rounded-xl p-4">
+            <div class="flex items-start">
+                <svg class="w-6 h-6 text-red-600 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <div>
+                    <h3 class="font-bold text-red-900 mb-1">{{ t('deliveryInfo.orderError') }}</h3>
+                    <p class="text-red-800">{{ errorMessage }}</p>
+                </div>
+                <button @click="errorMessage = ''" class="ml-auto text-red-600 hover:text-red-800">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Order Review -->
         <div class="lg:col-span-2 space-y-6">
             <!-- Customer Information -->
@@ -85,13 +104,16 @@
             :total-price="cartStore.totalPrice"
             :total-items="cartStore.totalItems"
             :submit-button-text="t('deliveryInfo.placeOrder')"
+            :is-submitting="isSubmitting"
             @submit="submitOrder"
             @back="goBack"
         />
+        </div>
     </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useCartStore } from '../../stores/cart'
@@ -103,6 +125,9 @@ const router = useRouter()
 const { t } = useI18n()
 const cartStore = useCartStore()
 
+const isSubmitting = ref(false)
+const errorMessage = ref('')
+
 const goToProducts = () => {
     router.push('/')
 }
@@ -112,11 +137,32 @@ const goBack = () => {
 }
 
 const submitOrder = async () => {
+    isSubmitting.value = true
+    errorMessage.value = ''
+
     try {
-        await cartStore.submitOrder()
-        router.push('/cart/4')
-    } catch (error) {
+        const order = await cartStore.submitOrder()
+        router.push({ name: 'cart', params: { id: '4' }, query: { orderId: order.id } })
+    } catch (error: any) {
         console.error('Order submission failed:', error)
+
+        // Extract error message
+        if (error.response?.data?.message) {
+            if (Array.isArray(error.response.data.message)) {
+                errorMessage.value = error.response.data.message.join(', ')
+            } else {
+                errorMessage.value = error.response.data.message
+            }
+        } else if (error.message) {
+            errorMessage.value = error.message
+        } else {
+            errorMessage.value = t('deliveryInfo.error')
+        }
+
+        // Scroll to top to show error
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+    } finally {
+        isSubmitting.value = false
     }
 }
 </script>
