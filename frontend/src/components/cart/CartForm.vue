@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch, type ComputedRef } from 'vue'
+import { computed, watch, type ComputedRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Steps from './Steps.vue'
 import CartForm1 from './CartForm1.vue'
@@ -52,7 +52,7 @@ const activeStep = computed(() => {
     return '1'
 })
 
-const steps = ref([
+const steps = computed(() => [
     {
         label: t('cart.steps.cart'),
         link: '/cart/1',

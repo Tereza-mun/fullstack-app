@@ -32,8 +32,8 @@ export default {
         clearedCart: 'Cart was cleared',
         steps: {
             cart: 'Cart',
-            deliveryInformation: 'Delivery Information and Payment',
-            summary: 'Order Summary a Order Submission',
+            deliveryInformation: 'Delivery and Payment',
+            summary: 'Order Summary and Submission',
             confirmation: 'Order Confirmation'
         }
     },
