@@ -13,7 +13,9 @@ export default {
         addToCart: 'Add to Cart',
         removeFromCart: 'Remove from Cart',
         addToCartAria: 'Click to add {product} to cart',
-        removeFromCartAria: 'Click to remove {product} from cart'
+        removeFromCartAria: 'Click to remove {product} from cart',
+        addedToCart: 'Added to cart:',
+        removedFromCart: 'Removed from cart:',
     },
     cart: {
         title: 'Shopping Cart',
