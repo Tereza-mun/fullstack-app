@@ -68,11 +68,23 @@ export const useCartStore = defineStore('cart', () => {
         return items.value.reduce((total, item) => total + (item.price * item.quantity), 0)
     })
 
+    const validateEmail = (email: string): boolean => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        return emailRegex.test(email)
+    }
+
+    const validatePhone = (phone: string): boolean => {
+        const phoneRegex = /^[\d+]+$/
+        return phoneRegex.test(phone)
+    }
+
     const isFormValid = computed(() => {
         return (
             formData.value.customerName.trim() !== '' &&
             formData.value.customerEmail.trim() !== '' &&
+            validateEmail(formData.value.customerEmail) &&
             formData.value.phone.trim() !== '' &&
+            validatePhone(formData.value.phone) &&
             formData.value.address.trim() !== '' &&
             formData.value.city.trim() !== '' &&
             formData.value.postalCode.trim() !== '' &&
