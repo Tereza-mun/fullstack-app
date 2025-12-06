@@ -18,7 +18,7 @@
             <div class="flex items-center justify-between">
                 <p class="font-mono text-base font-bold text-accent">€{{ product.price.toFixed(2) }}</p>
                 <Button
-                    :type="isInCart ? 'removeFromCart' : 'addToCart'"
+                    :variant="isInCart ? 'removeFromCart' : 'addToCart'"
                     :aria-label="isInCart ? t('products.removeFromCartAria', { product: productName }) : t('products.addToCartAria', { product: productName })"
                     @click="handleButtonClick"
                 >
@@ -47,7 +47,7 @@
                 <p class="font-mono text-xl font-bold text-accent mb-4">€{{ product.price.toFixed(2) }}</p>
                 <Button
                     class="w-full"
-                    :type="isInCart ? 'secondary' : 'primary'"
+                    :variant="isInCart ? 'secondary' : 'primary'"
                     :aria-label="isInCart ? t('products.removeFromCartAria', { product: productName }) : t('products.addToCartAria', { product: productName })"
                     @click="handleButtonClick"
                 >

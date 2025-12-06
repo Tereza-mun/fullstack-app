@@ -3,7 +3,7 @@
     <div class="lg:hidden mb-8">
         <Button
             @click="openDrawer"
-            type="secondary"
+            variant="secondary"
             class="w-full"
         >
             {{ t('filters.openFilters') }}
@@ -89,7 +89,7 @@
         <div class="flex justify-center">
             <Button
                 @click="filtersStore.resetFilters"
-                type="secondary"
+                variant="secondary"
                 :aria-label="t('filters.resetFiltersLabel')"
                 :disabled="filtersStore.filters.category === '' && filtersStore.filters.search === '' && filtersStore.filters.minPrice === null && filtersStore.filters.maxPrice === null && filtersStore.filters.sortBy === ''"
             >

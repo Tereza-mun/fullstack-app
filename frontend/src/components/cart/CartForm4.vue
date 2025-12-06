@@ -47,7 +47,7 @@
         </div>
 
         <!-- Back to Shopping Button -->
-        <Button type="primary" @click="goToProducts" class="px-8">
+        <Button variant="primary" @click="goToProducts" class="px-8">
             {{ t('confirmation.backToShopping') }}
         </Button>
     </div>

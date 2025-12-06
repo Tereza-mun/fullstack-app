@@ -3,7 +3,7 @@
         <Button
             v-if="isVisible"
             @click="scrollToTop"
-            type="scrollToTop"
+            variant="scrollToTop"
             aria-label="Scroll to top"
         >
             <ArrowUp stroke="currentColor" />

@@ -3,7 +3,7 @@
         <div class="max-w-[1200px] mx-auto">
             <!-- Back button -->
             <Button
-                type="secondary"
+                variant="secondary"
                 class="mb-6"
                 @click="goBack"
                 :aria-label="t('productDetail.backToProducts')"
@@ -86,7 +86,7 @@
                         <!-- Add to cart button -->
                         <Button
                             class="w-full"
-                            :type="isInCart ? 'secondary' : 'primary'"
+                            :variant="isInCart ? 'secondary' : 'primary'"
                             :aria-label="isInCart ? t('products.removeFromCartAria', { product: productName }) : t('products.addToCartAria', { product: productName })"
                             @click="handleCartClick"
                         >

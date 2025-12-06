@@ -1,23 +1,26 @@
 <template>
     <header class="bg-gradient-to-br from-primary-dark to-primary-darker px-4 md:px-8 py-4 md:py-6 shadow-[0_4px_20px_rgba(26,26,46,0.3)]">
         <div class="max-w-[1200px] mx-auto flex justify-between items-center">
-            <Button @click="goToHome" type="home">
+            <Button @click="goToHome" variant="home">
                 {{ t('header.title') }}
             </Button>
-            <div class="flex items-center gap-4 md:gap-6">
+            <div class="flex items-center gap-2 md:gap-6">
+                <Button @click="goToLogin" variant="iconButton" :aria-label="t('header.login')">
+                    <User stroke="#ffffff" />
+                </Button>
                 <div class="relative">
-                    <Button @click="goToCart" type="iconButton" :aria-label="t('header.cart')">
+                    <Button @click="goToCart" variant="iconButton" :aria-label="t('header.cart')">
                         <Cart stroke="#ffffff" />
                     </Button>
                     <CartBadge :count="cartStore.totalItems" />
                 </div>
                 <Button
                     @click="toggleLocale"
-                    type="languageSwitch"
+                    variant="languageSwitch"
                     :aria-label="t('header.switchLanguage', { language: locale === 'en' ? 'Čeština' : 'English' })"
                 >
-                    <img 
-                        :src="locale === 'en' ? flagCz : flagEn" 
+                    <img
+                        :src="locale === 'en' ? flagCz : flagEn"
                         :alt="locale === 'en' ? 'Czech flag' : 'English flag'"
                         class="w-5 h-5 rounded-sm object-cover"
                     />
@@ -33,6 +36,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Cart from '../atoms/icons/Cart.vue'
+import User from '../atoms/icons/User.vue'
 import CartBadge from '../atoms/CartBadge.vue'
 import { useCartStore } from '../../stores/cart'
 import flagCz from '../../assets/images/flag-cz.svg'
@@ -44,6 +48,10 @@ const { t, locale } = useI18n()
 
 const goToHome = () => {
     router.push('/')
+}
+
+const goToLogin = () => {
+    router.push('/login')
 }
 
 const goToCart = () => {

@@ -39,7 +39,7 @@
             <!-- Submit Buttons -->
             <div class="flex flex-col gap-3">
                 <Button 
-                    type="primary" 
+                    variant="primary" 
                     @click="$emit('submit')" 
                     :disabled="submitDisabled" 
                     class="w-full"
@@ -48,7 +48,7 @@
                     <span v-else>{{ submitButtonText || t('cart.continue') }}</span>
                 </Button>
                 <Button 
-                    type="secondary" 
+                    variant="secondary" 
                     @click="$emit('back')" 
                     class="w-full"
                 >

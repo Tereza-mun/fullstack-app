@@ -18,7 +18,7 @@
             <div class="flex items-center gap-1">
                 <Button
                     @click="handleDecreaseQuantity"
-                    type="counterButton"
+                    variant="counterButton"
                     :aria-label="`${t('cart.decreaseQuantity')} ${item.quantity - 1}`"
                 >
                     -
@@ -26,7 +26,7 @@
                 <span class="w-12 text-center font-semibold">{{ item.quantity }}</span>
                 <Button
                     @click="handleIncreaseQuantity"
-                    type="counterButton"
+                    variant="counterButton"
                     :aria-label="`${t('cart.increaseQuantity')} ${item.quantity + 1}`"
                 >
                     +
@@ -39,7 +39,7 @@
 
             <Button
                 @click="handleRemove"
-                type="iconButton"
+                variant="iconButton"
                 :aria-label="`${t('cart.removeItem')} ${itemName}`"
             >
                 <Trash fill="#e63946" />

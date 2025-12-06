@@ -5,8 +5,8 @@
             <span class="font-mono text-2xl font-bold text-accent">€{{ totalPrice.toFixed(2) }}</span>
         </div>
         <div class="flex flex-col sm:flex-row justify-center sm:justify-between gap-4">
-            <Button type="secondary" @click="handleClearCart">{{ t('cart.clearCart') }}</Button>
-            <Button type="primary" @click="handleCheckout">{{ t('cart.continue') }}</Button>
+            <Button variant="secondary" @click="handleClearCart">{{ t('cart.clearCart') }}</Button>
+            <Button variant="primary" @click="handleCheckout">{{ t('cart.continue') }}</Button>
         </div>
     </div>
 </template>

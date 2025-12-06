@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-type ButtonType =
+type ButtonVariant =
     | 'primary'
     | 'secondary'
     | 'home'
@@ -24,13 +24,13 @@ type ButtonType =
     | 'removeFromCart'
 
 interface Props {
-    type?: ButtonType
+    variant?: ButtonVariant
     ariaLabel?: string
     disabled?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    type: 'primary',
+    variant: 'primary',
     disabled: false
 })
 
@@ -51,6 +51,6 @@ const buttonClasses = computed(() => {
         removeFromCart: `flex items-center gap-1 px-2 py-1 rounded-lg text-white text-xs font-semibold bg-gradient-to-br from-accent to-accent-dark ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer active:scale-95' : ''}`
     }
 
-    return variantClasses[props.type]
+    return variantClasses[props.variant]
 })
 </script>

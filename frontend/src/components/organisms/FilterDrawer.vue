@@ -66,7 +66,7 @@
                     <div class="flex gap-3">
                         <Button
                             @click="handleReset"
-                            type="secondary"
+                            variant="secondary"
                             class="flex-1"
                             :aria-label="t('filters.resetFiltersLabel')"
                             :disabled="localFilters.category === '' && localFilters.search === '' && localFilters.minPrice === null && localFilters.maxPrice === null && localFilters.sortBy === ''"
@@ -75,7 +75,7 @@
                         </Button>
                         <Button
                             @click="$emit('apply', localFilters)"
-                            type="primary"
+                            variant="primary"
                             class="flex-1"
                         >
                             {{ t('filters.applyFilters') }}
