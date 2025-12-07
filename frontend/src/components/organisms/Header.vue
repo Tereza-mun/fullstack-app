@@ -7,10 +7,10 @@
             <div class="flex items-center gap-2 md:gap-6">
                 <div class="flex items-center gap-2">
                     <Button @click="goToRegister" variant="iconButton" :aria-label="t('header.register')">
-                        <UserPlus stroke="#ffffff" />
+                        <UserPlus :stroke="IconFill.WHITE" />
                     </Button>
                     <!-- <Button @click="goToLogin" variant="iconButton" :aria-label="t('header.login')">
-                        <User stroke="#ffffff" />
+                        <User :stroke="IconFill.WHITE" />
                     </Button> -->
                     <!-- <span v-if="user" class="hidden md:block text-white font-medium text-sm">
                         {{ user.firstName }} {{ user.lastName }}
@@ -21,7 +21,7 @@
                 </div>
                 <div class="relative">
                     <Button @click="goToCart" variant="iconButton" :aria-label="t('header.cart')">
-                        <Cart stroke="#ffffff" />
+                        <Cart :stroke="IconFill.WHITE" />
                     </Button>
                     <CartBadge :count="cartStore.totalItems" />
                 </div>
@@ -55,6 +55,7 @@ import { useCartStore } from '../../stores/cart'
 import { authService } from '../../services/auth.service'
 import flagCz from '../../assets/images/flag-cz.svg'
 import flagEn from '../../assets/images/flag-en.svg'
+import { IconFill } from '../../types/common'
 
 const router = useRouter()
 const cartStore = useCartStore()

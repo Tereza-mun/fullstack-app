@@ -6,7 +6,7 @@
             variant="scrollToTop"
             aria-label="Scroll to top"
         >
-            <ArrowUp stroke="currentColor" />
+            <ArrowUp :stroke="IconFill.WHITE" />
         </Button>
     </Transition>
 </template>
@@ -15,6 +15,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import ArrowUp from './icons/ArrowUp.vue'
 import Button from './Button.vue'
+import { IconFill } from '../../types/common'
 
 const isVisible = ref(false)
 

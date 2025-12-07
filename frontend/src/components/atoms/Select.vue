@@ -12,7 +12,7 @@
                     class="w-5 h-5 transition-transform duration-200"
                     :class="{ 'rotate-180': isOpen }"
                     fill="none"
-                    stroke="currentColor"
+                    :stroke="IconFill.BLACK"
                     viewBox="0 0 24 24"
                 >
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -43,7 +43,7 @@
                             v-if="option.value === modelValue"
                             class="w-5 h-5 text-gray-900"
                             fill="none"
-                            stroke="currentColor"
+                            :stroke="IconFill.BLACK"
                             viewBox="0 0 24 24"
                         >
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -58,6 +58,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { IconFill } from '../../types/common'
 
 export interface SelectOption {
     value: string | number

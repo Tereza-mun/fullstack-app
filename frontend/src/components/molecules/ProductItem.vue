@@ -22,7 +22,7 @@
                     :aria-label="isInCart ? t('products.removeFromCartAria', { product: productName }) : t('products.addToCartAria', { product: productName })"
                     @click="handleButtonClick"
                 >
-                    <Cart class="!w-4 !h-4" stroke="currentColor" />
+                    <Cart class="!w-4 !h-4" :stroke="IconFill.WHITE" />
                     <span class="text-sm font-bold">{{ isInCart ? '−' : '+' }}</span>
                 </Button>
             </div>
@@ -66,6 +66,7 @@ import Button from '../atoms/Button.vue'
 import Cart from '../atoms/icons/Cart.vue'
 import { useCartStore } from '../../stores/cart'
 import { useAlertStore } from '../../stores/alert'
+import { IconFill } from '../../types/common'
 
 interface ProductName {
     en: string
