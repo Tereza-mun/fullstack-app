@@ -3,7 +3,7 @@
         <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 text-center">
             <div class="mb-6">
                 <!-- Success Icon -->
-                <div class="mx-auto mb-4">
+                <div class="w-16 h-16 mx-auto mb-4">
                     <CheckIcon />
                 </div>
 
