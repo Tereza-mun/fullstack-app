@@ -13,8 +13,11 @@ export class AuthService {
     ) {}
 
     async checkEmailExists(email: string) {
+        // Normalize email to lowercase
+        const normalizedEmail = email.toLowerCase();
+
         const existingUser = await this.prisma.user.findUnique({
-            where: { email },
+            where: { email: normalizedEmail },
         });
 
         return { exists: !!existingUser };
@@ -23,9 +26,12 @@ export class AuthService {
     async register(registerDto: RegisterDto) {
         const { email, password, firstName, lastName, phonePrefix, phoneNumber, deliveryAddress, deliveryCity, deliveryPostalCode, deliveryCountry, billingAddress, billingCity, billingPostalCode, billingCountry } = registerDto;
 
+        // Normalize email to lowercase
+        const normalizedEmail = email.toLowerCase();
+
         // Check if user already exists
         const existingUser = await this.prisma.user.findUnique({
-            where: { email },
+            where: { email: normalizedEmail },
         });
 
         if (existingUser) {
@@ -38,7 +44,7 @@ export class AuthService {
         // Create user
         const user = await this.prisma.user.create({
             data: {
-                email,
+                email: normalizedEmail,
                 password: hashedPassword,
                 firstName,
                 lastName,
@@ -82,9 +88,12 @@ export class AuthService {
     async login(loginDto: LoginDto) {
         const { email, password } = loginDto;
 
+        // Normalize email to lowercase
+        const normalizedEmail = email.toLowerCase();
+
         // Find user by email
         const user = await this.prisma.user.findUnique({
-            where: { email },
+            where: { email: normalizedEmail },
         });
 
         if (!user) {

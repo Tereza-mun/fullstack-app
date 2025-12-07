@@ -93,6 +93,9 @@ export const useRegisterStore = defineStore('register', () => {
         error.value = ''
 
         try {
+            // Normalize email to lowercase
+            const normalizedEmail = sensitiveData.value.email.toLowerCase()
+
             // For billing address, if checkbox is not checked, use delivery address
             const billingAddress = differentBillingAddress.value
                 ? formData.value.billingAddress
@@ -111,7 +114,7 @@ export const useRegisterStore = defineStore('register', () => {
                 : formData.value.deliveryCountry
 
             const response = await authService.register({
-                email: sensitiveData.value.email,
+                email: normalizedEmail,
                 password: sensitiveData.value.password,
                 firstName: formData.value.firstName,
                 lastName: formData.value.lastName,
