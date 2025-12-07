@@ -21,7 +21,11 @@ export class OrderItemDto {
 export class CreateOrderDto {
   @IsString()
   @IsNotEmpty()
-  customerName: string;
+  firstName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  lastName: string;
 
   @IsEmail()
   @IsNotEmpty()

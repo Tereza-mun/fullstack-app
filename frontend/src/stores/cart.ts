@@ -17,9 +17,11 @@ export interface CartItem {
 }
 
 export interface OrderFormData {
-    customerName: string
+    firstName: string
+    lastName: string
     customerEmail: string
-    phone: string
+    phonePrefix: string
+    phoneNumber: string
     address: string
     city: string
     postalCode: string
@@ -30,9 +32,11 @@ export interface OrderFormData {
 }
 
 export interface CompleteOrderData {
-    customerName: string
+    firstName: string
+    lastName: string
     customerEmail: string
-    phone: string
+    phonePrefix: string
+    phoneNumber: string
     address: string
     city: string
     postalCode: string
@@ -48,9 +52,11 @@ export const useCartStore = defineStore('cart', () => {
     const items = ref<CartItem[]>([])
 
     const formData = ref<OrderFormData>({
-        customerName: '',
+        firstName: '',
+        lastName: '',
         customerEmail: '',
-        phone: '',
+        phonePrefix: '+420',
+        phoneNumber: '',
         address: '',
         city: '',
         postalCode: '',
@@ -81,18 +87,22 @@ export const useCartStore = defineStore('cart', () => {
         return emailRegex.test(email)
     }
 
-    const validatePhone = (phone: string): boolean => {
-        const phoneRegex = /^[\d+]+$/
-        return phoneRegex.test(phone)
+    const validatePhoneNumber = (phoneNumber: string): boolean => {
+        // Phone number should contain only digits and be between 6-15 digits
+        const phoneRegex = /^\d+$/
+        if (!phoneRegex.test(phoneNumber)) return false
+        return phoneNumber.length >= 6 && phoneNumber.length <= 15
     }
 
     const isFormValid = computed(() => {
         return (
-            formData.value.customerName.trim() !== '' &&
+            formData.value.firstName.trim() !== '' &&
+            formData.value.lastName.trim() !== '' &&
             formData.value.customerEmail.trim() !== '' &&
             validateEmail(formData.value.customerEmail) &&
-            formData.value.phone.trim() !== '' &&
-            validatePhone(formData.value.phone) &&
+            formData.value.phonePrefix.trim() !== '' &&
+            formData.value.phoneNumber.trim() !== '' &&
+            validatePhoneNumber(formData.value.phoneNumber) &&
             formData.value.address.trim() !== '' &&
             formData.value.city.trim() !== '' &&
             formData.value.postalCode.trim() !== '' &&
@@ -148,9 +158,11 @@ export const useCartStore = defineStore('cart', () => {
 
     const resetFormData = () => {
         formData.value = {
-            customerName: '',
+            firstName: '',
+            lastName: '',
             customerEmail: '',
-            phone: '',
+            phonePrefix: '+420',
+            phoneNumber: '',
             address: '',
             city: '',
             postalCode: '',

@@ -9,7 +9,8 @@ export class OrdersService {
   async create(orderData: CreateOrderDto) {
     const order = await this.prisma.order.create({
       data: {
-        customerName: orderData.customerName,
+        firstName: orderData.firstName,
+        lastName: orderData.lastName,
         customerEmail: orderData.customerEmail,
         phone: orderData.phone,
         address: orderData.address,
