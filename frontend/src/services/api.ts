@@ -15,9 +15,11 @@ interface CartItemInput {
 }
 
 interface CreateOrderDto {
-  customerName: string;
+  firstName: string;
+  lastName: string;
   customerEmail: string;
-  phone: string;
+  phonePrefix: string;
+  phoneNumber: string;
   address: string;
   city: string;
   postalCode: string;
@@ -31,9 +33,11 @@ interface CreateOrderDto {
 
 interface Order {
   id: number;
-  customerName: string;
+  firstName: string;
+  lastName: string;
   customerEmail: string;
-  phone?: string;
+  phonePrefix?: string;
+  phoneNumber?: string;
   address?: string;
   city?: string;
   postalCode?: string;
