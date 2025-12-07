@@ -1,0 +1,138 @@
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { authService } from '../services/auth.service'
+
+export const useRegisterStore = defineStore('register', () => {
+    // Non-sensitive form data (can be persisted)
+    const formData = ref({
+        firstName: '',
+        lastName: '',
+        phonePrefix: '+420',
+        phoneNumber: '',
+        billingAddress: '',
+        billingCity: '',
+        billingPostalCode: '',
+        billingCountry: '',
+        deliveryAddress: '',
+        deliveryCity: '',
+        deliveryPostalCode: '',
+        deliveryCountry: '',
+    })
+
+    // Sensitive data - NEVER persisted to localStorage
+    const sensitiveData = ref({
+        email: '',
+        password: '',
+    })
+
+    const differentBillingAddress = ref(false)
+    const loading = ref(false)
+    const error = ref('')
+
+    // Clear sensitive data (password and email)
+    const clearSensitiveData = () => {
+        sensitiveData.value = {
+            email: '',
+            password: '',
+        }
+    }
+
+    const resetForm = () => {
+        formData.value = {
+            firstName: '',
+            lastName: '',
+            phonePrefix: '+420',
+            phoneNumber: '',
+            billingAddress: '',
+            billingCity: '',
+            billingPostalCode: '',
+            billingCountry: '',
+            deliveryAddress: '',
+            deliveryCity: '',
+            deliveryPostalCode: '',
+            deliveryCountry: '',
+        }
+        clearSensitiveData()
+        differentBillingAddress.value = false
+        error.value = ''
+    }
+
+    const submitRegistration = async () => {
+        loading.value = true
+        error.value = ''
+
+        try {
+            // For billing address, if checkbox is not checked, use delivery address
+            const billingAddress = differentBillingAddress.value
+                ? formData.value.billingAddress
+                : formData.value.deliveryAddress
+
+            const billingCity = differentBillingAddress.value
+                ? formData.value.billingCity
+                : formData.value.deliveryCity
+
+            const billingPostalCode = differentBillingAddress.value
+                ? formData.value.billingPostalCode
+                : formData.value.deliveryPostalCode
+
+            const billingCountry = differentBillingAddress.value
+                ? formData.value.billingCountry
+                : formData.value.deliveryCountry
+
+            await authService.register({
+                email: sensitiveData.value.email,
+                password: sensitiveData.value.password,
+                firstName: formData.value.firstName,
+                lastName: formData.value.lastName,
+                phonePrefix: formData.value.phonePrefix,
+                phoneNumber: formData.value.phoneNumber,
+                deliveryAddress: formData.value.deliveryAddress,
+                deliveryCity: formData.value.deliveryCity,
+                deliveryPostalCode: formData.value.deliveryPostalCode,
+                deliveryCountry: formData.value.deliveryCountry,
+                billingAddress: billingAddress || undefined,
+                billingCity: billingCity || undefined,
+                billingPostalCode: billingPostalCode || undefined,
+                billingCountry: billingCountry || undefined,
+            })
+
+            // Clear sensitive data after successful registration
+            clearSensitiveData()
+
+            return { success: true }
+        } catch (err: any) {
+            error.value = err.message || 'Registration failed'
+            return { success: false, error: error.value }
+        } finally {
+            loading.value = false
+        }
+    }
+
+    // Clear sensitive data when page is about to unload (browser close, refresh, navigate away)
+    if (typeof window !== 'undefined') {
+        const handleBeforeUnload = () => {
+            clearSensitiveData()
+        }
+        window.addEventListener('beforeunload', handleBeforeUnload)
+
+        // Note: In Vue 3 with Pinia, we can't use onUnmounted in store setup
+        // The beforeunload listener handles cleanup when user leaves the page
+    }
+
+    return {
+        formData,
+        sensitiveData,
+        differentBillingAddress,
+        loading,
+        error,
+        resetForm,
+        clearSensitiveData,
+        submitRegistration,
+    }
+}, {
+    persist: {
+        // Only persist non-sensitive address/name data
+        // Email and password are NEVER persisted
+        pick: ['formData', 'differentBillingAddress'],
+    }
+})
