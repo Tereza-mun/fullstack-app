@@ -65,6 +65,7 @@ billingAddress String?
 billingCity String?
 billingPostalCode String?
 billingCountry String?
+refreshToken String?
 createdAt DateTime @default(now())
 updatedAt DateTime @updatedAt
 }

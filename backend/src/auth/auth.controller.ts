@@ -21,15 +21,22 @@ export class AuthController {
     async register(@Body() registerDto: RegisterDto, @Response() res: ExpressResponse) {
         const result = await this.authService.register(registerDto);
 
-        // Set JWT token in HttpOnly cookie
+        // Set JWT tokens in HttpOnly cookies
         res.cookie('access_token', result.access_token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
-            maxAge: 24 * 60 * 60 * 1000, // 24 hours
+            maxAge: 15 * 60 * 1000, // 15 minutes
         });
 
-        // Return user data without token
+        res.cookie('refresh_token', result.refresh_token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        });
+
+        // Return user data without tokens
         return res.json({ user: result.user });
     }
 
@@ -38,8 +45,15 @@ export class AuthController {
     async login(@Body() loginDto: LoginDto, @Response() res: ExpressResponse) {
         const result = await this.authService.login(loginDto);
 
-        // Set JWT token in HttpOnly cookie
+        // Set JWT tokens in HttpOnly cookies
         res.cookie('access_token', result.access_token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 15 * 60 * 1000, // 15 minutes
+        });
+
+        res.cookie('refresh_token', result.refresh_token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',
@@ -50,9 +64,38 @@ export class AuthController {
         return res.json({ user: result.user });
     }
 
+    @Post('refresh')
+    async refresh(@Request() req, @Response() res: ExpressResponse) {
+        const refreshToken = req.cookies?.refresh_token;
+
+        if (!refreshToken) {
+            return res.status(401).json({ message: 'Refresh token not found' });
+        }
+
+        const result = await this.authService.refreshTokens(refreshToken);
+
+        // Set new tokens in HttpOnly cookies
+        res.cookie('access_token', result.access_token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 15 * 60 * 1000, // 15 minutes
+        });
+
+        res.cookie('refresh_token', result.refresh_token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        });
+
+        return res.json({ message: 'Tokens refreshed successfully' });
+    }
+
     @Post('logout')
     async logout(@Response() res: ExpressResponse) {
         res.clearCookie('access_token');
+        res.clearCookie('refresh_token');
         return res.json({ message: 'Logged out successfully' });
     }
 

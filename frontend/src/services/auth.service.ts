@@ -1,3 +1,5 @@
+import { fetchWithRefresh } from '../utils/fetchWithRefresh';
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export interface LoginCredentials {
@@ -106,10 +108,21 @@ class AuthService {
         return { user: data.user, access_token: '' };
     }
 
+    async refreshToken(): Promise<boolean> {
+        try {
+            const response = await fetch(`${API_URL}/auth/refresh`, {
+                method: 'POST',
+                credentials: 'include',
+            });
+
+            return response.ok;
+        } catch (error) {
+            return false;
+        }
+    }
+
     async getProfile() {
-        const response = await fetch(`${API_URL}/auth/profile`, {
-            credentials: 'include', // Important: send cookies with request
-        });
+        const response = await fetchWithRefresh(`${API_URL}/auth/profile`);
 
         if (!response.ok) {
             throw new Error('Failed to fetch profile');

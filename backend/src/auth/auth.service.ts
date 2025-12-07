@@ -61,11 +61,19 @@ export class AuthService {
             },
         });
 
-        // Generate JWT token
-        const token = this.generateToken(user.id, user.email);
+        // Generate JWT tokens
+        const accessToken = this.generateAccessToken(user.id, user.email);
+        const refreshToken = this.generateRefreshToken(user.id, user.email);
+
+        // Store refresh token in database
+        await this.prisma.user.update({
+            where: { id: user.id },
+            data: { refreshToken },
+        });
 
         return {
-            access_token: token,
+            access_token: accessToken,
+            refresh_token: refreshToken,
             user: {
                 id: user.id,
                 email: user.email,
@@ -107,11 +115,19 @@ export class AuthService {
             throw new UnauthorizedException('Invalid credentials');
         }
 
-        // Generate JWT token
-        const token = this.generateToken(user.id, user.email);
+        // Generate JWT tokens
+        const accessToken = this.generateAccessToken(user.id, user.email);
+        const refreshToken = this.generateRefreshToken(user.id, user.email);
+
+        // Store refresh token in database
+        await this.prisma.user.update({
+            where: { id: user.id },
+            data: { refreshToken },
+        });
 
         return {
-            access_token: token,
+            access_token: accessToken,
+            refresh_token: refreshToken,
             user: {
                 id: user.id,
                 email: user.email,
@@ -154,8 +170,48 @@ export class AuthService {
         };
     }
 
-    private generateToken(userId: number, email: string): string {
+    private generateAccessToken(userId: number, email: string): string {
         const payload = { sub: userId, email };
-        return this.jwtService.sign(payload);
+        return this.jwtService.sign(payload, { expiresIn: '15m' });
+    }
+
+    private generateRefreshToken(userId: number, email: string): string {
+        const payload = { sub: userId, email, type: 'refresh' };
+        return this.jwtService.sign(payload, { expiresIn: '7d' });
+    }
+
+    async refreshTokens(refreshToken: string) {
+        try {
+            const payload = this.jwtService.verify(refreshToken);
+
+            if (payload.type !== 'refresh') {
+                throw new UnauthorizedException('Invalid token type');
+            }
+
+            const user = await this.prisma.user.findUnique({
+                where: { id: payload.sub },
+            });
+
+            if (!user || user.refreshToken !== refreshToken) {
+                throw new UnauthorizedException('Invalid refresh token');
+            }
+
+            // Generate new tokens
+            const newAccessToken = this.generateAccessToken(user.id, user.email);
+            const newRefreshToken = this.generateRefreshToken(user.id, user.email);
+
+            // Update refresh token in database
+            await this.prisma.user.update({
+                where: { id: user.id },
+                data: { refreshToken: newRefreshToken },
+            });
+
+            return {
+                access_token: newAccessToken,
+                refresh_token: newRefreshToken,
+            };
+        } catch (error) {
+            throw new UnauthorizedException('Invalid or expired refresh token');
+        }
     }
 }
