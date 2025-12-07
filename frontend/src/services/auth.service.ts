@@ -67,6 +67,10 @@ class AuthService {
         });
 
         if (!response.ok) {
+            // Handle rate limiting
+            if (response.status === 429) {
+                throw new Error('TOO_MANY_REQUESTS');
+            }
             const error = await response.json().catch(() => ({ message: 'Login failed' }));
             throw new Error(error.message || 'Login failed');
         }

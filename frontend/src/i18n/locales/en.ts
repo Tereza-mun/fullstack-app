@@ -170,9 +170,10 @@ export default {
         submit: 'Sign In',
         loading: 'Signing in...',
         error: 'Login failed. Please check your credentials.',
+        rateLimitError: 'Too many login attempts. Please wait a minute and try again.',
+        success: 'You have been successfully logged in!',
         noAccount: "Don't have an account?",
         register: 'Register here',
-        success: 'You have been successfully logged in!',
     },
     register: {
         title: 'Create Account',

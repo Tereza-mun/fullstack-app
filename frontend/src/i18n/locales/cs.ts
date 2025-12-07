@@ -170,9 +170,10 @@ export default {
         submit: 'Přihlásit se',
         loading: 'Přihlašování...',
         error: 'Přihlášení selhalo. Zkontrolujte prosím své přihlašovací údaje.',
+        rateLimitError: 'Příliš mnoho pokusů o přihlášení. Počkejte prosím minutu a zkuste to znovu.',
+        success: 'Byli jste úspěšně přihlášeni!',
         noAccount: 'Nemáte účet?',
         register: 'Registrujte se zde',
-        success: 'Byli jste úspěšně přihlášeni!',
     },
     register: {
         title: 'Vytvořit Účet',

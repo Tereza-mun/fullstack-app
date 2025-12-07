@@ -26,9 +26,9 @@
                             autocomplete="current-password"
                         />
 
-                        <!-- <div v-if="error" class="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                        <div v-if="error" class="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                             {{ error }}
-                        </div> -->
+                        </div>
 
                         <Button variant="primary" type="submit" class="w-full">
                             <span v-if="loading">{{ t('login.loading') }}</span>
@@ -90,9 +90,17 @@ const handleSubmit = async () => {
         // After successful login, redirect to home
         router.push('/')
     } catch (err: any) {
-        error.value = err.message || t('login.error')
+        // Only show rate limiting error in the form
+        if (err.message === 'TOO_MANY_REQUESTS') {
+            error.value = t('login.rateLimitError')
+        }
+        // Show all errors in alert
+        const alertMessage = err.message === 'TOO_MANY_REQUESTS'
+            ? t('login.rateLimitError')
+            : t('login.error')
+
         alertStore.showAlert({
-            message: t('login.error'),
+            message: alertMessage,
             bgColor: 'bg-red-500',
             textColor: 'text-white'
         })
