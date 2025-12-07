@@ -13,6 +13,7 @@
             :name="name || inputId"
             :value="modelValue"
             @input="handleInput"
+            @blur="handleBlur"
             :type="type"
             :placeholder="placeholder"
             :min="min"
@@ -24,8 +25,8 @@
             :aria-describedby="describedBy"
             :autocomplete="autocomplete"
             class="w-full px-3 py-2 border-2 rounded-lg text-base transition-all duration-200 outline-none text-gray-900 placeholder-gray-400 focus:ring-4"
-            :class="error 
-                ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10' 
+            :class="error
+                ? 'border-red-500 focus:border-red-500 focus:ring-red-500/10'
                 : 'border-gray-300 focus:border-gray-900 focus:ring-gray-900/10'"
         />
         <p 
@@ -71,6 +72,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
     'update:modelValue': [value: string | number | null]
+    'blur': [event: Event]
 }>()
 
 // Generate unique ID for input-label connection
@@ -91,5 +93,9 @@ const handleInput = (event: Event) => {
     const target = event.target as HTMLInputElement
     const value = target.type === 'number' ? (target.value ? Number(target.value) : null) : target.value
     emit('update:modelValue', value)
+}
+
+const handleBlur = (event: Event) => {
+    emit('blur', event)
 }
 </script>
