@@ -5,9 +5,20 @@
                 {{ t('header.title') }}
             </Button>
             <div class="flex items-center gap-2 md:gap-6">
-                <Button @click="goToLogin" variant="iconButton" :aria-label="t('header.login')">
-                    <User stroke="#ffffff" />
-                </Button>
+                <div class="flex items-center gap-2">
+                    <Button @click="goToRegister" variant="iconButton" :aria-label="t('header.register')">
+                        <UserPlus stroke="#ffffff" />
+                    </Button>
+                    <!-- <Button @click="goToLogin" variant="iconButton" :aria-label="t('header.login')">
+                        <User stroke="#ffffff" />
+                    </Button> -->
+                    <!-- <span v-if="user" class="hidden md:block text-white font-medium text-sm">
+                        {{ user.firstName }} {{ user.lastName }}
+                    </span>
+                    <Button v-if="user" @click="logout" variant="secondary" class="text-sm">
+                        {{ t('header.logout') }}
+                    </Button> -->
+                </div>
                 <div class="relative">
                     <Button @click="goToCart" variant="iconButton" :aria-label="t('header.cart')">
                         <Cart stroke="#ffffff" />
@@ -32,13 +43,16 @@
 </template>
 
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Cart from '../atoms/icons/Cart.vue'
-import User from '../atoms/icons/User.vue'
+// import User from '../atoms/icons/User.vue'
+import UserPlus from '../atoms/icons/UserPlus.vue'
 import CartBadge from '../atoms/CartBadge.vue'
 import { useCartStore } from '../../stores/cart'
+import { authService } from '../../services/auth.service'
 import flagCz from '../../assets/images/flag-cz.svg'
 import flagEn from '../../assets/images/flag-en.svg'
 
@@ -46,12 +60,25 @@ const router = useRouter()
 const cartStore = useCartStore()
 const { t, locale } = useI18n()
 
+const user = ref<{ firstName?: string; lastName?: string; email?: string } | null>(null)
+
+onMounted(() => {
+    // Check if user is logged in and get user data
+    if (authService.isAuthenticated()) {
+        user.value = authService.getUser()
+    }
+})
+
 const goToHome = () => {
     router.push('/')
 }
 
-const goToLogin = () => {
-    router.push('/login')
+// const goToLogin = () => {
+//     router.push('/login')
+// }
+
+const goToRegister = () => {
+    router.push('/register/1')
 }
 
 const goToCart = () => {
@@ -62,5 +89,11 @@ const toggleLocale = () => {
     locale.value = locale.value === 'en' ? 'cs' : 'en'
     localStorage.setItem('locale', locale.value)
 }
+
+// const logout = () => {
+//     authService.logout()
+//     user.value = null
+//     router.push('/')
+// }
 </script>
 
