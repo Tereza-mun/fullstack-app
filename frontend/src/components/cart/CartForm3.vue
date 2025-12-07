@@ -32,7 +32,7 @@
                 <div class="space-y-3 text-gray-700">
                     <div class="flex justify-between">
                         <span class="font-semibold">{{ t('deliveryInfo.name') }}:</span>
-                        <span>{{ cartStore.formData.customerName }}</span>
+                        <span>{{ cartStore.formData.firstName }} {{ cartStore.formData.lastName }}</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="font-semibold">{{ t('deliveryInfo.email') }}:</span>
@@ -40,7 +40,7 @@
                     </div>
                     <div class="flex justify-between">
                         <span class="font-semibold">{{ t('deliveryInfo.phone') }}:</span>
-                        <span>{{ cartStore.formData.phone }}</span>
+                        <span>{{ cartStore.formData.phonePrefix }}{{ cartStore.formData.phoneNumber }}</span>
                     </div>
                 </div>
             </div>

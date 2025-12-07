@@ -105,6 +105,7 @@ export default {
         emptyCart: 'Váš košík je prázdný. Přidejte položky pro pokračování k pokladně.',
         customerInfo: 'Informace o Zákazníkovi',
         addressInfo: 'Dodací Adresa',
+        name: 'Celé Jméno',
         firstName: 'Jméno',
         lastName: 'Příjmení',
         firstNamePlaceholder: 'Jan',

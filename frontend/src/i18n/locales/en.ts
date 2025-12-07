@@ -105,6 +105,7 @@ export default {
         emptyCart: 'Your cart is empty. Add items to proceed with checkout.',
         customerInfo: 'Customer Information',
         addressInfo: 'Delivery Address',
+        name: 'Full Name',
         firstName: 'First Name',
         lastName: 'Last Name',
         firstNamePlaceholder: 'John',
