@@ -15,8 +15,11 @@ export default {
     header: {
         title: 'TechStore',
         cart: 'Přejít do košíku',
+        cartTitle: 'Košík',
         login: 'Přihlášení',
         logout: 'Odhlásit se',
+        logoutSuccess: 'Byli jste úspěšně odhlášeni!',
+        register: 'Registrace',
         switchLanguage: 'Přepnout na {language}'
     },
     products: {
@@ -167,7 +170,8 @@ export default {
         loading: 'Přihlašování...',
         error: 'Přihlášení selhalo. Zkontrolujte prosím své přihlašovací údaje.',
         noAccount: 'Nemáte účet?',
-        register: 'Registrujte se zde'
+        register: 'Registrujte se zde',
+        success: 'Byli jste úspěšně přihlášeni!',
     },
     register: {
         title: 'Vytvořit Účet',

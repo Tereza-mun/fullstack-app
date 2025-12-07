@@ -15,8 +15,11 @@ export default {
     header: {
         title: 'TechStore',
         cart: 'Go to cart',
+        cartTitle: 'Cart',
         login: 'Login',
         logout: 'Logout',
+        logoutSuccess: 'You have been successfully logged out!',
+        register: 'Register',
         switchLanguage: 'Switch to {language}'
     },
     products: {
@@ -167,7 +170,8 @@ export default {
         loading: 'Signing in...',
         error: 'Login failed. Please check your credentials.',
         noAccount: "Don't have an account?",
-        register: 'Register here'
+        register: 'Register here',
+        success: 'You have been successfully logged in!',
     },
     register: {
         title: 'Create Account',

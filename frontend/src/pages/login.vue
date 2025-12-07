@@ -26,9 +26,9 @@
                             autocomplete="current-password"
                         />
 
-                        <div v-if="error" class="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                        <!-- <div v-if="error" class="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                             {{ error }}
-                        </div>
+                        </div> -->
 
                         <Button variant="primary" type="submit" class="w-full">
                             <span v-if="loading">{{ t('login.loading') }}</span>
@@ -56,6 +56,8 @@ import Container from '../components/molecules/Container.vue'
 import Button from '../components/atoms/Button.vue'
 import Input from '../components/atoms/Input.vue'
 import { authService } from '../services/auth.service'
+import { useAlertStore } from '../stores/alert'
+import { useAuthStore } from '../stores/auth'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -64,21 +66,36 @@ const email = ref('')
 const password = ref('')
 const loading = ref(false)
 const error = ref('')
+const alertStore = useAlertStore()
+const authStore = useAuthStore()
 
 const handleSubmit = async () => {
     loading.value = true
     error.value = ''
 
     try {
-        await authService.login({
+        const response = await authService.login({
             email: email.value,
             password: password.value
         })
 
+        // Update auth store with user data
+        authStore.setUser(response.user)
+
+        alertStore.showAlert({
+            message: t('login.success'),
+            bgColor: 'bg-green-500',
+            textColor: 'text-white'
+        })
         // After successful login, redirect to home
         router.push('/')
     } catch (err: any) {
         error.value = err.message || t('login.error')
+        alertStore.showAlert({
+            message: t('login.error'),
+            bgColor: 'bg-red-500',
+            textColor: 'text-white'
+        })
     } finally {
         loading.value = false
     }

@@ -5,26 +5,40 @@
                 {{ t('header.title') }}
             </Button>
             <div class="flex items-center gap-2 md:gap-6">
-                <div class="flex items-center gap-2">
-                    <Button @click="goToRegister" variant="iconButton" :aria-label="t('header.register')">
-                        <UserPlus :stroke="IconFill.WHITE" />
-                    </Button>
-                    <!-- <Button @click="goToLogin" variant="iconButton" :aria-label="t('header.login')">
-                        <User :stroke="IconFill.WHITE" />
-                    </Button> -->
-                    <!-- <span v-if="user" class="hidden md:block text-white font-medium text-sm">
-                        {{ user.firstName }} {{ user.lastName }}
-                    </span>
-                    <Button v-if="user" @click="logout" variant="secondary" class="text-sm">
-                        {{ t('header.logout') }}
-                    </Button> -->
-                </div>
                 <div class="relative">
                     <Button @click="goToCart" variant="iconButton" :aria-label="t('header.cart')">
                         <Cart :stroke="IconFill.WHITE" />
+                        <span class="hidden md:block ml-3 text-lg text-white">{{ t('header.cartTitle') }}</span>
+                        <CartBadge :count="cartStore.totalItems" />
                     </Button>
-                    <CartBadge :count="cartStore.totalItems" />
                 </div>
+                <div
+                    v-if="!authStore.user"
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <Button @click="goToRegister" variant="iconButton" :aria-label="t('header.register')">
+                        <UserPlus :stroke="IconFill.WHITE" />
+                        <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.register') }}</span>
+                    </Button>
+                    <Button @click="goToLogin" variant="iconButton" :aria-label="t('header.login')">
+                        <User :stroke="IconFill.WHITE" />
+                        <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.login') }}</span>
+                    </Button>
+                </div>
+                <div
+                    v-else
+                    class="flex items-center gap-2 md:gap-4"
+                >
+                    <span class="hidden md:flex items-center gap-2 text-white font-medium text-lg">
+                        <User :stroke="IconFill.WHITE" />
+                        {{ authStore.user.firstName }}
+                    </span>
+                    <Button @click="logout" variant="iconButton" class="text-sm">
+                        <LogOut :stroke="IconFill.WHITE" />
+                        <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.logout') }}</span>
+                    </Button>
+                </div>
+               
                 <Button
                     @click="toggleLocale"
                     variant="languageSwitch"
@@ -37,46 +51,53 @@
                     />
                     <span class="text-lg font-semibold">{{ locale === 'en' ? 'CS' : 'EN' }}</span>
                 </Button>
+
+                 <!-- <span v-if="user" class="hidden md:block text-white font-medium text-sm">
+                        {{ user.firstName }} {{ user.lastName }}
+                    </span>
+                    <Button v-if="user" @click="logout" variant="secondary" class="text-sm">
+                        {{ t('header.logout') }}
+                    </Button> -->
             </div>
         </div>
     </header>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Cart from '../atoms/icons/Cart.vue'
-// import User from '../atoms/icons/User.vue'
+import User from '../atoms/icons/User.vue'
 import UserPlus from '../atoms/icons/UserPlus.vue'
+import LogOut from '../atoms/icons/LogOut.vue'
 import CartBadge from '../atoms/CartBadge.vue'
 import { useCartStore } from '../../stores/cart'
-import { authService } from '../../services/auth.service'
+import { useAuthStore } from '../../stores/auth'
+import { useAlertStore } from '../../stores/alert'
 import flagCz from '../../assets/images/flag-cz.svg'
 import flagEn from '../../assets/images/flag-en.svg'
 import { IconFill } from '../../types/common'
 
+
 const router = useRouter()
 const cartStore = useCartStore()
+const authStore = useAuthStore()
+const alertStore = useAlertStore()
 const { t, locale } = useI18n()
 
-const user = ref<{ firstName?: string; lastName?: string; email?: string } | null>(null)
-
 onMounted(() => {
-    // Check if user is logged in and get user data
-    if (authService.isAuthenticated()) {
-        user.value = authService.getUser()
-    }
+    authStore.initAuth()
 })
 
 const goToHome = () => {
     router.push('/')
 }
 
-// const goToLogin = () => {
-//     router.push('/login')
-// }
+const goToLogin = () => {
+    router.push('/login')
+}
 
 const goToRegister = () => {
     router.push('/register/1')
@@ -91,10 +112,14 @@ const toggleLocale = () => {
     localStorage.setItem('locale', locale.value)
 }
 
-// const logout = () => {
-//     authService.logout()
-//     user.value = null
-//     router.push('/')
-// }
+const logout = () => {
+    authStore.logout()
+    router.push('/login')
+    alertStore.showAlert({
+        message: t('header.logoutSuccess'),
+        bgColor: 'bg-green-500',
+        textColor: 'text-white'
+    })
+}
 </script>
 
