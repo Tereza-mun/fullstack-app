@@ -1,5 +1,6 @@
 import { Controller, Post, Body, UseGuards, Get, Request, Response } from '@nestjs/common';
 import { Response as ExpressResponse } from 'express';
+import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
@@ -10,11 +11,13 @@ export class AuthController {
     constructor(private authService: AuthService) {}
 
     @Post('check-email')
+    @Throttle({ default: { limit: 10, ttl: 60000 } }) // 10 requests per minute
     async checkEmail(@Body() body: { email: string }) {
         return this.authService.checkEmailExists(body.email);
     }
 
     @Post('register')
+    @Throttle({ default: { limit: 5, ttl: 60000 } }) // 5 attempts per minute
     async register(@Body() registerDto: RegisterDto, @Response() res: ExpressResponse) {
         const result = await this.authService.register(registerDto);
 
@@ -31,6 +34,7 @@ export class AuthController {
     }
 
     @Post('login')
+    @Throttle({ default: { limit: 5, ttl: 60000 } }) // 5 attempts per minute
     async login(@Body() loginDto: LoginDto, @Response() res: ExpressResponse) {
         const result = await this.authService.login(loginDto);
 
