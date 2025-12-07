@@ -229,7 +229,8 @@ export default {
             personalInfo: 'Osobní Údaje a Heslo',
             addressInfo: 'Dodací a Fakturační Adresa',
             confirmation: 'Potvrzení'
-        }
+        },
+        emailAlreadyExists: 'Tento email je již registrován. Použijte prosím jiný email nebo se přihlaste ke svému stávajícímu účtu.'
     },
     country: {
         cz: 'Česká Republika',

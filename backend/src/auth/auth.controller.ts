@@ -8,6 +8,11 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 export class AuthController {
     constructor(private authService: AuthService) {}
 
+    @Post('check-email')
+    async checkEmail(@Body() body: { email: string }) {
+        return this.authService.checkEmailExists(body.email);
+    }
+
     @Post('register')
     async register(@Body() registerDto: RegisterDto) {
         return this.authService.register(registerDto);

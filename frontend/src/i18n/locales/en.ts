@@ -230,7 +230,8 @@ export default {
             personalInfo: 'Personal Info and Password',
             addressInfo: 'Delivery and Billing Address',
             confirmation: 'Confirmation'
-        }
+        },
+        emailAlreadyExists: 'This email is already registered. Please use a different email or login to your existing account.'
     },
     country: {
         cz: 'Czech Republic',

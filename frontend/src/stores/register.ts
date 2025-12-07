@@ -78,6 +78,16 @@ export const useRegisterStore = defineStore('register', () => {
         )
     }
 
+    const checkEmailExists = async (email: string): Promise<boolean> => {
+        try {
+            return await authService.checkEmailExists(email)
+        } catch (err) {
+            console.error('Failed to check email:', err)
+            // If the endpoint fails, return false to allow registration to proceed
+            return false
+        }
+    }
+
     const submitRegistration = async () => {
         loading.value = true
         error.value = ''
@@ -148,6 +158,7 @@ export const useRegisterStore = defineStore('register', () => {
         error,
         resetForm,
         clearSensitiveData,
+        checkEmailExists,
         submitRegistration,
         isStep1Complete,
         isStep2Complete,

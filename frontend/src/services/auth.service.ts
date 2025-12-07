@@ -39,6 +39,23 @@ export interface AuthResponse {
 }
 
 class AuthService {
+    async checkEmailExists(email: string): Promise<boolean> {
+        const response = await fetch(`${API_URL}/auth/check-email`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to check email');
+        }
+
+        const data = await response.json();
+        return data.exists;
+    }
+
     async login(credentials: LoginCredentials): Promise<AuthResponse> {
         const response = await fetch(`${API_URL}/auth/login`, {
             method: 'POST',

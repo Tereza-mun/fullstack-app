@@ -236,7 +236,7 @@ const goToLogin = () => {
     router.push('/login')
 }
 
-const goToNextStep = () => {
+const goToNextStep = async () => {
     error.value = ''
 
     // Clear all previous errors
@@ -256,6 +256,14 @@ const goToNextStep = () => {
     if (!emailValidation.isValid) {
         emailError.value = t('validation.invalidEmail')
         error.value = t('validation.invalidEmail')
+        return
+    }
+
+    // Check if email already exists
+    const emailExists = await registerStore.checkEmailExists(registerStore.sensitiveData.email)
+    if (emailExists) {
+        emailError.value = t('register.emailAlreadyExists')
+        error.value = t('register.emailAlreadyExists')
         return
     }
 
