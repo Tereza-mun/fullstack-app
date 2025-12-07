@@ -41,14 +41,11 @@
             </div>
 
             <!-- Country -->
-            <Input
+            <CountryAutocomplete
                 :model-value="cartStore.formData.country"
                 @update:model-value="cartStore.updateFormData({ country: String($event ?? '') })"
                 :label="t('deliveryInfo.country')"
-                type="text"
-                name="country"
-                :placeholder="t('deliveryInfo.countryPlaceholder')"
-                autocomplete="country-name"
+                :countries="COUNTRIES"
                 required
             />
         </div>
@@ -59,6 +56,8 @@
 import { useI18n } from 'vue-i18n'
 import { useCartStore } from '../../stores/cart'
 import Input from '../atoms/Input.vue'
+import CountryAutocomplete from '../atoms/CountryAutocomplete.vue'
+import { COUNTRIES } from '../../constants/countries'
 
 const { t } = useI18n()
 const cartStore = useCartStore()
