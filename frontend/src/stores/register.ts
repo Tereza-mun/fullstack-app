@@ -57,6 +57,27 @@ export const useRegisterStore = defineStore('register', () => {
         error.value = ''
     }
 
+    // Validation functions for step access control
+    const isStep1Complete = () => {
+        return !!(
+            formData.value.firstName &&
+            formData.value.lastName &&
+            sensitiveData.value.email &&
+            sensitiveData.value.password &&
+            formData.value.phonePrefix &&
+            formData.value.phoneNumber
+        )
+    }
+
+    const isStep2Complete = () => {
+        return !!(
+            formData.value.deliveryAddress &&
+            formData.value.deliveryCity &&
+            formData.value.deliveryPostalCode &&
+            formData.value.deliveryCountry
+        )
+    }
+
     const submitRegistration = async () => {
         loading.value = true
         error.value = ''
@@ -128,6 +149,8 @@ export const useRegisterStore = defineStore('register', () => {
         resetForm,
         clearSensitiveData,
         submitRegistration,
+        isStep1Complete,
+        isStep2Complete,
     }
 }, {
     persist: {

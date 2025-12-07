@@ -110,6 +110,17 @@ export const useCartStore = defineStore('cart', () => {
         )
     })
 
+    // Validation functions for step access control
+    const isStep1Complete = () => {
+        // Step 1 (cart) is complete if there are items in the cart
+        return items.value.length > 0
+    }
+
+    const isStep2Complete = () => {
+        // Step 2 (delivery info) is complete if the form is valid
+        return isFormValid.value
+    }
+
     const addToCart = (product: { id: number; name: ItemName; price: number; category: string; imageUrl?: string }) => {
         const existingItem = items.value.find(item => item.id === product.id)
 
@@ -204,6 +215,8 @@ export const useCartStore = defineStore('cart', () => {
         totalPrice,
         formData,
         isFormValid,
+        isStep1Complete,
+        isStep2Complete,
         addToCart,
         removeFromCart,
         increaseQuantity,

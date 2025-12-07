@@ -4,6 +4,7 @@ import productDetail from '../pages/productDetail.vue'
 import cartId from '../pages/cart/[id].vue'
 import login from '../pages/login.vue'
 import registerId from '../pages/register/[id].vue'
+import { cartGuard, registerGuard } from './guards'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -21,7 +22,8 @@ const router = createRouter({
     {
       path: '/cart/:id',
       name: 'cart',
-      component: cartId
+      component: cartId,
+      beforeEnter: cartGuard
     },
     {
       path: '/login',
@@ -31,7 +33,8 @@ const router = createRouter({
     {
       path: '/register/:id',
       name: 'register',
-      component: registerId
+      component: registerId,
+      beforeEnter: registerGuard
     }
   ]
 })
