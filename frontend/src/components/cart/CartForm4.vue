@@ -2,10 +2,8 @@
     <div class="flex flex-col items-center justify-center px-4">
         <!-- Success Header -->
         <div class="flex items-center gap-4 mb-8">
-            <div class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path>
-                </svg>
+            <div class="flex-shrink-0">
+                <CheckIcon />
             </div>
             <div class="text-left">
                 <h2 class="font-serif text-2xl md:text-3xl font-bold text-primary-dark leading-tight">
@@ -58,6 +56,7 @@ import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
+import CheckIcon from '../atoms/CheckIcon.vue'
 
 const router = useRouter()
 const route = useRoute()

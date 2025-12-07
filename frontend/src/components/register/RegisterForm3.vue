@@ -3,10 +3,8 @@
         <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 text-center">
             <div class="mb-6">
                 <!-- Success Icon -->
-                <div class="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
+                <div class="mx-auto mb-4">
+                    <CheckIcon />
                 </div>
 
                 <h2 class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-primary-dark tracking-tight mb-4">
@@ -36,6 +34,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useRegisterStore } from '../../stores/register'
 import Button from '../atoms/Button.vue'
+import CheckIcon from '../atoms/CheckIcon.vue'
 
 const router = useRouter()
 const { t } = useI18n()
