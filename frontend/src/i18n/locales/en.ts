@@ -220,7 +220,7 @@ export default {
         fillRequired: 'Please fill in all required fields',
         passwordTooShort: 'Password must be at least 8 characters',
         successTitle: 'Account Created Successfully!',
-        successMessage: 'Welcome to TechStore!',
+        successMessage: 'Welcome to TechStore, {name}!',
         successSubMessage: 'Your account has been created and you are now logged in.',
         accountDetails: 'Account Details',
         startShopping: 'Start Shopping',
