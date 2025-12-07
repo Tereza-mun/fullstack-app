@@ -3,12 +3,13 @@
         :model-value="modelValue"
         :label="label"
         :options="mappedOptions"
-        :placeholder="t('phonePrefix.select')"
-        :search-placeholder="t('phonePrefix.search')"
-        :no-results-text="t('phonePrefix.noResults')"
+        :placeholder="placeholder || t('country.select')"
+        :search-placeholder="t('country.search')"
+        :no-results-text="t('country.noResults')"
         :error="error"
         :disabled="disabled"
         :required="required"
+        :normalize-search="true"
         @update:model-value="$emit('update:modelValue', $event)"
     />
 </template>
@@ -17,19 +18,16 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import FlagAutocomplete, { type FlagOption } from './FlagAutocomplete.vue'
-
-export interface PhonePrefixOption {
-    value: string
-    country: string
-}
+import type { Country } from '../../constants/countries'
 
 interface Props {
     modelValue: string
     label?: string
-    options: PhonePrefixOption[]
+    countries: Country[]
     error?: string
     disabled?: boolean
     required?: boolean
+    placeholder?: string
 }
 
 const props = defineProps<Props>()
@@ -39,13 +37,13 @@ const emit = defineEmits<{
     'update:modelValue': [value: string]
 }>()
 
-// Map phone prefix options to FlagOption format
+// Map countries to FlagOption format
 const mappedOptions = computed<FlagOption[]>(() => {
-    return props.options.map(option => ({
-        value: option.value,
-        displayText: option.value,
-        flagCode: option.country,
-        searchableText: option.value
+    return props.countries.map(country => ({
+        value: country.code,
+        displayText: country.name,
+        flagCode: country.code,
+        searchableText: `${country.name} ${country.code}`
     }))
 })
 </script>
