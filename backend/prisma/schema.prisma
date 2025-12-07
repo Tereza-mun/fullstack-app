@@ -22,7 +22,8 @@ createdAt DateTime @default(now())
 
 model Order {
 id Int @id @default(autoincrement())
-customerName String
+firstName String
+lastName String
 customerEmail String
 phone String?
 address String?
@@ -46,4 +47,24 @@ productId Int
 productName Json
 productPrice Float
 quantity Int
+}
+
+model User {
+id Int @id @default(autoincrement())
+email String @unique
+password String
+firstName String
+lastName String
+phonePrefix String?
+phoneNumber String?
+deliveryAddress String?
+deliveryCity String?
+deliveryPostalCode String?
+deliveryCountry String?
+billingAddress String?
+billingCity String?
+billingPostalCode String?
+billingCountry String?
+createdAt DateTime @default(now())
+updatedAt DateTime @updatedAt
 }
