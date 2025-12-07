@@ -125,6 +125,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useRegisterStore } from '../../stores/register'
 import { useAlertStore } from '../../stores/alert'
+import { useAuthStore } from '../../stores/auth'
 import Input from '../atoms/Input.vue'
 import Button from '../atoms/Button.vue'
 import CountryAutocomplete from '../atoms/CountryAutocomplete.vue'
@@ -134,6 +135,7 @@ const router = useRouter()
 const { t } = useI18n()
 const registerStore = useRegisterStore()
 const alertStore = useAlertStore()
+const authStore = useAuthStore()
 
 const countryOptions = COUNTRIES
 
@@ -173,11 +175,11 @@ const handleSubmit = async () => {
     const result = await registerStore.submitRegistration()
 
     if (result.success) {
-        // alertStore.showAlert({
-        //     message: t('register.successMessage'),
-        //     bgColor: 'bg-green-500',
-        //     textColor: 'text-white'
-        // })
+        // Auto-login: Set user data in auth store
+        if (result.user) {
+            authStore.setUser(result.user)
+        }
+
         router.push('/register/3')
     } else {
         alertStore.showAlert({

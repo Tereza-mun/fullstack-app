@@ -20,6 +20,7 @@ export default {
         logout: 'Logout',
         logoutSuccess: 'You have been successfully logged out!',
         register: 'Register',
+        profile: 'Profile',
         switchLanguage: 'Switch to {language}'
     },
     products: {
@@ -236,6 +237,23 @@ export default {
             confirmation: 'Confirmation'
         },
         emailAlreadyExists: 'This email is already registered. Please use a different email or login to your existing account.'
+    },
+    profile: {
+        title: 'My Profile',
+        personalInfo: 'Personal Information',
+        deliveryAddress: 'Delivery Address',
+        billingAddress: 'Billing Address',
+        firstName: 'First Name',
+        lastName: 'Last Name',
+        email: 'Email',
+        phone: 'Phone',
+        address: 'Street Address',
+        city: 'City',
+        postalCode: 'Postal Code',
+        country: 'Country',
+        backToHome: 'Back to Home',
+        notLoggedIn: 'You are not logged in. Please log in to view your profile.',
+        loginButton: 'Go to Login'
     },
     country: {
         cz: 'Czech Republic',

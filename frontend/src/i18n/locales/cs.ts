@@ -20,6 +20,7 @@ export default {
         logout: 'Odhlásit se',
         logoutSuccess: 'Byli jste úspěšně odhlášeni!',
         register: 'Registrace',
+        profile: 'Profil',
         switchLanguage: 'Přepnout na {language}'
     },
     products: {
@@ -235,6 +236,23 @@ export default {
             confirmation: 'Potvrzení'
         },
         emailAlreadyExists: 'Tento email je již registrován. Použijte prosím jiný email nebo se přihlaste ke svému stávajícímu účtu.'
+    },
+    profile: {
+        title: 'Můj Profil',
+        personalInfo: 'Osobní Údaje',
+        deliveryAddress: 'Dodací Adresa',
+        billingAddress: 'Fakturační Adresa',
+        firstName: 'Jméno',
+        lastName: 'Příjmení',
+        email: 'Email',
+        phone: 'Telefon',
+        address: 'Ulice a Číslo Popisné',
+        city: 'Město',
+        postalCode: 'PSČ',
+        country: 'Země',
+        backToHome: 'Zpět na Hlavní Stránku',
+        notLoggedIn: 'Nejste přihlášeni. Přihlaste se prosím pro zobrazení vašeho profilu.',
+        loginButton: 'Přejít na Přihlášení'
     },
     country: {
         cz: 'Česká Republika',

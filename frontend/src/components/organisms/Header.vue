@@ -29,10 +29,10 @@
                     v-else
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <span class="hidden md:flex items-center gap-2 text-white font-medium text-lg">
+                    <Button @click="goToProfile" variant="iconButton" :aria-label="t('header.profile')">
                         <User :stroke="IconFill.WHITE" />
-                        {{ authStore.user.firstName }}
-                    </span>
+                        <span class="hidden md:block ml-2 text-lg text-white">{{ authStore.user.firstName }}</span>
+                    </Button>
                     <Button @click="logout" variant="iconButton" class="text-sm">
                         <LogOut :stroke="IconFill.WHITE" />
                         <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.logout') }}</span>
@@ -105,6 +105,10 @@ const goToRegister = () => {
 
 const goToCart = () => {
     router.push('/cart/1')
+}
+
+const goToProfile = () => {
+    router.push('/profile')
 }
 
 const toggleLocale = () => {

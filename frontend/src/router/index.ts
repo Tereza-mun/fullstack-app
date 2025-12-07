@@ -4,6 +4,7 @@ import productDetail from '../pages/productDetail.vue'
 import cartId from '../pages/cart/[id].vue'
 import login from '../pages/login.vue'
 import registerId from '../pages/register/[id].vue'
+import profile from '../pages/profile.vue'
 import { cartGuard, registerGuard } from './guards'
 
 const router = createRouter({
@@ -42,6 +43,11 @@ const router = createRouter({
       name: 'register',
       component: registerId,
       beforeEnter: registerGuard
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: profile
     }
   ]
 })

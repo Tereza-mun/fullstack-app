@@ -19,9 +19,9 @@
                     <Button @click="goToProducts" variant="primary" class="w-full sm:w-auto">
                         {{ t('register.startShopping') }}
                     </Button>
-                    <!-- <Button @click="goToProfile" variant="secondary" class="w-full sm:w-auto">
+                    <Button @click="goToProfile" variant="secondary" class="w-full sm:w-auto">
                         {{ t('register.viewProfile') }}
-                    </Button> -->
+                    </Button>
                 </div>
             </div>
         </div>
@@ -55,8 +55,8 @@ const goToProducts = () => {
     router.push('/')
 }
 
-// const goToProfile = () => {
-//     // TODO: Navigate to profile page when implemented
-//     router.push('/')
-// }
+const goToProfile = () => {
+    // TODO: Navigate to profile page when implemented
+    router.push('/profile')
+}
 </script>

@@ -110,7 +110,7 @@ export const useRegisterStore = defineStore('register', () => {
                 ? formData.value.billingCountry
                 : formData.value.deliveryCountry
 
-            await authService.register({
+            const response = await authService.register({
                 email: sensitiveData.value.email,
                 password: sensitiveData.value.password,
                 firstName: formData.value.firstName,
@@ -130,7 +130,8 @@ export const useRegisterStore = defineStore('register', () => {
             // Clear sensitive data after successful registration
             clearSensitiveData()
 
-            return { success: true }
+            // Return user data for auto-login
+            return { success: true, user: response.user }
         } catch (err: any) {
             error.value = err.message || 'Registration failed'
             return { success: false, error: error.value }

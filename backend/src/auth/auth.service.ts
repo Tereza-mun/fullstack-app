@@ -71,6 +71,10 @@ export class AuthService {
                 deliveryCity: user.deliveryCity,
                 deliveryPostalCode: user.deliveryPostalCode,
                 deliveryCountry: user.deliveryCountry,
+                billingAddress: user.billingAddress,
+                billingCity: user.billingCity,
+                billingPostalCode: user.billingPostalCode,
+                billingCountry: user.billingCountry,
             },
         };
     }
@@ -110,6 +114,10 @@ export class AuthService {
                 deliveryCity: user.deliveryCity,
                 deliveryPostalCode: user.deliveryPostalCode,
                 deliveryCountry: user.deliveryCountry,
+                billingAddress: user.billingAddress,
+                billingCity: user.billingCity,
+                billingPostalCode: user.billingPostalCode,
+                billingCountry: user.billingCountry,
             },
         };
     }
