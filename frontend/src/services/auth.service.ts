@@ -62,6 +62,7 @@ class AuthService {
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include', // Important: send cookies with request
             body: JSON.stringify(credentials),
         });
 
@@ -70,13 +71,12 @@ class AuthService {
             throw new Error(error.message || 'Login failed');
         }
 
-        const data: AuthResponse = await response.json();
+        const data = await response.json();
 
-        // Store token and user data
-        this.setToken(data.access_token);
+        // Store user data (token is now in HttpOnly cookie)
         this.setUser(data.user);
 
-        return data;
+        return { user: data.user, access_token: '' };
     }
 
     async register(registerData: RegisterData): Promise<AuthResponse> {
@@ -85,6 +85,7 @@ class AuthService {
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include', // Important: send cookies with request
             body: JSON.stringify(registerData),
         });
 
@@ -93,26 +94,17 @@ class AuthService {
             throw new Error(error.message || 'Registration failed');
         }
 
-        const data: AuthResponse = await response.json();
+        const data = await response.json();
 
-        // Store token and user data
-        // this.setToken(data.access_token);
-        // this.setUser(data.user);
+        // Store user data (token is now in HttpOnly cookie)
+        this.setUser(data.user);
 
-        return data;
+        return { user: data.user, access_token: '' };
     }
 
     async getProfile() {
-        const token = this.getToken();
-
-        if (!token) {
-            throw new Error('No authentication token found');
-        }
-
         const response = await fetch(`${API_URL}/auth/profile`, {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
+            credentials: 'include', // Important: send cookies with request
         });
 
         if (!response.ok) {
@@ -122,13 +114,13 @@ class AuthService {
         return response.json();
     }
 
-    logout() {
-        localStorage.removeItem('auth_token');
-        localStorage.removeItem('user');
-    }
+    async logout() {
+        await fetch(`${API_URL}/auth/logout`, {
+            method: 'POST',
+            credentials: 'include', // Important: send cookies with request
+        });
 
-    getToken(): string | null {
-        return localStorage.getItem('auth_token');
+        localStorage.removeItem('user');
     }
 
     getUser() {
@@ -137,11 +129,7 @@ class AuthService {
     }
 
     isAuthenticated(): boolean {
-        return !!this.getToken();
-    }
-
-    private setToken(token: string) {
-        localStorage.setItem('auth_token', token);
+        return !!this.getUser();
     }
 
     private setUser(user: any) {
