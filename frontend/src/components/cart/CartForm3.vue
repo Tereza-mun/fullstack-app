@@ -63,7 +63,7 @@
                     </div>
                     <div class="flex justify-between">
                         <span class="font-semibold">{{ t('deliveryInfo.country') }}:</span>
-                        <span>{{ cartStore.formData.country }}</span>
+                        <span>{{ t(`country.${cartStore.formData.country?.toLowerCase?.()}`) }}</span>
                     </div>
                 </div>
             </div>
