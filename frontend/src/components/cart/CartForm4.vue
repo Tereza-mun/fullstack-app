@@ -1,19 +1,11 @@
 <template>
     <div class="flex flex-col items-center justify-center px-4">
         <!-- Success Header -->
-        <div class="flex items-center gap-4 mb-8">
-            <div class="flex-shrink-0">
-                <CheckIcon />
-            </div>
-            <div class="text-left">
-                <h2 class="font-serif text-2xl md:text-3xl font-bold text-primary-dark leading-tight">
-                    {{ t('confirmation.title') }}
-                </h2>
-                <p class="text-base text-gray-600 mt-1">
-                    {{ t('confirmation.thankYou') }}
-                </p>
-            </div>
-        </div>
+        <SuccessHeader
+            :title="t('confirmation.title')"
+            :subtitle="t('confirmation.thankYou')"
+            class="mb-8"
+        />
 
         <!-- Order Number -->
         <div v-if="orderId" class="bg-white rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.08)] p-6 mb-8 w-full max-w-md">
@@ -56,7 +48,7 @@ import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
-import CheckIcon from '../atoms/CheckIcon.vue'
+import SuccessHeader from '../molecules/SuccessHeader.vue'
 
 const router = useRouter()
 const route = useRoute()

@@ -1,19 +1,21 @@
 <template>
     <div class="max-w-2xl mx-auto">
-        <div class="bg-white rounded-lg shadow-lg p-6 md:p-8 text-center">
-            <div class="mb-6">
-                <!-- Email Icon -->
-                <EmailIcon class="mb-4" />
+        <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
+            <div class="flex flex-col items-center">
+                <!-- Success Header with Email Icon -->
+                <SuccessHeader
+                    :title="t('register.verifyEmailTitle')"
+                    :subtitle="t('register.verifyEmailMessage')"
+                    layout="centered"
+                    class="mb-6"
+                >
+                    <template #icon>
+                        <EmailIcon />
+                    </template>
+                </SuccessHeader>
 
-                <h2 class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-primary-dark tracking-tight mb-4">
-                    {{ t('register.verifyEmailTitle') }}
-                </h2>
-
-                <p class="text-lg text-gray-700 mb-4">
-                    {{ t('register.verifyEmailMessage') }}
-                </p>
-
-                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                <!-- Warning Box -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 w-full">
                     <div class="flex items-start">
                         <WarningIcon />
                         <p class="text-sm text-yellow-800">
@@ -22,7 +24,8 @@
                     </div>
                 </div>
 
-                <div class="text-sm text-gray-600 mb-6">
+                <!-- Resend Email -->
+                <div class="text-sm text-gray-600 text-center">
                     <p class="mb-4">{{ t('register.didntReceiveEmail') }}</p>
                     <Button
                         @click="resendEmail"
@@ -44,6 +47,7 @@ import { useRegisterStore } from '../../stores/register'
 import EmailIcon from '../atoms/EmailIcon.vue'
 import WarningIcon from '../atoms/WarningIcon.vue'
 import Button from '../atoms/Button.vue'
+import SuccessHeader from '../molecules/SuccessHeader.vue'
 
 const { t } = useI18n()
 const registerStore = useRegisterStore()
