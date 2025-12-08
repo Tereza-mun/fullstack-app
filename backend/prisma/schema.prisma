@@ -25,7 +25,8 @@ id Int @id @default(autoincrement())
 firstName String
 lastName String
 customerEmail String
-phone String?
+phonePrefix String?
+phoneNumber String?
 address String?
 city String?
 postalCode String?

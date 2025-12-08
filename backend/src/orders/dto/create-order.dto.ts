@@ -33,10 +33,17 @@ export class CreateOrderDto {
 
   @IsOptional()
   @IsString()
-  @Matches(/^[\d+]+$/, {
-    message: 'Phone number can only contain digits and the + character',
+  @Matches(/^\+\d+$/, {
+    message: 'Phone prefix must start with + followed by digits',
   })
-  phone?: string;
+  phonePrefix?: string;
+
+  @IsOptional()
+  @IsString()
+  @Matches(/^\d+$/, {
+    message: 'Phone number can only contain digits',
+  })
+  phoneNumber?: string;
 
   @IsOptional()
   @IsString()

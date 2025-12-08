@@ -228,5 +228,21 @@ export const useCartStore = defineStore('cart', () => {
         submitOrder
     }
 }, {
-    persist: true
+    persist: {
+        pick: [
+            'items',
+            'formData.firstName',
+            'formData.lastName',
+            'formData.customerEmail',
+            'formData.phonePrefix',
+            'formData.phoneNumber',
+            'formData.address',
+            'formData.city',
+            'formData.postalCode',
+            'formData.country',
+            'formData.notes',
+            'formData.deliveryMethod',
+            'formData.paymentMethod'
+        ]
+    }
 })
