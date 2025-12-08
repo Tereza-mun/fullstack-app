@@ -58,6 +58,7 @@ import Input from '../components/atoms/Input.vue'
 import { authService } from '../services/auth.service'
 import { useAlertStore } from '../stores/alert'
 import { useAuthStore } from '../stores/auth'
+import { useCartStore } from '../stores/cart'
 
 const { t } = useI18n()
 const router = useRouter()
@@ -68,6 +69,7 @@ const loading = ref(false)
 const error = ref('')
 const alertStore = useAlertStore()
 const authStore = useAuthStore()
+const cartStore = useCartStore()
 
 const handleSubmit = async () => {
     loading.value = true
@@ -81,6 +83,9 @@ const handleSubmit = async () => {
 
         // Update auth store with user data
         authStore.setUser(response.user)
+
+        // Prefill cart form with user data
+        cartStore.prefillFromUserData(response.user)
 
         alertStore.showAlert({
             message: t('login.success'),

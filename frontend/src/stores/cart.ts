@@ -184,6 +184,57 @@ export const useCartStore = defineStore('cart', () => {
         }
     }
 
+    interface UserData {
+        firstName?: string
+        lastName?: string
+        email?: string
+        phonePrefix?: string
+        phoneNumber?: string
+        deliveryAddress?: string
+        deliveryCity?: string
+        deliveryPostalCode?: string
+        deliveryCountry?: string
+    }
+
+    const prefillFromUserData = (user: UserData | null, overwriteExisting = false) => {
+        if (!user) return
+
+        const updates: Partial<OrderFormData> = {}
+
+        // Only fill fields that are empty (unless overwriteExisting is true)
+        if (user.firstName && (overwriteExisting || !formData.value.firstName)) {
+            updates.firstName = user.firstName
+        }
+        if (user.lastName && (overwriteExisting || !formData.value.lastName)) {
+            updates.lastName = user.lastName
+        }
+        if (user.email && (overwriteExisting || !formData.value.customerEmail)) {
+            updates.customerEmail = user.email
+        }
+        if (user.phonePrefix && (overwriteExisting || formData.value.phonePrefix === '+420')) {
+            updates.phonePrefix = user.phonePrefix
+        }
+        if (user.phoneNumber && (overwriteExisting || !formData.value.phoneNumber)) {
+            updates.phoneNumber = user.phoneNumber
+        }
+        if (user.deliveryAddress && (overwriteExisting || !formData.value.address)) {
+            updates.address = user.deliveryAddress
+        }
+        if (user.deliveryCity && (overwriteExisting || !formData.value.city)) {
+            updates.city = user.deliveryCity
+        }
+        if (user.deliveryPostalCode && (overwriteExisting || !formData.value.postalCode)) {
+            updates.postalCode = user.deliveryPostalCode
+        }
+        if (user.deliveryCountry && (overwriteExisting || !formData.value.country)) {
+            updates.country = user.deliveryCountry
+        }
+
+        if (Object.keys(updates).length > 0) {
+            updateFormData(updates)
+        }
+    }
+
     const getCompleteOrderData = (): CompleteOrderData => {
         return {
             ...formData.value,
@@ -224,6 +275,7 @@ export const useCartStore = defineStore('cart', () => {
         clearCart,
         updateFormData,
         resetFormData,
+        prefillFromUserData,
         getCompleteOrderData,
         submitOrder
     }
