@@ -51,13 +51,6 @@
                     />
                     <span class="text-lg font-semibold">{{ locale === 'en' ? 'CS' : 'EN' }}</span>
                 </Button>
-
-                 <!-- <span v-if="user" class="hidden md:block text-white font-medium text-sm">
-                        {{ user.firstName }} {{ user.lastName }}
-                    </span>
-                    <Button v-if="user" @click="logout" :variant="ButtonVariant.SECONDARY" class="text-sm">
-                        {{ t('header.logout') }}
-                    </Button> -->
             </div>
         </div>
     </header>
