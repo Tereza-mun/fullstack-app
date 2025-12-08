@@ -440,5 +440,10 @@ export default {
         resendButton: 'Send Verification Email',
         sending: 'Sending...',
         resendSuccess: 'Verification email has been sent. Please check your inbox.',
+    },
+    notFound: {
+        title: 'Page Not Found',
+        description: 'Sorry, the page you are looking for does not exist or has been moved.',
+        backHome: 'Back to Home'
     }
 }

@@ -440,5 +440,10 @@ export default {
         resendButton: 'Odeslat ověřovací email',
         sending: 'Odesílání...',
         resendSuccess: 'Ověřovací email byl úspěšně odeslán. Zkontrolujte svou emailovou schránku.',
+    },
+    notFound: {
+        title: 'Stránka Nenalezena',
+        description: 'Omlouváme se, ale stránka, kterou hledáte, neexistuje nebo byla přesunuta.',
+        backHome: 'Zpět na Hlavní Stránku'
     }
 }

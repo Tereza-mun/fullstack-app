@@ -6,6 +6,7 @@ import login from '../pages/login.vue'
 import registerId from '../pages/register/[id].vue'
 import profile from '../pages/profile.vue'
 import verifyEmail from '../pages/verifyEmail.vue'
+import notFound from '../pages/notFound.vue'
 import { cartGuard, registerGuard, authGuard } from './guards'
 
 const router = createRouter({
@@ -55,6 +56,11 @@ const router = createRouter({
       path: '/verify-email',
       name: 'verifyEmail',
       component: verifyEmail
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'notFound',
+      component: notFound
     }
   ]
 })
