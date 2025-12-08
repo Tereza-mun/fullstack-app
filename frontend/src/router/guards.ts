@@ -1,6 +1,7 @@
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router'
 import { useRegisterStore } from '../stores/register'
 import { useCartStore } from '../stores/cart'
+import { useAuthStore } from '../stores/auth'
 
 /**
  * Route guard for registration flow
@@ -96,4 +97,23 @@ export const cartGuard = (
 
     // Invalid step ID, redirect to step 1
     next('/cart/1')
+}
+
+/**
+ * Route guard for authentication
+ * Ensures user is authenticated before accessing protected routes
+ */
+export const authGuard = (
+    _to: RouteLocationNormalized,
+    _from: RouteLocationNormalized,
+    next: NavigationGuardNext
+) => {
+    const authStore = useAuthStore()
+    authStore.initAuth()
+
+    if (authStore.isAuthenticated) {
+        next()
+    } else {
+        next('/login')
+    }
 }

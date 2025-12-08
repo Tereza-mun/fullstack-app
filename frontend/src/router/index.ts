@@ -5,7 +5,7 @@ import cartId from '../pages/cart/[id].vue'
 import login from '../pages/login.vue'
 import registerId from '../pages/register/[id].vue'
 import profile from '../pages/profile.vue'
-import { cartGuard, registerGuard } from './guards'
+import { cartGuard, registerGuard, authGuard } from './guards'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -47,7 +47,8 @@ const router = createRouter({
     {
       path: '/profile',
       name: 'profile',
-      component: profile
+      component: profile,
+      beforeEnter: authGuard
     }
   ]
 })
