@@ -90,14 +90,18 @@ const handleSubmit = async () => {
         // After successful login, redirect to home
         router.push('/')
     } catch (err: any) {
-        // Only show rate limiting error in the form
+        // Handle different error types
+        let alertMessage = t('login.error')
+
         if (err.message === 'TOO_MANY_REQUESTS') {
             error.value = t('login.rateLimitError')
+            alertMessage = t('login.rateLimitError')
+        } else if (err.message?.includes('verify your email')) {
+            error.value = t('login.emailNotVerified')
+            alertMessage = t('login.emailNotVerified')
+        } else {
+            error.value = t('login.error')
         }
-        // Show all errors in alert
-        const alertMessage = err.message === 'TOO_MANY_REQUESTS'
-            ? t('login.rateLimitError')
-            : t('login.error')
 
         alertStore.showAlert({
             message: alertMessage,
