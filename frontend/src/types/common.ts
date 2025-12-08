@@ -15,7 +15,8 @@ export enum ButtonVariant {
     SCROLL_TO_TOP = 'scrollToTop',
     ADD_TO_CART = 'addToCart',
     REMOVE_FROM_CART = 'removeFromCart',
-    LINK = 'link'
+    LINK = 'link',
+    CLOSE = 'close'
 }
 
 export enum ButtonTag {
