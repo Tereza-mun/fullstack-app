@@ -1,15 +1,18 @@
-import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException, BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
+import { MailService } from '../mail/mail.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthService {
     constructor(
         private prisma: PrismaService,
         private jwtService: JwtService,
+        private mailService: MailService,
     ) {}
 
     async checkEmailExists(email: string) {
@@ -48,6 +51,11 @@ export class AuthService {
         // Hash password with bcrypt (salt rounds: 12 for strong security)
         const hashedPassword = await bcrypt.hash(password, 12);
 
+        // Generate email verification token
+        const verificationToken = crypto.randomBytes(32).toString('hex');
+        const verificationExpires = new Date();
+        verificationExpires.setHours(verificationExpires.getHours() + 24); // 24 hours
+
         // Create user
         const user = await this.prisma.user.create({
             data: {
@@ -65,22 +73,21 @@ export class AuthService {
                 billingCity,
                 billingPostalCode,
                 billingCountry,
+                isEmailVerified: false,
+                emailVerificationToken: verificationToken,
+                emailVerificationExpires: verificationExpires,
             },
         });
 
-        // Generate JWT tokens
-        const accessToken = this.generateAccessToken(user.id, user.email);
-        const refreshToken = this.generateRefreshToken(user.id, user.email);
+        // Send verification email
+        await this.mailService.sendVerificationEmail(user.email, verificationToken);
 
-        // Store refresh token in database
-        await this.prisma.user.update({
-            where: { id: user.id },
-            data: { refreshToken },
-        });
+        // Don't generate tokens - user must verify email first
+        // No auto-login during registration
 
         return {
-            access_token: accessToken,
-            refresh_token: refreshToken,
+            access_token: '', // No token until email verified
+            refresh_token: '', // No token until email verified
             user: {
                 id: user.id,
                 email: user.email,
@@ -120,6 +127,11 @@ export class AuthService {
 
         if (!isPasswordValid) {
             throw new UnauthorizedException('Invalid credentials');
+        }
+
+        // Check if email is verified
+        if (!user.isEmailVerified) {
+            throw new UnauthorizedException('Please verify your email address before logging in. Check your inbox for the verification link.');
         }
 
         // Generate JWT tokens
@@ -220,5 +232,71 @@ export class AuthService {
         } catch (error) {
             throw new UnauthorizedException('Invalid or expired refresh token');
         }
+    }
+
+    async verifyEmail(token: string) {
+        const user = await this.prisma.user.findFirst({
+            where: {
+                emailVerificationToken: token,
+                emailVerificationExpires: {
+                    gte: new Date(),
+                },
+            },
+        });
+
+        if (!user) {
+            throw new BadRequestException('Invalid or expired verification token');
+        }
+
+        // Update user to verified
+        await this.prisma.user.update({
+            where: { id: user.id },
+            data: {
+                isEmailVerified: true,
+                emailVerificationToken: null,
+                emailVerificationExpires: null,
+            },
+        });
+
+        // Send welcome email
+        await this.mailService.sendWelcomeEmail(user.email, user.firstName);
+
+        return { message: 'Email verified successfully' };
+    }
+
+    async resendVerificationEmail(email: string) {
+        const normalizedEmail = email.toLowerCase();
+
+        const user = await this.prisma.user.findUnique({
+            where: { email: normalizedEmail },
+        });
+
+        if (!user) {
+            // Don't reveal if user exists
+            return { message: 'If the email exists, a verification link has been sent' };
+        }
+
+        if (user.isEmailVerified) {
+            throw new BadRequestException('Email is already verified');
+        }
+
+        // Generate new verification token
+        const verificationToken = crypto.randomBytes(32).toString('hex');
+        const verificationExpires = new Date();
+        verificationExpires.setHours(verificationExpires.getHours() + 24);
+
+        // Update user with new token
+        await this.prisma.user.update({
+            where: { id: user.id },
+            data: {
+                emailVerificationToken: verificationToken,
+                emailVerificationExpires: verificationExpires,
+            },
+        });
+
+        // Send verification email
+        await this.mailService.sendVerificationEmail(user.email, verificationToken);
+
+        return { message: 'Verification email sent' };
     }
 }

@@ -171,6 +171,7 @@ export default {
         loading: 'Přihlašování...',
         error: 'Přihlášení selhalo. Zkontrolujte prosím své přihlašovací údaje.',
         rateLimitError: 'Příliš mnoho pokusů o přihlášení. Počkejte prosím minutu a zkuste to znovu.',
+        emailNotVerified: 'Prosím ověřte svou emailovou adresu před přihlášením. Zkontrolujte svou emailovou schránku pro ověřovací odkaz.',
         success: 'Byli jste úspěšně přihlášeni!',
         noAccount: 'Nemáte účet?',
         register: 'Registrujte se zde',
@@ -236,7 +237,15 @@ export default {
             addressInfo: 'Dodací a Fakturační Adresa',
             confirmation: 'Potvrzení'
         },
-        emailAlreadyExists: 'Tento email je již registrován. Použijte prosím jiný email nebo se přihlaste ke svému stávajícímu účtu.'
+        emailAlreadyExists: 'Tento email je již registrován. Použijte prosím jiný email nebo se přihlaste ke svému stávajícímu účtu.',
+        verifyEmailTitle: 'Ověřte svou emailovou adresu',
+        verifyEmailMessage: 'Ověřovací odkaz byl zaslán na vaši emailovou adresu. Klikněte na odkaz pro aktivaci účtu.',
+        checkSpamFolder: 'Pokud nevidíte email v inboxu, zkontrolujte prosím spamovou složku.',
+        didntReceiveEmail: 'Nepřišel vám email?',
+        resendEmail: 'Znovu odeslat ověření',
+        emailResent: '✓ Email odeslán!',
+        goToLogin: 'Přihlásit se',
+        backToHome: 'Zpět na Hlavní Stránku'
     },
     profile: {
         title: 'Můj Profil',
@@ -413,5 +422,21 @@ export default {
         na: 'Namibie',
         ao: 'Angola',
         bw: 'Botswana',
+    },
+    verify: {
+        verifying: 'Ověřování vašeho emailu...',
+        success: 'Emailová adresa byla úspěšně ověřena!',
+        successMessage: 'Vaše emailová adresa byla úspěšně ověřena. Nyní se můžete přihlásit k svému účtu.',
+        goToLogin: 'Přihlásit se',
+        error: 'Ověření emailové adresy selhalo',
+        noToken: 'Nebyl poskytnut žádný ověřovací token',
+        invalidToken: 'Neplatný nebo vypršelý ověřovací token',
+        networkError: 'Síťová chyba. Zkuste to prosím znovu.',
+        backToLogin: 'Zpět na Přihlášení',
+        resendLink: 'Znovu odeslat ověřovací email',
+        resendTitle: 'Znovu odeslat ověřovací email',
+        resendButton: 'Odeslat ověřovací email',
+        sending: 'Odesílání...',
+        resendSuccess: 'Ověřovací email byl úspěšně odeslán. Zkontrolujte svou emailovou schránku.',
     }
 }

@@ -171,6 +171,7 @@ export default {
         loading: 'Signing in...',
         error: 'Login failed. Please check your credentials.',
         rateLimitError: 'Too many login attempts. Please wait a minute and try again.',
+        emailNotVerified: 'Please verify your email address before logging in. Check your inbox for the verification link.',
         success: 'You have been successfully logged in!',
         noAccount: "Don't have an account?",
         register: 'Register here',
@@ -237,7 +238,15 @@ export default {
             addressInfo: 'Delivery and Billing Address',
             confirmation: 'Confirmation'
         },
-        emailAlreadyExists: 'This email is already registered. Please use a different email or login to your existing account.'
+        emailAlreadyExists: 'This email is already registered. Please use a different email or login to your existing account.',
+        verifyEmailTitle: 'Check Your Email',
+        verifyEmailMessage: 'We have sent you a verification email. Please check your inbox and click the verification link to activate your account.',
+        checkSpamFolder: 'If you don\'t see the email in your inbox, please check your spam or junk folder.',
+        didntReceiveEmail: 'Didn\'t receive the email?',
+        resendEmail: 'Resend verification email',
+        emailResent: '✓ Email sent!',
+        goToLogin: 'Go to Login',
+        backToHome: 'Back to Home'
     },
     profile: {
         title: 'My Profile',
@@ -413,5 +422,21 @@ export default {
         mw: 'Malawi',
         mz: 'Mozambique',
         na: 'Namibia',
+    },
+    verify: {
+        verifying: 'Verifying your email...',
+        success: 'Email Verified!',
+        successMessage: 'Your email has been successfully verified. You can now log in to your account.',
+        goToLogin: 'Go to Login',
+        error: 'Verification Failed',
+        noToken: 'No verification token provided',
+        invalidToken: 'Invalid or expired verification token',
+        networkError: 'Network error. Please try again.',
+        backToLogin: 'Back to Login',
+        resendLink: 'Resend verification email',
+        resendTitle: 'Resend Verification Email',
+        resendButton: 'Send Verification Email',
+        sending: 'Sending...',
+        resendSuccess: 'Verification email has been sent. Please check your inbox.',
     }
 }

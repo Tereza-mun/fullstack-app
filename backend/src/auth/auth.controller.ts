@@ -1,9 +1,11 @@
-import { Controller, Post, Body, UseGuards, Get, Request, Response } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get, Request, Response, Query } from '@nestjs/common';
 import { Response as ExpressResponse } from 'express';
 import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { VerifyEmailDto } from './dto/verify-email.dto';
+import { ResendVerificationDto } from './dto/resend-verification.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
@@ -21,23 +23,18 @@ export class AuthController {
     async register(@Body() registerDto: RegisterDto, @Response() res: ExpressResponse) {
         const result = await this.authService.register(registerDto);
 
-        // Set JWT tokens in HttpOnly cookies
-        res.cookie('access_token', result.access_token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 15 * 60 * 1000, // 15 minutes
-        });
+        // Don't set tokens - user must verify email first
+        // No auto-login during registration
 
-        res.cookie('refresh_token', result.refresh_token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            maxAge: 24 * 60 * 60 * 1000, // 24 hours
+        // Return success message only
+        return res.json({
+            message: 'Registration successful. Please check your email to verify your account.',
+            user: {
+                email: result.user.email,
+                firstName: result.user.firstName,
+                lastName: result.user.lastName
+            }
         });
-
-        // Return user data without tokens
-        return res.json({ user: result.user });
     }
 
     @Post('login')
@@ -103,5 +100,17 @@ export class AuthController {
     @Get('profile')
     async getProfile(@Request() req) {
         return req.user;
+    }
+
+    @Post('verify-email')
+    @Throttle({ default: { limit: 5, ttl: 60000 } })
+    async verifyEmail(@Body() verifyEmailDto: VerifyEmailDto) {
+        return this.authService.verifyEmail(verifyEmailDto.token);
+    }
+
+    @Post('resend-verification')
+    @Throttle({ default: { limit: 3, ttl: 60000 } })
+    async resendVerification(@Body() resendDto: ResendVerificationDto) {
+        return this.authService.resendVerificationEmail(resendDto.email);
     }
 }

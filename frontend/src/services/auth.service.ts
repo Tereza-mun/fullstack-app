@@ -102,8 +102,8 @@ class AuthService {
 
         const data = await response.json();
 
-        // Store user data (token is now in HttpOnly cookie)
-        this.setUser(data.user);
+        // Don't store user data - no auto-login during registration
+        // User must verify email first before logging in
 
         return { user: data.user, access_token: '' };
     }
