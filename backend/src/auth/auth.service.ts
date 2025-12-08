@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException, ConflictException, BadRequestException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, ConflictException, BadRequestException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service';
 import { MailService } from '../mail/mail.service';
@@ -9,6 +9,8 @@ import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthService {
+    private readonly logger = new Logger(AuthService.name);
+
     constructor(
         private prisma: PrismaService,
         private jwtService: JwtService,
@@ -56,31 +58,48 @@ export class AuthService {
         const verificationExpires = new Date();
         verificationExpires.setHours(verificationExpires.getHours() + 24); // 24 hours
 
-        // Create user
-        const user = await this.prisma.user.create({
-            data: {
-                email: normalizedEmail,
-                password: hashedPassword,
-                firstName,
-                lastName,
-                phonePrefix,
-                phoneNumber,
-                deliveryAddress,
-                deliveryCity,
-                deliveryPostalCode,
-                deliveryCountry,
-                billingAddress,
-                billingCity,
-                billingPostalCode,
-                billingCountry,
-                isEmailVerified: false,
-                emailVerificationToken: verificationToken,
-                emailVerificationExpires: verificationExpires,
-            },
-        });
+        let user;
 
-        // Send verification email
-        await this.mailService.sendVerificationEmail(user.email, verificationToken);
+        try {
+            // Create user
+            user = await this.prisma.user.create({
+                data: {
+                    email: normalizedEmail,
+                    password: hashedPassword,
+                    firstName,
+                    lastName,
+                    phonePrefix,
+                    phoneNumber,
+                    deliveryAddress,
+                    deliveryCity,
+                    deliveryPostalCode,
+                    deliveryCountry,
+                    billingAddress,
+                    billingCity,
+                    billingPostalCode,
+                    billingCountry,
+                    isEmailVerified: false,
+                    emailVerificationToken: verificationToken,
+                    emailVerificationExpires: verificationExpires,
+                },
+            });
+
+            // Send verification email - CRITICAL: If this fails, rollback user creation
+            await this.mailService.sendVerificationEmail(user.email, verificationToken);
+        } catch (error) {
+            // If email sending failed and user was created, delete the user
+            if (user) {
+                await this.prisma.user.delete({
+                    where: { id: user.id },
+                }).catch(() => {
+                    // Log but don't throw - already in error state
+                    this.logger.error('Failed to rollback user creation after email error');
+                });
+            }
+
+            // Re-throw the error
+            throw new Error('Failed to send verification email. Please try again or contact support.');
+        }
 
         // Don't generate tokens - user must verify email first
         // No auto-login during registration
