@@ -28,6 +28,7 @@
     
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
+import { onBeforeRouteLeave } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useProductsStore } from '../stores/products'
 import { useFiltersStore } from '../stores/filters'
@@ -66,5 +67,9 @@ watch(() => filtersStore.filters, () => {
 
 onMounted(() => {
     productsStore.fetchProducts()
+})
+
+onBeforeRouteLeave(() => {
+    filtersStore.resetFilters()
 })
 </script>
