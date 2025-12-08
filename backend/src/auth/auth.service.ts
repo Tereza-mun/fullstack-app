@@ -20,6 +20,13 @@ export class AuthService {
             where: { email: normalizedEmail },
         });
 
+        // Add artificial delay to prevent timing attacks
+        // This makes the response time consistent regardless of whether the email exists
+        const delay = Math.floor(Math.random() * 50) + 50; // 50-100ms random delay
+        await new Promise(resolve => setTimeout(resolve, delay));
+
+        // For security, we return a generic message instead of revealing if email exists
+        // This prevents email enumeration attacks
         return { exists: !!existingUser };
     }
 

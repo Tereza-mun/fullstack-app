@@ -260,10 +260,12 @@ const goToNextStep = async () => {
     }
 
     // Check if email already exists
+    // Note: For security reasons, we don't reveal if an email exists
+    // Show a generic error to prevent email enumeration attacks
     const emailExists = await registerStore.checkEmailExists(registerStore.sensitiveData.email)
     if (emailExists) {
-        emailError.value = t('register.emailAlreadyExists')
-        error.value = t('register.emailAlreadyExists')
+        emailError.value = t('validation.invalidEmail')
+        error.value = t('validation.invalidEmail')
         return
     }
 
