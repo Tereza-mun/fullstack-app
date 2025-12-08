@@ -57,6 +57,13 @@ export const useRegisterStore = defineStore('register', () => {
         error.value = ''
     }
 
+    // Clear all persisted registration data from storage
+    const clearPersistedData = () => {
+        resetForm()
+        // Remove persisted store data from localStorage
+        localStorage.removeItem('register')
+    }
+
     // Validation functions for step access control
     const isStep1Complete = () => {
         return !!(
@@ -130,8 +137,8 @@ export const useRegisterStore = defineStore('register', () => {
                 billingCountry: billingCountry || undefined,
             })
 
-            // Clear sensitive data after successful registration
-            clearSensitiveData()
+            // Clear all persisted registration data after successful submission
+            clearPersistedData()
 
             // Return user data for auto-login
             return { success: true, user: response.user }
@@ -161,6 +168,7 @@ export const useRegisterStore = defineStore('register', () => {
         loading,
         error,
         resetForm,
+        clearPersistedData,
         clearSensitiveData,
         checkEmailExists,
         submitRegistration,
