@@ -3,10 +3,10 @@
         <div
             v-if="isOpen"
             class="fixed inset-0 z-50 lg:hidden"
-            @click.self="$emit('close')"
+            @click.self="handleClose"
         >
             <!-- Backdrop -->
-            <div class="absolute inset-0 bg-black/50" @click="$emit('close')"></div>
+            <div class="absolute inset-0 bg-black/50" @click="handleClose"></div>
 
             <!-- Drawer Content -->
             <div class="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl max-h-[85vh] overflow-y-auto shadow-xl">
@@ -15,7 +15,7 @@
                     <Button
                         :variant="ButtonVariant.CLOSE"
                         :aria-label="t('filters.closeFilters')"
-                        @click="$emit('close')"
+                        @click="handleClose"
                     >
                         <Close />
                     </Button>
@@ -72,7 +72,7 @@
                             {{ t('filters.resetFilters') }}
                         </Button>
                         <Button
-                            @click="$emit('apply', localFilters)"
+                            @click="handleClose"
                             :variant="ButtonVariant.PRIMARY"
                             class="flex-1"
                         >
@@ -132,6 +132,11 @@ const handleReset = () => {
         maxPrice: null,
         sortBy: ''
     }
+}
+
+const handleClose = () => {
+    emit('apply', localFilters.value)
+    emit('close')
 }
 </script>
 
