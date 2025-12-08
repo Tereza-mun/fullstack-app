@@ -24,102 +24,95 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- Order Review -->
-        <div class="lg:col-span-2 space-y-6">
-            <!-- Customer Information -->
-            <div class="bg-white rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.08)] p-6">
-                <h3 class="text-xl font-bold text-primary-dark mb-4">{{ t('deliveryInfo.customerInfo') }}</h3>
-                <div class="space-y-3 text-gray-700">
-                    <div class="flex justify-between">
-                        <span class="font-semibold">{{ t('deliveryInfo.name') }}:</span>
-                        <span>{{ cartStore.formData.firstName }} {{ cartStore.formData.lastName }}</span>
+            <!-- Order Review -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Customer Information -->
+                <OrderReviewSection :title="t('deliveryInfo.customerInfo')">
+                    <OrderReviewField 
+                        :label="t('deliveryInfo.name')" 
+                        :value="fullName" 
+                    />
+                    <OrderReviewField 
+                        :label="t('deliveryInfo.email')" 
+                        :value="cartStore.formData.customerEmail" 
+                    />
+                    <OrderReviewField 
+                        :label="t('deliveryInfo.phone')" 
+                        :value="formattedPhone" 
+                    />
+                </OrderReviewSection>
+
+                <!-- Delivery Address -->
+                <OrderReviewSection :title="t('deliveryInfo.addressInfo')">
+                    <OrderReviewField 
+                        :label="t('deliveryInfo.address')" 
+                        :value="cartStore.formData.address" 
+                    />
+                    <OrderReviewField 
+                        :label="t('deliveryInfo.city')" 
+                        :value="cartStore.formData.city" 
+                    />
+                    <OrderReviewField 
+                        :label="t('deliveryInfo.postalCode')" 
+                        :value="cartStore.formData.postalCode" 
+                    />
+                    <OrderReviewField 
+                        :label="t('deliveryInfo.country')" 
+                        :value="formattedCountry" 
+                    />
+                </OrderReviewSection>
+
+                <!-- Delivery & Payment Methods -->
+                <OrderReviewSection :title="t('deliveryInfo.deliveryMethod')">
+                    <OrderReviewField 
+                        :label="t('deliveryInfo.deliveryMethod')" 
+                        :value="formattedDeliveryMethod" 
+                    />
+                    <OrderReviewField 
+                        :label="t('deliveryInfo.paymentMethod')" 
+                        :value="formattedPaymentMethod" 
+                    />
+                </OrderReviewSection>
+
+                <!-- Order Notes -->
+                <div v-if="cartStore.formData.notes" class="bg-white rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.08)] p-6">
+                    <h3 class="text-xl font-bold text-primary-dark mb-4">{{ t('deliveryInfo.notes') }}</h3>
+                    <p class="text-gray-700">{{ cartStore.formData.notes }}</p>
+                </div>
+
+                <!-- Cart Items -->
+                <div class="bg-white rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
+                    <div class="p-6 border-b">
+                        <h3 class="text-xl font-bold text-primary-dark">{{ t('deliveryInfo.orderSummary') }}</h3>
                     </div>
-                    <div class="flex justify-between">
-                        <span class="font-semibold">{{ t('deliveryInfo.email') }}:</span>
-                        <span>{{ cartStore.formData.customerEmail }}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="font-semibold">{{ t('deliveryInfo.phone') }}:</span>
-                        <span>{{ cartStore.formData.phonePrefix }}{{ cartStore.formData.phoneNumber }}</span>
-                    </div>
+                    <CartItem v-for="item in cartStore.items" :key="item.id" :item="item" :readonly="true" />
                 </div>
             </div>
 
-            <!-- Delivery Address -->
-            <div class="bg-white rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.08)] p-6">
-                <h3 class="text-xl font-bold text-primary-dark mb-4">{{ t('deliveryInfo.addressInfo') }}</h3>
-                <div class="space-y-3 text-gray-700">
-                    <div class="flex justify-between">
-                        <span class="font-semibold">{{ t('deliveryInfo.address') }}:</span>
-                        <span>{{ cartStore.formData.address }}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="font-semibold">{{ t('deliveryInfo.city') }}:</span>
-                        <span>{{ cartStore.formData.city }}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="font-semibold">{{ t('deliveryInfo.postalCode') }}:</span>
-                        <span>{{ cartStore.formData.postalCode }}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="font-semibold">{{ t('deliveryInfo.country') }}:</span>
-                        <span>{{ t(`country.${cartStore.formData.country?.toLowerCase?.()}`) }}</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Delivery & Payment Methods -->
-            <div class="bg-white rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.08)] p-6">
-                <h3 class="text-xl font-bold text-primary-dark mb-4">{{ t('deliveryInfo.deliveryMethod') }}</h3>
-                <div class="space-y-3 text-gray-700">
-                    <div class="flex justify-between">
-                        <span class="font-semibold">{{ t('deliveryInfo.deliveryMethod') }}:</span>
-                        <span>{{ cartStore.formData.deliveryMethod === 'delivery' ? t('deliveryInfo.delivery') : t('deliveryInfo.pickup') }}</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="font-semibold">{{ t('deliveryInfo.paymentMethod') }}:</span>
-                        <span>{{ cartStore.formData.paymentMethod === 'cash' ? t('deliveryInfo.cash') : t('deliveryInfo.bankTransfer') }}</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Order Notes -->
-            <div v-if="cartStore.formData.notes" class="bg-white rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.08)] p-6">
-                <h3 class="text-xl font-bold text-primary-dark mb-4">{{ t('deliveryInfo.notes') }}</h3>
-                <p class="text-gray-700">{{ cartStore.formData.notes }}</p>
-            </div>
-
-            <!-- Cart Items -->
-            <div class="bg-white rounded-xl shadow-[0_2px_12px_rgba(0,0,0,0.08)]">
-                <div class="p-6 border-b">
-                    <h3 class="text-xl font-bold text-primary-dark">{{ t('deliveryInfo.orderSummary') }}</h3>
-                </div>
-                <CartItem v-for="item in cartStore.items" :key="item.id" :item="item" :readonly="true" />
-            </div>
-        </div>
-
-        <!-- Order Summary with Actions -->
-        <OrderSummary
-            :items="cartStore.items"
-            :subtotal-price="cartStore.subtotalPrice"
-            :delivery-cost="cartStore.deliveryCost"
-            :total-price="cartStore.totalPrice"
-            :total-items="cartStore.totalItems"
-            :submit-button-text="t('deliveryInfo.placeOrder')"
-            :is-submitting="isSubmitting"
-            @submit="submitOrder"
-            @back="goBack"
-        />
+            <!-- Order Summary with Actions -->
+            <OrderSummary
+                :items="cartStore.items"
+                :subtotal-price="cartStore.subtotalPrice"
+                :delivery-cost="cartStore.deliveryCost"
+                :total-price="cartStore.totalPrice"
+                :total-items="cartStore.totalItems"
+                :submit-button-text="t('deliveryInfo.placeOrder')"
+                :is-submitting="isSubmitting"
+                @submit="submitOrder"
+                @back="goBack"
+            />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useCartStore } from '../../stores/cart'
 import Button from '../atoms/Button.vue'
+import OrderReviewField from '../atoms/OrderReviewField.vue'
+import OrderReviewSection from '../molecules/OrderReviewSection.vue'
 import CartItem from './CartItem.vue'
 import OrderSummary from './OrderSummary.vue'
 import { ButtonVariant } from '../../types/common'
@@ -130,6 +123,30 @@ const cartStore = useCartStore()
 
 const isSubmitting = ref(false)
 const errorMessage = ref('')
+
+const fullName = computed(() => 
+    `${cartStore.formData.firstName} ${cartStore.formData.lastName}`
+)
+
+const formattedPhone = computed(() => 
+    `${cartStore.formData.phonePrefix}${cartStore.formData.phoneNumber}`
+)
+
+const formattedCountry = computed(() => 
+    t(`country.${cartStore.formData.country?.toLowerCase?.()}`)
+)
+
+const formattedDeliveryMethod = computed(() => 
+    cartStore.formData.deliveryMethod === 'delivery' 
+        ? t('deliveryInfo.delivery') 
+        : t('deliveryInfo.pickup')
+)
+
+const formattedPaymentMethod = computed(() => 
+    cartStore.formData.paymentMethod === 'cash' 
+        ? t('deliveryInfo.cash') 
+        : t('deliveryInfo.bankTransfer')
+)
 
 const goToProducts = () => {
     router.push('/')
