@@ -425,8 +425,10 @@ export default {
     },
     verify: {
         verifying: 'Verifying your email...',
+        pleaseWait: 'Please wait while we verify your email address.',
         success: 'Email Verified!',
-        successMessage: 'Your email has been successfully verified. You can now log in to your account.',
+        successMessage: 'Your email has been successfully verified.',
+        canNowLogin: 'You can now log in to your account and start exploring our products.',
         goToLogin: 'Go to Login',
         error: 'Verification Failed',
         noToken: 'No verification token provided',

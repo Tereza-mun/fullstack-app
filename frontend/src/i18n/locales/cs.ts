@@ -425,8 +425,10 @@ export default {
     },
     verify: {
         verifying: 'Ověřování vašeho emailu...',
-        success: 'Emailová adresa byla úspěšně ověřena!',
-        successMessage: 'Vaše emailová adresa byla úspěšně ověřena. Nyní se můžete přihlásit k svému účtu.',
+        pleaseWait: 'Prosím vyčkejte, ověřujeme vaši emailovou adresu.',
+        success: 'Email byl úspěšně ověřen!',
+        successMessage: 'Vaše emailová adresa byla úspěšně ověřena.',
+        canNowLogin: 'Nyní se můžete přihlásit ke svému účtu a začít procházet naše produkty.',
         goToLogin: 'Přihlásit se',
         error: 'Ověření emailové adresy selhalo',
         noToken: 'Nebyl poskytnut žádný ověřovací token',
