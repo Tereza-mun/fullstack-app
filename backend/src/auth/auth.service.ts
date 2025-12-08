@@ -177,7 +177,7 @@ export class AuthService {
 
     private generateRefreshToken(userId: number, email: string): string {
         const payload = { sub: userId, email, type: 'refresh' };
-        return this.jwtService.sign(payload, { expiresIn: '7d' });
+        return this.jwtService.sign(payload, { expiresIn: '24h' });
     }
 
     async refreshTokens(refreshToken: string) {
