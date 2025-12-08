@@ -1,6 +1,6 @@
 <template>
     <Container>
-        <div class="max-w-md mx-auto mt-8 md:mt-16">
+        <div class="max-w-md mx-auto">
             <h2 class="font-serif text-[1.75rem] md:text-[2.5rem] font-bold text-center mb-6 md:mb-8 text-primary-dark tracking-tight">
                 {{ t('login.title') }}
             </h2>
