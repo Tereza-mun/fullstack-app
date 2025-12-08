@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { authService } from '../services/auth.service'
+import { useCartStore } from './cart'
 
 interface User {
     id?: number
@@ -37,6 +38,10 @@ export const useAuthStore = defineStore('auth', () => {
     const logout = () => {
         authService.logout()
         user.value = null
+        
+        // Clear cart form data (personal info) on logout
+        const cartStore = useCartStore()
+        cartStore.resetFormData()
     }
 
     return {
