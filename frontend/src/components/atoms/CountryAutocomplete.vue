@@ -31,19 +31,26 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const emit = defineEmits<{
     'update:modelValue': [value: string]
 }>()
 
-// Map countries to FlagOption format
+// Map countries to FlagOption format with translated names
 const mappedOptions = computed<FlagOption[]>(() => {
-    return props.countries.map(country => ({
-        value: country.code,
-        displayText: country.name,
-        flagCode: country.code,
-        searchableText: `${country.name} ${country.code}`
-    }))
+    // Access locale.value to make this computed reactive to language changes
+    void locale.value
+    
+    return props.countries.map(country => {
+        const translatedName = t(`country.${country.code.toLowerCase()}`)
+        return {
+            value: country.code,
+            displayText: translatedName,
+            flagCode: country.code,
+            // Include both translated name and English name for better search
+            searchableText: `${translatedName} ${country.name} ${country.code}`
+        }
+    })
 })
 </script>
