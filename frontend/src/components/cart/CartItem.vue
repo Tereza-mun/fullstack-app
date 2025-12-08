@@ -18,7 +18,7 @@
             <div class="flex items-center gap-1">
                 <Button
                     @click="handleDecreaseQuantity"
-                    variant="counterButton"
+                    :variant="ButtonVariant.COUNTER_BUTTON"
                     :aria-label="`${t('cart.decreaseQuantity')} ${item.quantity - 1}`"
                 >
                     -
@@ -26,7 +26,7 @@
                 <span class="w-12 text-center font-semibold">{{ item.quantity }}</span>
                 <Button
                     @click="handleIncreaseQuantity"
-                    variant="counterButton"
+                    :variant="ButtonVariant.COUNTER_BUTTON"
                     :aria-label="`${t('cart.increaseQuantity')} ${item.quantity + 1}`"
                 >
                     +
@@ -39,7 +39,7 @@
 
             <Button
                 @click="handleRemove"
-                variant="iconButton"
+                :variant="ButtonVariant.ICON_BUTTON"
                 :aria-label="`${t('cart.removeItem')} ${itemName}`"
             >
                 <Trash fill="#e63946" />
@@ -55,6 +55,7 @@ import Button from '../atoms/Button.vue'
 import Trash from '../atoms/icons/Trash.vue'
 import { useCartStore } from '../../stores/cart'
 import { useAlertStore } from '../../stores/alert'
+import { ButtonVariant } from '../../types/common'
 
 interface ItemName {
     en: string

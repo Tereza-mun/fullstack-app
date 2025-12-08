@@ -5,8 +5,8 @@
             <span class="font-mono text-2xl font-bold text-accent">€{{ totalPrice.toFixed(2) }}</span>
         </div>
         <div class="flex flex-col sm:flex-row justify-center sm:justify-between gap-4">
-            <Button variant="secondary" @click="handleClearCart">{{ t('cart.clearCart') }}</Button>
-            <Button variant="primary" @click="handleCheckout">{{ t('cart.continue') }}</Button>
+            <Button :variant="ButtonVariant.SECONDARY" @click="handleClearCart">{{ t('cart.clearCart') }}</Button>
+            <Button :variant="ButtonVariant.PRIMARY" @click="handleCheckout">{{ t('cart.continue') }}</Button>
         </div>
     </div>
 </template>
@@ -17,6 +17,7 @@ import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import { useCartStore } from '../../stores/cart'
 import { useAlertStore } from '../../stores/alert'
+import { ButtonVariant } from '../../types/common'
 
 const { t } = useI18n()
 

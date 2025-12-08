@@ -1,7 +1,7 @@
 <template>
     <div v-if="cartStore.items.length === 0" class="text-center py-16">
         <p class="text-xl text-gray-600 mb-6">{{ t('deliveryInfo.emptyCart') }}</p>
-        <Button variant="primary" @click="goToProducts">{{ t('cart.continueShopping') }}</Button>
+        <Button :variant="ButtonVariant.PRIMARY" @click="goToProducts">{{ t('cart.continueShopping') }}</Button>
     </div>
 
     <div v-else class="space-y-6">
@@ -122,6 +122,7 @@ import { useCartStore } from '../../stores/cart'
 import Button from '../atoms/Button.vue'
 import CartItem from './CartItem.vue'
 import OrderSummary from './OrderSummary.vue'
+import { ButtonVariant } from '../../types/common'
 
 const router = useRouter()
 const { t } = useI18n()

@@ -22,7 +22,10 @@
         </div>
 
         <!-- Go to Login Button -->
-        <Button variant="primary" @click="$emit('goToLogin')" class="px-8">
+        <Button 
+            :variant="ButtonVariant.PRIMARY" 
+            @click="$emit('goToLogin')" 
+            class="px-8">
             {{ t('verify.goToLogin') }}
         </Button>
     </div>
@@ -32,6 +35,7 @@
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import SuccessHeader from '../molecules/SuccessHeader.vue'
+import { ButtonVariant } from '../../types/common'
 
 defineEmits<{
     goToLogin: []

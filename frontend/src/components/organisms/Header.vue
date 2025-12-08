@@ -1,12 +1,12 @@
 <template>
     <header class="bg-gradient-to-br from-primary-dark to-primary-darker px-4 md:px-8 py-4 md:py-6 shadow-[0_4px_20px_rgba(26,26,46,0.3)]">
         <div class="max-w-[1200px] mx-auto flex justify-between items-center">
-            <Button @click="goToHome" variant="home">
+            <Button @click="goToHome" :variant="ButtonVariant.HOME">
                 {{ t('header.title') }}
             </Button>
             <div class="flex items-center gap-2 md:gap-6">
                 <div class="relative">
-                    <Button @click="goToCart" variant="iconButton" :aria-label="t('header.cart')">
+                    <Button @click="goToCart" :variant="ButtonVariant.ICON_BUTTON"  :aria-label="t('header.cart')">
                         <Cart :stroke="IconFill.WHITE" />
                         <span class="hidden md:block ml-3 text-lg text-white">{{ t('header.cartTitle') }}</span>
                         <CartBadge :count="cartStore.totalItems" />
@@ -16,11 +16,11 @@
                     v-if="!authStore.user"
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <Button @click="goToRegister" variant="iconButton" :aria-label="t('header.register')">
+                    <Button @click="goToRegister" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.register')">
                         <UserPlus :stroke="IconFill.WHITE" />
                         <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.register') }}</span>
                     </Button>
-                    <Button @click="goToLogin" variant="iconButton" :aria-label="t('header.login')">
+                    <Button @click="goToLogin" :variant="ButtonVariant.ICON_BUTTON"  :aria-label="t('header.login')">
                         <User :stroke="IconFill.WHITE" />
                         <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.login') }}</span>
                     </Button>
@@ -29,11 +29,11 @@
                     v-else
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <Button @click="goToProfile" variant="iconButton" :aria-label="t('header.profile')">
+                    <Button @click="goToProfile" :variant="ButtonVariant.ICON_BUTTON"  :aria-label="t('header.profile')">
                         <User :stroke="IconFill.WHITE" />
                         <span class="hidden md:block ml-2 text-lg text-white">{{ authStore.user.firstName }}</span>
                     </Button>
-                    <Button @click="logout" variant="iconButton" class="text-sm">
+                    <Button @click="logout" :variant="ButtonVariant.ICON_BUTTON"  class="text-sm">
                         <LogOut :stroke="IconFill.WHITE" />
                         <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.logout') }}</span>
                     </Button>
@@ -41,7 +41,7 @@
                
                 <Button
                     @click="toggleLocale"
-                    variant="languageSwitch"
+                    :variant="ButtonVariant.LANGUAGE_SWITCH"
                     :aria-label="t('header.switchLanguage', { language: locale === 'en' ? 'Čeština' : 'English' })"
                 >
                     <img
@@ -55,7 +55,7 @@
                  <!-- <span v-if="user" class="hidden md:block text-white font-medium text-sm">
                         {{ user.firstName }} {{ user.lastName }}
                     </span>
-                    <Button v-if="user" @click="logout" variant="secondary" class="text-sm">
+                    <Button v-if="user" @click="logout" :variant="ButtonVariant.SECONDARY" class="text-sm">
                         {{ t('header.logout') }}
                     </Button> -->
             </div>
@@ -79,6 +79,7 @@ import { useAlertStore } from '../../stores/alert'
 import flagCz from '../../assets/images/flag-cz.svg'
 import flagEn from '../../assets/images/flag-en.svg'
 import { IconFill } from '../../types/common'
+import { ButtonVariant } from '../../types/common'
 
 
 const router = useRouter()

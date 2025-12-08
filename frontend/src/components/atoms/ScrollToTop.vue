@@ -3,7 +3,7 @@
         <Button
             v-if="isVisible"
             @click="scrollToTop"
-            variant="scrollToTop"
+            :variant="ButtonVariant.SCROLL_TO_TOP"
             aria-label="Scroll to top"
         >
             <ArrowUp :stroke="IconFill.WHITE" />
@@ -15,7 +15,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import ArrowUp from './icons/ArrowUp.vue'
 import Button from './Button.vue'
-import { IconFill } from '../../types/common'
+import { IconFill, ButtonVariant } from '../../types/common'
 
 const isVisible = ref(false)
 

@@ -18,7 +18,7 @@
             <div class="flex items-center justify-between">
                 <p class="font-mono text-base font-bold text-accent">€{{ product.price.toFixed(2) }}</p>
                 <Button
-                    :variant="isInCart ? 'removeFromCart' : 'addToCart'"
+                    :variant="isInCart ? ButtonVariant.REMOVE_FROM_CART : ButtonVariant.ADD_TO_CART"
                     :aria-label="isInCart ? t('products.removeFromCartAria', { product: productName }) : t('products.addToCartAria', { product: productName })"
                     @click="handleButtonClick"
                 >
@@ -47,7 +47,7 @@
                 <p class="font-mono text-xl font-bold text-accent mb-4">€{{ product.price.toFixed(2) }}</p>
                 <Button
                     class="w-full"
-                    :variant="isInCart ? 'secondary' : 'primary'"
+                    :variant="isInCart ? ButtonVariant.SECONDARY : ButtonVariant.PRIMARY"
                     :aria-label="isInCart ? t('products.removeFromCartAria', { product: productName }) : t('products.addToCartAria', { product: productName })"
                     @click="handleButtonClick"
                 >
@@ -66,7 +66,7 @@ import Button from '../atoms/Button.vue'
 import Cart from '../atoms/icons/Cart.vue'
 import { useCartStore } from '../../stores/cart'
 import { useAlertStore } from '../../stores/alert'
-import { IconFill } from '../../types/common'
+import { IconFill, ButtonVariant } from '../../types/common'
 
 interface ProductName {
     en: string

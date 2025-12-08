@@ -100,11 +100,14 @@
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-3 pt-4">
-                        <Button @click="goToLogin" variant="secondary" class="w-full sm:w-auto order-2 sm:order-1">
+                        <Button 
+                            :variant="ButtonVariant.SECONDARY" 
+                            class="w-full sm:w-auto order-2 sm:order-1"
+                            @click="goToLogin">
                             {{ t('register.backToLogin') }}
                         </Button>
                         <Button 
-                            variant="primary"
+                            :variant="ButtonVariant.PRIMARY"
                             type="submit" 
                             class="w-full sm:flex-1 order-1 sm:order-2"
                             :disabled="formIncomplete">
@@ -134,6 +137,7 @@ import { PHONE_PREFIXES } from '../../constants/phonePrefixes'
 import Input from '../atoms/Input.vue'
 import PhonePrefixAutocomplete from '../atoms/PhonePrefixAutocomplete.vue'
 import Button from '../atoms/Button.vue'
+import { ButtonVariant } from '../../types/common'
 
 const router = useRouter()
 const { t } = useI18n()

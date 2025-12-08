@@ -37,7 +37,7 @@
         </div>
 
         <!-- Back to Shopping Button -->
-        <Button variant="primary" @click="goToProducts" class="px-8">
+        <Button :variant="ButtonVariant.PRIMARY" @click="goToProducts" class="px-8">
             {{ t('confirmation.backToShopping') }}
         </Button>
     </div>
@@ -49,6 +49,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import SuccessHeader from '../molecules/SuccessHeader.vue'
+import { ButtonVariant } from '../../types/common'
 
 const router = useRouter()
 const route = useRoute()

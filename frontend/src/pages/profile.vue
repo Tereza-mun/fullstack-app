@@ -88,7 +88,7 @@
 
                 <!-- Actions -->
                 <div class="flex gap-4 pt-4 border-t">
-                    <Button @click="goToHome" variant="secondary">
+                    <Button @click="goToHome" :variant="ButtonVariant.SECONDARY">
                         {{ t('profile.backToHome') }}
                     </Button>
                 </div>
@@ -96,7 +96,7 @@
 
             <div v-else class="bg-white rounded-lg shadow-lg p-6 md:p-8 text-center">
                 <p class="text-gray-600 mb-4">{{ t('profile.notLoggedIn') }}</p>
-                <Button @click="goToLogin" variant="primary">
+                <Button @click="goToLogin" :variant="ButtonVariant.PRIMARY">
                     {{ t('profile.loginButton') }}
                 </Button>
             </div>
@@ -111,6 +111,7 @@ import { useI18n } from 'vue-i18n'
 import Container from '../components/molecules/Container.vue'
 import Button from '../components/atoms/Button.vue'
 import { useAuthStore } from '../stores/auth'
+import { ButtonVariant } from '../types/common'
 
 const { t } = useI18n()
 const router = useRouter()

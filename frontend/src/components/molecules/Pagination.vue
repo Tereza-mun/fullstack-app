@@ -1,7 +1,7 @@
 <template>
     <div v-if="totalPages > 1" class="flex justify-center items-center gap-3 mt-10">
         <Button 
-            variant="paginationButton"
+            :variant="ButtonVariant.PAGINATION_BUTTON"
             @click="previousPage" 
             :disabled="modelValue === 1"
         >
@@ -13,7 +13,7 @@
         </span>
         
         <Button 
-            variant="paginationButton"
+            :variant="ButtonVariant.PAGINATION_BUTTON"
             @click="nextPage"
             :disabled="modelValue === totalPages"
         >
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
+import { ButtonVariant } from '../../types/common'
 
 interface Props {
     modelValue: number

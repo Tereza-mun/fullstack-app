@@ -105,10 +105,18 @@
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-3 pt-4">
-                        <Button @click="goBack" variant="secondary" class="w-full sm:w-auto order-2 sm:order-1">
+                        <Button 
+                            :variant="ButtonVariant.SECONDARY" 
+                            class="w-full sm:w-auto order-2 sm:order-1"
+                            @click="goBack">
                             {{ t('register.back') }}
                         </Button>
-                        <Button type="submit" :disabled="formIncomplete" class="w-full sm:flex-1 order-1 sm:order-2">
+                        <Button 
+                            :variant="ButtonVariant.PRIMARY"
+                            type="submit" 
+                            :disabled="formIncomplete" 
+                            class="w-full sm:flex-1 order-1 sm:order-2"
+                            @click="handleSubmit">
                             <span v-if="registerStore.loading">{{ t('register.creating') }}</span>
                             <span v-else>{{ t('register.createAccount') }}</span>
                         </Button>
@@ -129,6 +137,7 @@ import Input from '../atoms/Input.vue'
 import Button from '../atoms/Button.vue'
 import CountryAutocomplete from '../atoms/CountryAutocomplete.vue'
 import { COUNTRIES } from '../../constants/countries'
+import { ButtonVariant } from '../../types/common'
 
 const router = useRouter()
 const { t } = useI18n()

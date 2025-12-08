@@ -13,7 +13,7 @@
             />
             <Button
                 type="submit"
-                variant="primary"
+                :variant="ButtonVariant.PRIMARY"
                 class="w-full mt-4"
                 :disabled="loading"
             >
@@ -31,6 +31,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Input from '../atoms/Input.vue'
+import { ButtonVariant } from '../../types/common'
 
 const { t } = useI18n()
 

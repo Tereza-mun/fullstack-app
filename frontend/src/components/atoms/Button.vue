@@ -1,42 +1,41 @@
 <template>
-    <button
+    <component
+        :is="tag"
         :class="buttonClasses"
         :aria-label="ariaLabel"
-        :disabled="disabled"
+        :disabled="tag === 'button' ? disabled : undefined"
+        :href="tag === 'a' ? href : undefined"
+        :to="tag === 'router-link' ? to : undefined"
+        :target="tag === 'a' ? target : undefined"
+        :rel="tag === 'a' && target === '_blank' ? 'noopener noreferrer' : undefined"
     >
         <slot />
-    </button>
+    </component>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { ButtonVariant, ButtonTag } from '../../types/common'
 
-type ButtonVariant =
-    | 'primary'
-    | 'secondary'
-    | 'home'
-    | 'iconButton'
-    | 'counterButton'
-    | 'languageSwitch'
-    | 'paginationButton'
-    | 'scrollToTop'
-    | 'addToCart'
-    | 'removeFromCart'
-
-interface Props {
+export interface ButtonProps {
     variant?: ButtonVariant
+    tag?: ButtonTag
     ariaLabel?: string
     disabled?: boolean
+    href?: string
+    to?: string | object
+    target?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-    variant: 'primary',
+const props = withDefaults(defineProps<ButtonProps>(), {
+    variant: ButtonVariant.PRIMARY,
+    tag: ButtonTag.BUTTON,
     disabled: false
 })
 
 const buttonClasses = computed(() => {
     const baseClasses = 'transition-all duration-200'
-    const disabledClasses = 'disabled:opacity-50 disabled:cursor-not-allowed'
+    const disabledClasses = props.tag === 'button' ? 'disabled:opacity-50 disabled:cursor-not-allowed' : ''
 
     const variantClasses = {
         primary: `py-3 px-6 text-white border-none rounded-lg font-sans text-sm font-semibold uppercase tracking-wider whitespace-nowrap bg-gradient-to-br from-primary-dark to-primary-darker ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:scale-[1.02] active:scale-[0.98] hover:from-accent hover:to-accent-dark' : ''}`,
@@ -48,7 +47,8 @@ const buttonClasses = computed(() => {
         paginationButton: `px-4 py-2 rounded-lg border border-gray-300 text-gray-700 bg-white font-medium transition-colors ${disabledClasses} ${!props.disabled ? 'hover:bg-gray-50 hover:border-gray-400' : ''}`,
         scrollToTop: `fixed bottom-6 right-6 z-40 w-12 h-12 bg-gradient-to-br bg-gradient-to-br from-accent to-accent-dark text-white rounded-full shadow-lg flex items-center justify-center ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:scale-110 active:scale-95 hover:shadow-xl' : ''}`,
         addToCart: `flex items-center gap-1 px-2 py-1 rounded-lg text-white text-xs font-semibold bg-gradient-to-br from-primary-dark to-primary-darker ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer active:scale-95' : ''}`,
-        removeFromCart: `flex items-center gap-1 px-2 py-1 rounded-lg text-white text-xs font-semibold bg-gradient-to-br from-accent to-accent-dark ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer active:scale-95' : ''}`
+        removeFromCart: `flex items-center gap-1 px-2 py-1 rounded-lg text-white text-xs font-semibold bg-gradient-to-br from-accent to-accent-dark ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer active:scale-95' : ''}`,
+        link: `bg-transparent border-none p-0 text-primary font-medium ${baseClasses} hover:text-primary-dark hover:underline cursor-pointer`
     }
 
     return variantClasses[props.variant]

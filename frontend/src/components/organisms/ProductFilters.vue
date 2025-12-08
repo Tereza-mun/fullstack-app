@@ -3,7 +3,7 @@
     <div class="lg:hidden mb-8">
         <Button
             @click="openDrawer"
-            variant="secondary"
+            :variant="ButtonVariant.SECONDARY"
             class="w-full"
         >
             {{ t('filters.openFilters') }}
@@ -89,7 +89,7 @@
         <div class="flex justify-center">
             <Button
                 @click="filtersStore.resetFilters"
-                variant="secondary"
+                :variant="ButtonVariant.SECONDARY"
                 :aria-label="t('filters.resetFiltersLabel')"
                 :disabled="filtersStore.filters.category === '' && filtersStore.filters.search === '' && filtersStore.filters.minPrice === null && filtersStore.filters.maxPrice === null && filtersStore.filters.sortBy === ''"
             >
@@ -108,6 +108,7 @@ import Select, { type SelectOption } from '../atoms/Select.vue'
 import Button from '../atoms/Button.vue'
 import FilterTag from '../atoms/FilterTag.vue'
 import FilterDrawer from './FilterDrawer.vue'
+import { ButtonVariant } from '../../types/common'
 
 const isDrawerOpen = ref(false)
 

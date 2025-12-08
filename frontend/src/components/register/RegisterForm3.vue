@@ -30,7 +30,7 @@
                     <Button
                         @click="resendEmail"
                         :disabled="resendLoading || resendSuccess"
-                        variant="secondary"
+                        :variant="ButtonVariant.SECONDARY"
                     >
                         {{ resendLoading ? t('verify.sending') : resendSuccess ? t('register.emailResent') : t('register.resendEmail') }}
                     </Button>
@@ -48,6 +48,7 @@ import EmailIcon from '../atoms/EmailIcon.vue'
 import WarningIcon from '../atoms/WarningIcon.vue'
 import Button from '../atoms/Button.vue'
 import SuccessHeader from '../molecules/SuccessHeader.vue'
+import { ButtonVariant } from '../../types/common'
 
 const { t } = useI18n()
 const registerStore = useRegisterStore()

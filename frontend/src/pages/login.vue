@@ -5,10 +5,7 @@
                 {{ t('login.title') }}
             </h2>
 
-            <AuthForm 
-                @success="onLoginSuccess" 
-                @go-to-register="goToRegister" 
-            />
+            <AuthForm @success="onLoginSuccess" />
         </div>
     </Container>
 </template>
@@ -24,9 +21,5 @@ const router = useRouter()
 
 const onLoginSuccess = () => {
     router.push('/')
-}
-
-const goToRegister = () => {
-    router.push('/register/1')
 }
 </script>

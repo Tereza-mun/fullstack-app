@@ -39,7 +39,7 @@
             <!-- Submit Buttons -->
             <div class="flex flex-col gap-3">
                 <Button 
-                    variant="primary" 
+                    :variant="ButtonVariant.PRIMARY" 
                     @click="$emit('submit')" 
                     :disabled="submitDisabled" 
                     class="w-full"
@@ -48,7 +48,7 @@
                     <span v-else>{{ submitButtonText || t('cart.continue') }}</span>
                 </Button>
                 <Button 
-                    variant="secondary" 
+                    :variant="ButtonVariant.SECONDARY" 
                     @click="$emit('back')" 
                     class="w-full"
                 >
@@ -62,6 +62,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
+import { ButtonVariant } from '../../types/common'
 
 export interface CartItem {
     id: number

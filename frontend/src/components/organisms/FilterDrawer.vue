@@ -66,7 +66,7 @@
                     <div class="flex gap-3">
                         <Button
                             @click="handleReset"
-                            variant="secondary"
+                            :variant="ButtonVariant.SECONDARY"
                             class="flex-1"
                             :aria-label="t('filters.resetFiltersLabel')"
                             :disabled="localFilters.category === '' && localFilters.search === '' && localFilters.minPrice === null && localFilters.maxPrice === null && localFilters.sortBy === ''"
@@ -75,7 +75,7 @@
                         </Button>
                         <Button
                             @click="$emit('apply', localFilters)"
-                            variant="primary"
+                            :variant="ButtonVariant.PRIMARY"
                             class="flex-1"
                         >
                             {{ t('filters.applyFilters') }}
@@ -93,6 +93,7 @@ import { useI18n } from 'vue-i18n'
 import Input from '../atoms/Input.vue'
 import Select, { type SelectOption } from '../atoms/Select.vue'
 import Button from '../atoms/Button.vue'
+import { ButtonVariant } from '../../types/common'
 
 interface ProductFilters {
     search: string

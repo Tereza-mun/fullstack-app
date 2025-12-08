@@ -3,7 +3,7 @@
         <div class="max-w-[1200px] mx-auto">
             <!-- Back button -->
             <Button
-                variant="secondary"
+                :variant="ButtonVariant.SECONDARY"
                 class="mb-6"
                 @click="goBack"
                 :aria-label="t('productDetail.backToProducts')"
@@ -86,7 +86,7 @@
                         <!-- Add to cart button -->
                         <Button
                             class="w-full"
-                            :variant="isInCart ? 'secondary' : 'primary'"
+                            :variant="isInCart ? ButtonVariant.SECONDARY : ButtonVariant.PRIMARY"
                             :aria-label="isInCart ? t('products.removeFromCartAria', { product: productName }) : t('products.addToCartAria', { product: productName })"
                             @click="handleCartClick"
                         >
@@ -109,6 +109,7 @@ import ScrollToTop from '../components/atoms/ScrollToTop.vue'
 import { useProductsStore, type ProductName, type ProductDescription } from '../stores/products'
 import { useCartStore } from '../stores/cart'
 import { useAlertStore } from '../stores/alert'
+import { ButtonVariant } from '../types/common'
 
 const route = useRoute()
 const router = useRouter()

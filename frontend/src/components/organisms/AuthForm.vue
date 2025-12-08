@@ -24,16 +24,16 @@
                     {{ error }}
                 </div>
 
-                <Button variant="primary" type="submit" class="w-full">
+                <Button :variant="ButtonVariant.PRIMARY" type="submit" class="w-full">
                     <span v-if="loading">{{ t('login.loading') }}</span>
                     <span v-else>{{ t('login.submit') }}</span>
                 </Button>
 
                 <div class="text-center text-sm text-gray-600">
                     {{ t('login.noAccount') }}
-                    <a href="#" @click.prevent="$emit('goToRegister')" class="text-primary hover:text-primary-dark hover:underline font-medium">
+                    <Button :tag="ButtonTag.ROUTER_LINK" :variant="ButtonVariant.LINK" to="/register/1">
                         {{ t('login.register') }}
-                    </a>
+                    </Button>
                 </div>
             </div>
         </form>
@@ -49,10 +49,10 @@ import { authService } from '../../services/auth.service'
 import { useAlertStore } from '../../stores/alert'
 import { useAuthStore } from '../../stores/auth'
 import { useCartStore } from '../../stores/cart'
+import { ButtonVariant, ButtonTag } from '../../types/common'
 
 const emit = defineEmits<{
     success: []
-    goToRegister: []
 }>()
 
 const { t } = useI18n()
