@@ -77,6 +77,7 @@ const cartStore = useCartStore()
 const authStore = useAuthStore()
 const alertStore = useAlertStore()
 const { t, locale } = useI18n()
+const localeCookie = useCookie('locale', { maxAge: 60 * 60 * 24 * 365 })
 
 const isCartActive = computed(() => route.path.startsWith('/cart'))
 const isLoginActive = computed(() => route.path === '/login')
@@ -89,9 +90,7 @@ onMounted(() => {
 
 const toggleLocale = () => {
     locale.value = locale.value === 'en' ? 'cs' : 'en'
-    if (process.client) {
-        localStorage.setItem('locale', locale.value)
-    }
+    localeCookie.value = locale.value
 }
 
 const logout = async () => {
