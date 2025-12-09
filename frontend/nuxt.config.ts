@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       recaptchaSiteKey: process.env.VITE_RECAPTCHA_SITE_KEY || '',
-      apiBaseUrl: process.env.VITE_API_URL || 'http://localhost:3002',
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://localhost:3002',
       environment: process.env.NODE_ENV || 'development',
     }
   },
