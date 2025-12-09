@@ -1,10 +1,5 @@
 <template>
-    <div v-if="cartStore.items.length === 0" class="text-center py-16">
-        <p class="text-xl text-gray-600 mb-6">{{ t('deliveryInfo.emptyCart') }}</p>
-        <Button :tag="ButtonTag.NUXT_LINK" to="/" :variant="ButtonVariant.PRIMARY">{{ t('cart.continueShopping') }}</Button>
-    </div>
-
-    <div v-else class="space-y-6">
+    <div v-if="cartStore.items.length > 0" class="space-y-6">
         <!-- Error Alert -->
         <div v-if="errorMessage" class="bg-red-50 border-2 border-red-200 rounded-xl p-4">
             <div class="flex items-start">
@@ -103,6 +98,13 @@
             />
         </div>
     </div>
+
+    <ClientOnly>
+        <div v-if="cartStore.items.length === 0" class="text-center py-16">
+            <p class="text-xl text-gray-600 mb-6">{{ t('deliveryInfo.emptyCart') }}</p>
+            <Button :tag="ButtonTag.NUXT_LINK" to="/" :variant="ButtonVariant.PRIMARY">{{ t('cart.continueShopping') }}</Button>
+        </div>
+    </ClientOnly>
 </template>
 
 <script setup lang="ts">

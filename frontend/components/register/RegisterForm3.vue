@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRegisterStore } from '../../stores/register'
 import EmailIcon from '../atoms/EmailIcon.vue'
@@ -52,6 +52,11 @@ import { ButtonVariant } from '../../types/common'
 
 const { t } = useI18n()
 const registerStore = useRegisterStore()
+
+// Clear registration data when leaving step 3
+onBeforeUnmount(() => {
+    registerStore.clearPersistedData()
+})
 
 const resendLoading = ref(false)
 const resendSuccess = ref(false)

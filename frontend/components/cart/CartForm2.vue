@@ -1,10 +1,5 @@
 <template>
-    <div v-if="cartStore.items.length === 0" class="text-center py-16">
-        <p class="text-xl text-gray-600 mb-6">{{ t('deliveryInfo.emptyCart') }}</p>
-        <Button :tag="ButtonTag.NUXT_LINK" to="/" :variant="ButtonVariant.PRIMARY">{{ t('cart.continueShopping') }}</Button>
-    </div>
-
-    <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div v-if="cartStore.items.length > 0" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Checkout Form -->
         <form @submit.prevent="goToNextStep" class="lg:col-span-2 space-y-6">
             <CustomerData />
@@ -26,6 +21,13 @@
             @back="goToCart"
         />
     </div>
+
+    <ClientOnly>
+        <div v-if="cartStore.items.length === 0" class="text-center py-16">
+            <p class="text-xl text-gray-600 mb-6">{{ t('deliveryInfo.emptyCart') }}</p>
+            <Button :tag="ButtonTag.NUXT_LINK" to="/" :variant="ButtonVariant.PRIMARY">{{ t('cart.continueShopping') }}</Button>
+        </div>
+    </ClientOnly>
 </template>
 
 <script setup lang="ts">

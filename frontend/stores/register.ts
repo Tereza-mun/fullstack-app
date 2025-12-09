@@ -139,9 +139,7 @@ export const useRegisterStore = defineStore('register', () => {
                 recaptchaToken: recaptchaToken,
             })
 
-            // Clear all persisted registration data after successful submission
-            clearPersistedData()
-
+            // Don't clear data here - let step 3 handle cleanup
             // Return user data for auto-login
             return { success: true, user: response.user }
         } catch (err: any) {
