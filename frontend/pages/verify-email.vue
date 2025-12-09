@@ -3,7 +3,7 @@
         <div class="max-w-2xl mx-auto">
             <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
                 <VerifyLoading v-if="loading" />
-                <VerifySuccess v-else-if="success" @go-to-login="goToLogin" />
+                <VerifySuccess v-else-if="success" />
                 <VerifyError v-else-if="error" :error-message="errorMessage" />
             </div>
         </div>
@@ -12,7 +12,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Container from '../components/molecules/Container.vue'
 import VerifyLoading from '../components/verify/VerifyLoading.vue'
@@ -20,7 +19,6 @@ import VerifySuccess from '../components/verify/VerifySuccess.vue'
 import VerifyError from '../components/verify/VerifyError.vue'
 
 const route = useRoute()
-const router = useRouter()
 const { t } = useI18n()
 
 const loading = ref(true)
@@ -73,8 +71,4 @@ onMounted(async () => {
         loading.value = false
     }
 })
-
-const goToLogin = () => {
-    router.push('/login')
-}
 </script>

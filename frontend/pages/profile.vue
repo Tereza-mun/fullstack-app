@@ -77,7 +77,7 @@
                 <!-- Actions -->
                 <div class="flex gap-4 pt-4 border-t">
                     <Button 
-                        :tag="ButtonTag.ROUTER_LINK" 
+                        :tag="ButtonTag.NUXT_LINK" 
                         :variant="ButtonVariant.SECONDARY" 
                         to="/"
                     >
@@ -89,7 +89,7 @@
             <div v-else class="bg-white rounded-lg shadow-lg p-6 md:p-8 text-center">
                 <p class="text-gray-600 mb-4">{{ t('profile.notLoggedIn') }}</p>
                 <Button 
-                    :tag="ButtonTag.ROUTER_LINK" 
+                    :tag="ButtonTag.NUXT_LINK" 
                     :variant="ButtonVariant.PRIMARY" 
                     to="/login"
                 >

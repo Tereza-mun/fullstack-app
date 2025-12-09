@@ -24,14 +24,20 @@
                     {{ error }}
                 </div>
 
-                <Button :variant="ButtonVariant.PRIMARY" type="submit" class="w-full">
+                <Button 
+                    :variant="ButtonVariant.PRIMARY" 
+                    type="submit" 
+                    class="w-full">
                     <span v-if="loading">{{ t('login.loading') }}</span>
                     <span v-else>{{ t('login.submit') }}</span>
                 </Button>
 
                 <div class="text-center text-sm text-gray-600">
                     {{ t('login.noAccount') }}
-                    <Button :tag="ButtonTag.ROUTER_LINK" :variant="ButtonVariant.LINK" to="/register/1">
+                    <Button 
+                        :tag="ButtonTag.NUXT_LINK" 
+                        :variant="ButtonVariant.LINK" 
+                        to="/register/1">
                         {{ t('login.register') }}
                     </Button>
                 </div>

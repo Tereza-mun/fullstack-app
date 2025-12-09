@@ -11,7 +11,7 @@
                 {{ t('notFound.description') }}
             </p>
             <Button 
-                :tag="ButtonTag.ROUTER_LINK" 
+                :tag="ButtonTag.NUXT_LINK" 
                 :variant="ButtonVariant.PRIMARY" 
                 to="/"
             >

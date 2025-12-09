@@ -77,8 +77,8 @@ const buttonText = computed(() =>
     isInCart.value ? t('products.removeFromCart') : t('products.addToCart')
 )
 
-const goToProductDetail = () => {
-    router.push(`/product/${props.product.id}`)
+const goToProductDetail = async () => {
+    await navigateTo(`/product/${props.product.id}`)
 }
 
 const handleButtonClick = () => {

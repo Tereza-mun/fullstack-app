@@ -3,9 +3,10 @@
         <div class="max-w-[1200px] mx-auto">
             <!-- Back button -->
             <Button
+                :tag="ButtonTag.NUXT_LINK"
+                to="/"
                 :variant="ButtonVariant.SECONDARY"
                 class="mb-6"
-                @click="goBack"
                 :aria-label="t('productDetail.backToProducts')"
             >
                 ← {{ t('productDetail.backToProducts') }}
@@ -102,17 +103,15 @@
 
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from '../components/atoms/Button.vue'
 import ScrollToTop from '../components/atoms/ScrollToTop.vue'
 import { useProductsStore, type ProductName, type ProductDescription } from '../stores/products'
 import { useCartStore } from '../stores/cart'
 import { useAlertStore } from '../stores/alert'
-import { ButtonVariant } from '../types/common'
+import { ButtonVariant, ButtonTag } from '../types/common'
 
 const route = useRoute()
-const router = useRouter()
 const { t, locale } = useI18n()
 const productsStore = useProductsStore()
 const cartStore = useCartStore()
@@ -147,10 +146,6 @@ const getCategoryLabel = (category: string): string => {
         cables: t('filters.categories.cables')
     }
     return categoryMap[category] || category
-}
-
-const goBack = () => {
-    router.push('/')
 }
 
 const handleCartClick = () => {

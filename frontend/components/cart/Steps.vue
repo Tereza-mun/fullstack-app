@@ -10,7 +10,7 @@
                     'flex gap-2 sm:gap-3 md:gap-4 justify-center items-center text-gray-500',
                     index + 1 === parseInt(activeStep) && 'text-primary-dark cursor-pointer'
                 ]"
-                @click="navigateTo(step.link ?? '', index)"
+                @click="goToStep(step.link ?? '', index)"
             >
                 <div
                     :class="[
@@ -48,9 +48,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
 
 const props = defineProps<{
     steps: Array<{
@@ -75,11 +72,11 @@ onUnmounted(() => {
     window.removeEventListener('resize', checkScreenSize)
 })
 
-const navigateTo = (link: string, index: number) => {
+const goToStep = async (link: string, index: number) => {
     if (link) {
         // Only allow navigation to previous steps
         if (index < parseInt(props.activeStep) - 1) {
-            router.push(link)
+            await navigateTo(link)
         }
     }
 }

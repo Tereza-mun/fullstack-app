@@ -137,7 +137,6 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useReCaptcha } from 'vue-recaptcha-v3'
 import { useRegisterStore } from '../../stores/register'
@@ -146,9 +145,8 @@ import Input from '../atoms/Input.vue'
 import Button from '../atoms/Button.vue'
 import CountryAutocomplete from '../atoms/CountryAutocomplete.vue'
 import { COUNTRIES } from '../../constants/countries'
-import { ButtonVariant } from '../../types/common'
+import { ButtonVariant, ButtonTag } from '../../types/common'
 
-const router = useRouter()
 const { t, locale } = useI18n()
 const recaptchaInstance = useReCaptcha()
 const registerStore = useRegisterStore()
@@ -185,8 +183,8 @@ const formIncomplete = computed(() => {
     return !isDeliveryAddressComplete.value || !isBillingAddressComplete.value || registerStore.loading
 })
 
-const goBack = () => {
-    router.push('/register/1')
+const goBack = async () => {
+    await navigateTo('/register/1')
 }
 
 const handleSubmit = async () => {
@@ -215,7 +213,7 @@ const handleSubmit = async () => {
 
         if (result.success) {
             // Don't auto-login - user must verify email first
-            router.push('/register/3')
+            await navigateTo('/register/3')
         } else {
             alertStore.showAlert({
                 message: result.error || t('register.error'),

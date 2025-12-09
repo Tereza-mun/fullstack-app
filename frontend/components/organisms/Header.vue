@@ -6,7 +6,7 @@
             </Button>
             <div class="flex items-center gap-2 md:gap-6">
                 <div class="relative">
-                    <Button @click="goToCart" :variant="ButtonVariant.ICON_BUTTON"  :aria-label="t('header.cart')">
+                    <Button :tag="ButtonTag.NUXT_LINK" to="/cart/1" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.cart')">
                         <Cart :stroke="IconFill.WHITE" />
                         <span class="hidden md:block ml-3 text-lg text-white" :class="{ 'underline': isCartActive }">{{ t('header.cartTitle') }}</span>
                         <CartBadge :count="cartStore.totalItems" />
@@ -16,11 +16,11 @@
                     v-if="!authStore.user"
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <Button @click="goToRegister" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.register')">
+                    <Button :tag="ButtonTag.NUXT_LINK" to="/register/1" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.register')">
                         <UserPlus :stroke="IconFill.WHITE" />
                         <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isRegisterActive }">{{ t('header.register') }}</span>
                     </Button>
-                    <Button @click="goToLogin" :variant="ButtonVariant.ICON_BUTTON"  :aria-label="t('header.login')">
+                    <Button :tag="ButtonTag.NUXT_LINK" to="/login" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.login')">
                         <User :stroke="IconFill.WHITE" />
                         <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isLoginActive }">{{ t('header.login') }}</span>
                     </Button>
@@ -29,7 +29,7 @@
                     v-else
                     class="flex items-center gap-2 md:gap-4"
                 >
-                    <Button @click="goToProfile" :variant="ButtonVariant.ICON_BUTTON"  :aria-label="t('header.profile')">
+                    <Button :tag="ButtonTag.NUXT_LINK" to="/profile" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.profile')">
                         <User :stroke="IconFill.WHITE" />
                         <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isProfileActive }">{{ authStore.user.firstName }}</span>
                     </Button>
@@ -58,7 +58,6 @@
 
 <script setup lang="ts">
 import { onMounted, computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Cart from '../atoms/icons/Cart.vue'
@@ -73,8 +72,6 @@ import flagCz from '../../assets/images/flag-cz.svg'
 import flagEn from '../../assets/images/flag-en.svg'
 import { IconFill, ButtonVariant, ButtonTag } from '../../types/common'
 
-
-const router = useRouter()
 const route = useRoute()
 const cartStore = useCartStore()
 const authStore = useAuthStore()
@@ -90,22 +87,6 @@ onMounted(() => {
     authStore.initAuth()
 })
 
-const goToLogin = () => {
-    router.push('/login')
-}
-
-const goToRegister = () => {
-    router.push('/register/1')
-}
-
-const goToCart = () => {
-    router.push('/cart/1')
-}
-
-const goToProfile = () => {
-    router.push('/profile')
-}
-
 const toggleLocale = () => {
     locale.value = locale.value === 'en' ? 'cs' : 'en'
     if (process.client) {
@@ -113,9 +94,9 @@ const toggleLocale = () => {
     }
 }
 
-const logout = () => {
+const logout = async () => {
     authStore.logout()
-    router.push('/login')
+    await navigateTo('/login')
     alertStore.showAlert({
         message: t('header.logoutSuccess'),
         bgColor: 'bg-green-500',

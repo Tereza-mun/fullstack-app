@@ -11,15 +11,13 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Container from '../components/molecules/Container.vue'
 import AuthForm from '../components/organisms/AuthForm.vue'
 
 const { t } = useI18n()
-const router = useRouter()
 
-const onLoginSuccess = () => {
-    router.push('/')
+const onLoginSuccess = async () => {
+    await navigateTo('/')
 }
 </script>

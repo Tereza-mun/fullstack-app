@@ -37,7 +37,7 @@
         </div>
 
         <!-- Back to Shopping Button -->
-        <Button :variant="ButtonVariant.PRIMARY" @click="goToProducts" class="px-8">
+        <Button :tag="ButtonTag.NUXT_LINK" to="/" :variant="ButtonVariant.PRIMARY" class="px-8">
             {{ t('confirmation.backToShopping') }}
         </Button>
     </div>
@@ -45,19 +45,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import SuccessHeader from '../molecules/SuccessHeader.vue'
-import { ButtonVariant } from '../../types/common'
+import { ButtonVariant, ButtonTag } from '../../types/common'
 
-const router = useRouter()
 const route = useRoute()
 const { t } = useI18n()
 
 const orderId = computed(() => route.query.orderId as string | undefined)
-
-const goToProducts = () => {
-    router.push('/')
-}
 </script>

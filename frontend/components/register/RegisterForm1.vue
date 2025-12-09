@@ -148,7 +148,6 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useRegisterStore } from '../../stores/register'
 import { validateEmail, validatePhoneNumber, validatePassword } from '../../utils/validators'
@@ -157,9 +156,8 @@ import { PHONE_PREFIXES } from '../../constants/phonePrefixes'
 import Input from '../atoms/Input.vue'
 import PhonePrefixAutocomplete from '../atoms/PhonePrefixAutocomplete.vue'
 import Button from '../atoms/Button.vue'
-import { ButtonVariant } from '../../types/common'
+import { ButtonVariant, ButtonTag } from '../../types/common'
 
-const router = useRouter()
 const { t } = useI18n()
 const registerStore = useRegisterStore()
 
@@ -277,8 +275,8 @@ const validateConfirmPasswordField = () => {
     }
 }
 
-const goToLogin = () => {
-    router.push('/login')
+const goToLogin = async () => {
+    await navigateTo('/login')
 }
 
 const goToNextStep = async () => {
@@ -351,6 +349,6 @@ const goToNextStep = async () => {
         return
     }
 
-    router.push('/register/2')
+    await navigateTo('/register/2')
 }
 </script>

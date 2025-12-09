@@ -1,7 +1,7 @@
 <template>
     <div v-if="cartStore.items.length === 0" class="text-center py-16">
         <p class="text-xl text-gray-600 mb-6">{{ t('deliveryInfo.emptyCart') }}</p>
-        <Button :variant="ButtonVariant.PRIMARY" @click="goToProducts">{{ t('cart.continueShopping') }}</Button>
+        <Button :tag="ButtonTag.NUXT_LINK" to="/" :variant="ButtonVariant.PRIMARY">{{ t('cart.continueShopping') }}</Button>
     </div>
 
     <div v-else class="space-y-6">
@@ -107,7 +107,6 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useCartStore } from '../../stores/cart'
 import Button from '../atoms/Button.vue'
@@ -115,9 +114,8 @@ import OrderReviewField from '../atoms/OrderReviewField.vue'
 import OrderReviewSection from '../molecules/OrderReviewSection.vue'
 import CartItem from './CartItem.vue'
 import OrderSummary from './OrderSummary.vue'
-import { ButtonVariant } from '../../types/common'
+import { ButtonVariant, ButtonTag } from '../../types/common'
 
-const router = useRouter()
 const { t } = useI18n()
 const cartStore = useCartStore()
 
@@ -148,12 +146,8 @@ const formattedPaymentMethod = computed(() =>
         : t('deliveryInfo.bankTransfer')
 )
 
-const goToProducts = () => {
-    router.push('/')
-}
-
-const goBack = () => {
-    router.push('/cart/2')
+const goBack = async () => {
+    await navigateTo('/cart/2')
 }
 
 const submitOrder = async () => {
@@ -162,7 +156,7 @@ const submitOrder = async () => {
 
     try {
         const order = await cartStore.submitOrder()
-        router.push({ path: '/cart/4', query: { orderId: order.id } })
+        await navigateTo({ path: '/cart/4', query: { orderId: order.id } })
     } catch (error: any) {
         console.error('Order submission failed:', error)
 

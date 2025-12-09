@@ -1,7 +1,7 @@
 <template>
     <div v-if="cartStore.items.length === 0" class="text-center py-16">
         <p class="text-xl text-gray-600 mb-6">{{ t('deliveryInfo.emptyCart') }}</p>
-        <Button :variant="ButtonVariant.PRIMARY" @click="goToProducts">{{ t('cart.continueShopping') }}</Button>
+        <Button :tag="ButtonTag.NUXT_LINK" to="/" :variant="ButtonVariant.PRIMARY">{{ t('cart.continueShopping') }}</Button>
     </div>
 
     <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useCartStore } from '../../stores/cart'
 import Button from '../atoms/Button.vue'
@@ -39,23 +38,18 @@ import DeliveryOptions from './DeliveryOptions.vue'
 import PaymentOptions from './PaymentOptions.vue'
 import OrderNotes from './OrderNotes.vue'
 import OrderSummary from './OrderSummary.vue'
-import { ButtonVariant } from '../../types/common'
+import { ButtonVariant, ButtonTag } from '../../types/common'
 
-const router = useRouter()
 const { t } = useI18n()
 const cartStore = useCartStore()
 
-const goToProducts = () => {
-    router.push('/')
+const goToCart = async () => {
+    await navigateTo('/cart/1')
 }
 
-const goToCart = () => {
-    router.push('/cart/1')
-}
-
-const goToNextStep = () => {
+const goToNextStep = async () => {
     if (cartStore.isFormValid) {
-        router.push('/cart/3')
+        await navigateTo('/cart/3')
     }
 }
 </script>

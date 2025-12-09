@@ -23,8 +23,9 @@
 
         <!-- Go to Login Button -->
         <Button 
+            :tag="ButtonTag.NUXT_LINK"
+            to="/login"
             :variant="ButtonVariant.PRIMARY" 
-            @click="$emit('goToLogin')" 
             class="px-8">
             {{ t('verify.goToLogin') }}
         </Button>
@@ -35,11 +36,7 @@
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import SuccessHeader from '../molecules/SuccessHeader.vue'
-import { ButtonVariant } from '../../types/common'
-
-defineEmits<{
-    goToLogin: []
-}>()
+import { ButtonVariant, ButtonTag } from '../../types/common'
 
 const { t } = useI18n()
 </script>
