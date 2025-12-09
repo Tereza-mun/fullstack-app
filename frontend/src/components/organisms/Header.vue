@@ -8,7 +8,7 @@
                 <div class="relative">
                     <Button @click="goToCart" :variant="ButtonVariant.ICON_BUTTON"  :aria-label="t('header.cart')">
                         <Cart :stroke="IconFill.WHITE" />
-                        <span class="hidden md:block ml-3 text-lg text-white">{{ t('header.cartTitle') }}</span>
+                        <span class="hidden md:block ml-3 text-lg text-white" :class="{ 'underline': isCartActive }">{{ t('header.cartTitle') }}</span>
                         <CartBadge :count="cartStore.totalItems" />
                     </Button>
                 </div>
@@ -18,11 +18,11 @@
                 >
                     <Button @click="goToRegister" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.register')">
                         <UserPlus :stroke="IconFill.WHITE" />
-                        <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.register') }}</span>
+                        <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isRegisterActive }">{{ t('header.register') }}</span>
                     </Button>
                     <Button @click="goToLogin" :variant="ButtonVariant.ICON_BUTTON"  :aria-label="t('header.login')">
                         <User :stroke="IconFill.WHITE" />
-                        <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.login') }}</span>
+                        <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isLoginActive }">{{ t('header.login') }}</span>
                     </Button>
                 </div>
                 <div
@@ -31,7 +31,7 @@
                 >
                     <Button @click="goToProfile" :variant="ButtonVariant.ICON_BUTTON"  :aria-label="t('header.profile')">
                         <User :stroke="IconFill.WHITE" />
-                        <span class="hidden md:block ml-2 text-lg text-white">{{ authStore.user.firstName }}</span>
+                        <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isProfileActive }">{{ authStore.user.firstName }}</span>
                     </Button>
                     <Button @click="logout" :variant="ButtonVariant.ICON_BUTTON"  class="text-sm">
                         <LogOut :stroke="IconFill.WHITE" />
@@ -57,8 +57,8 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, computed } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Cart from '../atoms/icons/Cart.vue'
@@ -76,10 +76,16 @@ import { ButtonVariant } from '../../types/common'
 
 
 const router = useRouter()
+const route = useRoute()
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 const alertStore = useAlertStore()
 const { t, locale } = useI18n()
+
+const isCartActive = computed(() => route.path.startsWith('/cart'))
+const isLoginActive = computed(() => route.path === '/login')
+const isRegisterActive = computed(() => route.path.startsWith('/register'))
+const isProfileActive = computed(() => route.path === '/profile')
 
 onMounted(() => {
     authStore.initAuth()
