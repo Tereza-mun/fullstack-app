@@ -30,13 +30,14 @@ export class MailService {
         const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
         const verificationUrl = `${frontendUrl}/verify-email?token=${token}`;
 
-        const msg = {
+        const fromEmail = process.env.SENDGRID_FROM_EMAIL || 'noreply@yourdomain.com';
+
+        const msg: any = {
             to: email,
             from: {
-                email: process.env.SENDGRID_FROM_EMAIL || 'noreply@yourdomain.com',
+                email: fromEmail,
                 name: 'TechStore'
             },
-            replyTo: process.env.SENDGRID_FROM_EMAIL,
             subject: getVerificationEmailSubject(language),
             headers: {
                 'X-Priority': '1',
@@ -48,40 +49,51 @@ export class MailService {
             text: generateVerificationEmailText({ verificationUrl, language }),
         };
 
-        try {
-            if (process.env.SENDGRID_API_KEY) {
+        // Only add replyTo if we have a valid email
+        if (fromEmail !== 'noreply@yourdomain.com') {
+            msg.replyTo = fromEmail;
+        }
+
+        if (process.env.SENDGRID_API_KEY) {
+            try {
                 await sgMail.send(msg);
                 this.logger.log(`Verification email sent to: ${email} (language: ${language})`);
-            } else {
-                // Fallback to logging if SendGrid is not configured
-                this.logger.log(`
+            } catch (error) {
+                this.logger.error(`Failed to send verification email to ${email}:`, error);
+                throw error;
+            }
+        } else {
+            // Fallback to logging if SendGrid is not configured
+            this.logger.log(`
 ========================================
 Email Verification for: ${email}
 Language: ${language}
 ========================================
 Verification URL: ${verificationUrl}
 ========================================
-                `);
-            }
-        } catch (error) {
-            this.logger.error(`Failed to send verification email to ${email}:`, error);
-            throw error;
+            `);
         }
     }
 
     async sendWelcomeEmail(email: string, firstName: string, language: string = 'en'): Promise<void> {
-        const msg = {
+        const fromEmail = process.env.SENDGRID_FROM_EMAIL || 'noreply@yourdomain.com';
+
+        const msg: any = {
             to: email,
             from: {
-                email: process.env.SENDGRID_FROM_EMAIL || 'noreply@yourdomain.com',
+                email: fromEmail,
                 name: 'TechStore'
             },
-            replyTo: process.env.SENDGRID_FROM_EMAIL,
             subject: getWelcomeEmailSubject(firstName, language),
             categories: ['welcome', 'transactional'],
             html: generateWelcomeEmailHtml({ firstName, language }),
             text: generateWelcomeEmailText({ firstName, language }),
         };
+
+        // Only add replyTo if we have a valid email
+        if (fromEmail !== 'noreply@yourdomain.com') {
+            msg.replyTo = fromEmail;
+        }
 
         try {
             if (process.env.SENDGRID_API_KEY) {

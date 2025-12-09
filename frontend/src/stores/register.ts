@@ -95,7 +95,7 @@ export const useRegisterStore = defineStore('register', () => {
         }
     }
 
-    const submitRegistration = async (language?: string) => {
+    const submitRegistration = async (language?: string, recaptchaToken?: string) => {
         loading.value = true
         error.value = ''
 
@@ -136,6 +136,7 @@ export const useRegisterStore = defineStore('register', () => {
                 billingPostalCode: billingPostalCode || undefined,
                 billingCountry: billingCountry || undefined,
                 language: language || 'en',
+                recaptchaToken: recaptchaToken,
             })
 
             // Clear all persisted registration data after successful submission

@@ -100,8 +100,17 @@
                         </div>
                     </div>
 
+                    <!-- reCAPTCHA Notice -->
+                    <div class="text-xs text-gray-500 text-center py-2">
+                        {{ t('register.recaptchaNotice') }}
+                    </div>
+
                     <div v-if="registerStore.error" class="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                         {{ registerStore.error }}
+                    </div>
+
+                    <div v-if="captchaError" class="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                        {{ captchaError }}
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-3 pt-4">
@@ -111,12 +120,11 @@
                             @click="goBack">
                             {{ t('register.back') }}
                         </Button>
-                        <Button 
+                        <Button
                             :variant="ButtonVariant.PRIMARY"
-                            type="submit" 
-                            :disabled="formIncomplete" 
-                            class="w-full sm:flex-1 order-1 sm:order-2"
-                            @click="handleSubmit">
+                            type="submit"
+                            :disabled="formIncomplete || registerStore.loading"
+                            class="w-full sm:flex-1 order-1 sm:order-2">
                             <span v-if="registerStore.loading">{{ t('register.creating') }}</span>
                             <span v-else>{{ t('register.createAccount') }}</span>
                         </Button>
@@ -128,9 +136,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useReCaptcha } from 'vue-recaptcha-v3'
 import { useRegisterStore } from '../../stores/register'
 import { useAlertStore } from '../../stores/alert'
 import Input from '../atoms/Input.vue'
@@ -141,10 +150,12 @@ import { ButtonVariant } from '../../types/common'
 
 const router = useRouter()
 const { t, locale } = useI18n()
+const recaptchaInstance = useReCaptcha()
 const registerStore = useRegisterStore()
 const alertStore = useAlertStore()
 
 const countryOptions = COUNTRIES
+const captchaError = ref('')
 
 // Check if delivery address fields are filled
 const isDeliveryAddressComplete = computed(() => {
@@ -179,17 +190,42 @@ const goBack = () => {
 }
 
 const handleSubmit = async () => {
-    const result = await registerStore.submitRegistration(locale.value)
+    captchaError.value = ''
 
-    if (result.success) {
-        // Don't auto-login - user must verify email first
-        router.push('/register/3')
-    } else {
-        alertStore.showAlert({
-            message: result.error || t('register.error'),
-            bgColor: 'bg-red-500',
-            textColor: 'text-white'
-        })
+    try {
+        // Check if reCAPTCHA instance is available
+        if (!recaptchaInstance) {
+            captchaError.value = t('register.captchaError')
+            return
+        }
+
+        // Wait for reCAPTCHA to load
+        await recaptchaInstance.recaptchaLoaded()
+
+        // Execute reCAPTCHA
+        const token = await recaptchaInstance.executeRecaptcha('register')
+
+        if (!token) {
+            captchaError.value = t('register.captchaError')
+            return
+        }
+
+        // Submit registration with captcha token
+        const result = await registerStore.submitRegistration(locale.value, token)
+
+        if (result.success) {
+            // Don't auto-login - user must verify email first
+            router.push('/register/3')
+        } else {
+            alertStore.showAlert({
+                message: result.error || t('register.error'),
+                bgColor: 'bg-red-500',
+                textColor: 'text-white'
+            })
+        }
+    } catch (error) {
+        captchaError.value = t('register.captchaError')
+        console.error('reCAPTCHA error:', error)
     }
 }
 </script>

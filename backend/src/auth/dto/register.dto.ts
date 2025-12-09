@@ -66,4 +66,8 @@ export class RegisterDto {
     @IsString()
     @IsOptional()
     language?: string;
+
+    @IsString()
+    @IsOptional()
+    recaptchaToken?: string;
 }

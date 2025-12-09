@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { MailService } from '../mail/mail.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { verifyRecaptcha } from '../utils/recaptcha';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 
@@ -36,7 +37,15 @@ export class AuthService {
     }
 
     async register(registerDto: RegisterDto) {
-        const { email, password, firstName, lastName, phonePrefix, phoneNumber, deliveryAddress, deliveryCity, deliveryPostalCode, deliveryCountry, billingAddress, billingCity, billingPostalCode, billingCountry, language } = registerDto;
+        const { email, password, firstName, lastName, phonePrefix, phoneNumber, deliveryAddress, deliveryCity, deliveryPostalCode, deliveryCountry, billingAddress, billingCity, billingPostalCode, billingCountry, language, recaptchaToken } = registerDto;
+
+        // Verify reCAPTCHA token
+        if (recaptchaToken) {
+            const isValidCaptcha = await verifyRecaptcha(recaptchaToken);
+            if (!isValidCaptcha) {
+                throw new BadRequestException('reCAPTCHA verification failed. Please try again.');
+            }
+        }
 
         // Normalize email to lowercase
         const normalizedEmail = email.toLowerCase();
@@ -61,6 +70,7 @@ export class AuthService {
         let user;
 
         try {
+            this.logger.log('Creating user...');
             // Create user
             user = await this.prisma.user.create({
                 data: {
@@ -85,11 +95,17 @@ export class AuthService {
                 },
             });
 
+            this.logger.log(`User created successfully: ${user.email}`);
+
             // Send verification email - CRITICAL: If this fails, rollback user creation
+            this.logger.log('Sending verification email...');
             await this.mailService.sendVerificationEmail(user.email, verificationToken, language || 'en');
+            this.logger.log('Verification email sent successfully from auth.service');
         } catch (error) {
+            this.logger.error('Error in try block:', error);
             // If email sending failed and user was created, delete the user
             if (user) {
+                this.logger.log('Rolling back user creation...');
                 await this.prisma.user.delete({
                     where: { id: user.id },
                 }).catch(() => {

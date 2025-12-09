@@ -253,7 +253,9 @@ export default {
         resendEmail: 'Znovu odeslat ověření',
         emailResent: '✓ Email odeslán!',
         goToLogin: 'Přihlásit se',
-        backToHome: 'Zpět na Hlavní Stránku'
+        backToHome: 'Zpět na Hlavní Stránku',
+        captchaError: 'Prosím dokončete reCAPTCHA ověření',
+        recaptchaNotice: 'Tento web je chráněn službou reCAPTCHA a platí Zásady ochrany osobních údajů a Smluvní podmínky Google.'
     },
     profile: {
         title: 'Můj Profil',

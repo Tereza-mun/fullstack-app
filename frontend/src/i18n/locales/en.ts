@@ -254,7 +254,9 @@ export default {
         resendEmail: 'Resend verification email',
         emailResent: '✓ Email sent!',
         goToLogin: 'Go to Login',
-        backToHome: 'Back to Home'
+        backToHome: 'Back to Home',
+        captchaError: 'Please complete the reCAPTCHA verification',
+        recaptchaNotice: 'This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.'
     },
     profile: {
         title: 'My Profile',

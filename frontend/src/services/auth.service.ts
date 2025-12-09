@@ -23,6 +23,7 @@ export interface RegisterData {
     billingPostalCode?: string;
     billingCountry?: string;
     language?: string;
+    recaptchaToken?: string;
 }
 
 export interface AuthResponse {
