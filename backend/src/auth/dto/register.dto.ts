@@ -62,4 +62,8 @@ export class RegisterDto {
     @IsString()
     @IsOptional()
     billingCountry?: string;
+
+    @IsString()
+    @IsOptional()
+    language?: string;
 }

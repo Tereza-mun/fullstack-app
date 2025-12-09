@@ -140,7 +140,7 @@ import { COUNTRIES } from '../../constants/countries'
 import { ButtonVariant } from '../../types/common'
 
 const router = useRouter()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const registerStore = useRegisterStore()
 const alertStore = useAlertStore()
 
@@ -179,7 +179,7 @@ const goBack = () => {
 }
 
 const handleSubmit = async () => {
-    const result = await registerStore.submitRegistration()
+    const result = await registerStore.submitRegistration(locale.value)
 
     if (result.success) {
         // Don't auto-login - user must verify email first

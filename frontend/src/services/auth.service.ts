@@ -22,6 +22,7 @@ export interface RegisterData {
     billingCity?: string;
     billingPostalCode?: string;
     billingCountry?: string;
+    language?: string;
 }
 
 export interface AuthResponse {

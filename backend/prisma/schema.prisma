@@ -70,6 +70,7 @@ refreshToken String?
 isEmailVerified Boolean @default(false)
 emailVerificationToken String?
 emailVerificationExpires DateTime?
+language String @default("en")
 createdAt DateTime @default(now())
 updatedAt DateTime @updatedAt
 }

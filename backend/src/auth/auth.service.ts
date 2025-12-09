@@ -36,7 +36,7 @@ export class AuthService {
     }
 
     async register(registerDto: RegisterDto) {
-        const { email, password, firstName, lastName, phonePrefix, phoneNumber, deliveryAddress, deliveryCity, deliveryPostalCode, deliveryCountry, billingAddress, billingCity, billingPostalCode, billingCountry } = registerDto;
+        const { email, password, firstName, lastName, phonePrefix, phoneNumber, deliveryAddress, deliveryCity, deliveryPostalCode, deliveryCountry, billingAddress, billingCity, billingPostalCode, billingCountry, language } = registerDto;
 
         // Normalize email to lowercase
         const normalizedEmail = email.toLowerCase();
@@ -81,11 +81,12 @@ export class AuthService {
                     isEmailVerified: false,
                     emailVerificationToken: verificationToken,
                     emailVerificationExpires: verificationExpires,
+                    language: language || 'en',
                 },
             });
 
             // Send verification email - CRITICAL: If this fails, rollback user creation
-            await this.mailService.sendVerificationEmail(user.email, verificationToken);
+            await this.mailService.sendVerificationEmail(user.email, verificationToken, language || 'en');
         } catch (error) {
             // If email sending failed and user was created, delete the user
             if (user) {
@@ -268,7 +269,7 @@ export class AuthService {
         }
 
         // Update user to verified
-        await this.prisma.user.update({
+        const updatedUser = await this.prisma.user.update({
             where: { id: user.id },
             data: {
                 isEmailVerified: true,
@@ -277,8 +278,8 @@ export class AuthService {
             },
         });
 
-        // Send welcome email
-        await this.mailService.sendWelcomeEmail(user.email, user.firstName);
+        // Send welcome email in user's language
+        await this.mailService.sendWelcomeEmail(updatedUser.email, updatedUser.firstName, updatedUser.language);
 
         return { message: 'Email verified successfully' };
     }
@@ -313,8 +314,8 @@ export class AuthService {
             },
         });
 
-        // Send verification email
-        await this.mailService.sendVerificationEmail(user.email, verificationToken);
+        // Send verification email in user's language
+        await this.mailService.sendVerificationEmail(user.email, verificationToken, user.language);
 
         return { message: 'Verification email sent' };
     }
