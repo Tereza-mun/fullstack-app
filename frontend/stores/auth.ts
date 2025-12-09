@@ -25,6 +25,12 @@ export const useAuthStore = defineStore('auth', () => {
 
     const isAuthenticated = computed(() => !!user.value)
 
+    // Email verification state
+    const verifyLoading = ref(false)
+    const verifySuccess = ref(false)
+    const verifyError = ref(false)
+    const verifyErrorMessage = ref('')
+
     const initAuth = () => {
         if (authService.isAuthenticated()) {
             user.value = authService.getUser()
@@ -44,11 +50,55 @@ export const useAuthStore = defineStore('auth', () => {
         cartStore.resetFormData()
     }
 
+    const verifyEmail = async (token: string, t: (key: string) => string) => {
+        verifyLoading.value = true
+        verifySuccess.value = false
+        verifyError.value = false
+        verifyErrorMessage.value = ''
+
+        if (!token) {
+            verifyError.value = true
+            verifyErrorMessage.value = t('verify.noToken')
+            verifyLoading.value = false
+            return
+        }
+
+        try {
+            const result = await authService.verifyEmail(token)
+
+            if (result.success) {
+                verifySuccess.value = true
+                sessionStorage.setItem('emailVerified', 'true')
+            } else {
+                // Check if this token was already verified (reload scenario)
+                const wasVerified = sessionStorage.getItem('emailVerified') === 'true'
+
+                if (wasVerified) {
+                    // Already verified, show success instead of error
+                    verifySuccess.value = true
+                } else {
+                    verifyError.value = true
+                    verifyErrorMessage.value = result.message || t('verify.invalidToken')
+                }
+            }
+        } catch (err) {
+            verifyError.value = true
+            verifyErrorMessage.value = t('verify.networkError')
+        } finally {
+            verifyLoading.value = false
+        }
+    }
+
     return {
         user,
         isAuthenticated,
+        verifyLoading,
+        verifySuccess,
+        verifyError,
+        verifyErrorMessage,
         initAuth,
         setUser,
         logout,
+        verifyEmail,
     }
 })

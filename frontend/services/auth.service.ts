@@ -153,6 +153,23 @@ class AuthService {
         // Silent success/fail - don't reveal if email exists
     }
 
+    async verifyEmail(token: string): Promise<{ success: boolean; message?: string }> {
+        const response = await fetch(`${API_URL}/auth/verify-email`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token }),
+        });
+
+        if (response.ok) {
+            return { success: true };
+        }
+
+        const data = await response.json().catch(() => ({}));
+        return { success: false, message: data.message };
+    }
+
     getUser() {
         const userStr = localStorage.getItem('user');
         return userStr ? JSON.parse(userStr) : null;
