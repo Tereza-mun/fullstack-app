@@ -22,7 +22,6 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import ProductItemMobile from './ProductItemMobile.vue'
 import ProductItemDesktop from './ProductItemDesktop.vue'
@@ -47,7 +46,6 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-const router = useRouter()
 const { t, locale } = useI18n()
 const cartStore = useCartStore()
 const alertStore = useAlertStore()

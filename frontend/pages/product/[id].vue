@@ -6,7 +6,6 @@
                 :tag="ButtonTag.NUXT_LINK"
                 to="/"
                 :variant="ButtonVariant.SECONDARY"
-                class="mb-6"
                 :aria-label="t('productDetail.backToProducts')"
             >
                 ← {{ t('productDetail.backToProducts') }}
@@ -28,7 +27,7 @@
             </div>
 
             <!-- Product details -->
-            <div v-else class="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden">
+            <div v-else class="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden mt-6">
                 <div class="grid md:grid-cols-2 gap-0">
                     <!-- Image -->
                     <div class="relative aspect-[4/3] md:aspect-auto md:h-full bg-gradient-to-br from-background-light to-background-lighter">
@@ -102,14 +101,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import Button from '../components/atoms/Button.vue'
-import ScrollToTop from '../components/atoms/ScrollToTop.vue'
-import { useProductsStore, type ProductName, type ProductDescription } from '../stores/products'
-import { useCartStore } from '../stores/cart'
-import { useAlertStore } from '../stores/alert'
-import { ButtonVariant, ButtonTag } from '../types/common'
+import Button from '../../components/atoms/Button.vue'
+import ScrollToTop from '../../components/atoms/ScrollToTop.vue'
+import { useProductsStore, type ProductName, type ProductDescription } from '../../stores/products'
+import { useCartStore } from '../../stores/cart'
+import { useAlertStore } from '../../stores/alert'
+import { ButtonVariant, ButtonTag } from '../../types/common'
 
 const route = useRoute()
 const { t, locale } = useI18n()
