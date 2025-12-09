@@ -62,7 +62,8 @@ export default defineNuxtConfig({
     },
     alias: {
       'form-data': 'unenv/runtime/mock/empty'
-    }
+    },
+    preset: 'netlify'
   },
 
   pinia: {
