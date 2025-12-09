@@ -73,7 +73,26 @@
                             autocomplete="new-password"
                             @blur="validatePasswordField"
                         />
-                        <div class="mt-2 text-xs text-gray-600 space-y-1">
+
+                        <!-- Password Strength Indicator -->
+                        <div v-if="registerStore.sensitiveData.password" class="mt-3">
+                            <div class="flex items-center justify-between mb-1.5">
+                                <span class="text-xs font-medium text-gray-700">{{ t('register.passwordStrength') }}</span>
+                                <span class="text-xs font-semibold" :class="strengthColor">
+                                    {{ t(`register.strength.${passwordStrength.level}`) }}
+                                </span>
+                            </div>
+                            <div class="flex gap-1 h-1.5">
+                                <div
+                                    v-for="i in 4"
+                                    :key="i"
+                                    class="flex-1 rounded-full transition-all duration-300"
+                                    :class="i <= passwordStrength.score ? strengthBarColor : 'bg-gray-200'"
+                                />
+                            </div>
+                        </div>
+
+                        <div class="mt-3 text-xs text-gray-600 space-y-1">
                             <p class="font-medium">{{ t('register.passwordRequirements') }}</p>
                             <ul class="list-disc list-inside space-y-0.5 ml-2">
                                 <li :class="passwordChecks.length ? 'text-green-600' : ''">{{ t('register.passwordReq1') }}</li>
@@ -133,6 +152,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useRegisterStore } from '../../stores/register'
 import { validateEmail, validatePhoneNumber, validatePassword } from '../../utils/validators'
+import { calculatePasswordStrength } from '../../utils/passwordStrength'
 import { PHONE_PREFIXES } from '../../constants/phonePrefixes'
 import Input from '../atoms/Input.vue'
 import PhonePrefixAutocomplete from '../atoms/PhonePrefixAutocomplete.vue'
@@ -152,13 +172,34 @@ const phoneError = ref('')
 const passwordValidationError = ref('')
 const confirmPasswordError = ref('')
 
+// Password strength calculation
+const passwordStrength = computed(() => calculatePasswordStrength(registerStore.sensitiveData.password))
+
 // Password requirement checks (for visual feedback)
-const passwordChecks = computed(() => ({
-    length: registerStore.sensitiveData.password.length >= 8,
-    uppercase: /[A-Z]/.test(registerStore.sensitiveData.password),
-    number: /\d/.test(registerStore.sensitiveData.password),
-    special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(registerStore.sensitiveData.password)
-}))
+const passwordChecks = computed(() => passwordStrength.value.checks)
+
+// Color classes for strength indicator
+const strengthColor = computed(() => {
+    switch (passwordStrength.value.level) {
+        case 'very-weak': return 'text-red-600';
+        case 'weak': return 'text-orange-600';
+        case 'fair': return 'text-yellow-600';
+        case 'good': return 'text-blue-600';
+        case 'strong': return 'text-green-600';
+        default: return 'text-gray-600';
+    }
+})
+
+const strengthBarColor = computed(() => {
+    switch (passwordStrength.value.level) {
+        case 'very-weak': return 'bg-red-500';
+        case 'weak': return 'bg-orange-500';
+        case 'fair': return 'bg-yellow-500';
+        case 'good': return 'bg-blue-500';
+        case 'strong': return 'bg-green-500';
+        default: return 'bg-gray-300';
+    }
+})
 
 const formIncomplete = computed(() => {
     return !registerStore.formData.firstName
