@@ -32,6 +32,7 @@ import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Input from '../atoms/Input.vue'
 import { ButtonVariant } from '../../types/common'
+import { authService } from '../../services/auth.service'
 
 const { t } = useI18n()
 
@@ -39,26 +40,16 @@ const email = ref('')
 const loading = ref(false)
 const resendSuccess = ref(false)
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'
-
 const handleResend = async () => {
     loading.value = true
     resendSuccess.value = false
 
     try {
-        const response = await fetch(`${API_URL}/auth/resend-verification`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: email.value }),
-        })
-
-        if (response.ok) {
-            resendSuccess.value = true
-        }
+        await authService.resendVerificationEmail(email.value)
+        resendSuccess.value = true
     } catch (err) {
         // Silent fail - don't reveal if email exists
+        resendSuccess.value = true // Show success anyway for security
     } finally {
         loading.value = false
     }

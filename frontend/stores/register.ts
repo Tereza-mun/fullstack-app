@@ -28,6 +28,8 @@ export const useRegisterStore = defineStore('register', () => {
     const differentBillingAddress = ref(false)
     const loading = ref(false)
     const error = ref('')
+    const resendLoading = ref(false)
+    const resendSuccess = ref(false)
 
     // Clear sensitive data (password and email)
     const clearSensitiveData = () => {
@@ -150,6 +152,21 @@ export const useRegisterStore = defineStore('register', () => {
         }
     }
 
+    const resendVerificationEmail = async () => {
+        resendLoading.value = true
+        resendSuccess.value = false
+
+        try {
+            await authService.resendVerificationEmail(sensitiveData.value.email)
+            resendSuccess.value = true
+        } catch (err) {
+            // Silent fail - don't reveal if email exists
+            resendSuccess.value = true // Show success anyway for security
+        } finally {
+            resendLoading.value = false
+        }
+    }
+
     // Clear sensitive data when page is about to unload (browser close, refresh, navigate away)
     if (typeof window !== 'undefined') {
         const handleBeforeUnload = () => {
@@ -167,11 +184,14 @@ export const useRegisterStore = defineStore('register', () => {
         differentBillingAddress,
         loading,
         error,
+        resendLoading,
+        resendSuccess,
         resetForm,
         clearPersistedData,
         clearSensitiveData,
         checkEmailExists,
         submitRegistration,
+        resendVerificationEmail,
         isStep1Complete,
         isStep2Complete,
     }

@@ -142,6 +142,17 @@ class AuthService {
         localStorage.removeItem('user');
     }
 
+    async resendVerificationEmail(email: string): Promise<void> {
+        await fetch(`${API_URL}/auth/resend-verification`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email }),
+        });
+        // Silent success/fail - don't reveal if email exists
+    }
+
     getUser() {
         const userStr = localStorage.getItem('user');
         return userStr ? JSON.parse(userStr) : null;
