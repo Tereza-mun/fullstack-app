@@ -5,9 +5,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import Container from '../../components/molecules/Container.vue'
 import CartForm from '../../components/cart/CartForm.vue'
+
+definePageMeta({
+  middleware: 'cart-step'
+})
 
 const route = useRoute()
 const id = computed(() => route.params.id as string)
