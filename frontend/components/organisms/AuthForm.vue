@@ -126,7 +126,7 @@ const handleSubmit = async () => {
 
     try {
         const response = await authService.login({
-            email: email.value,
+            email: email.value.toLowerCase(),
             password: password.value
         })
 
