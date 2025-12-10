@@ -25,7 +25,7 @@
                 :aria-label="t('common.closeAlert')"
                 :class="alertStore.textColor"
             >
-                <Close :stroke="alertStore.textColor === 'text-white' ? '#ffffff' : 'currentColor'" />
+                <Close :stroke="alertStore.textColor === 'text-white' ? IconFill.WHITE : 'currentColor'" />
             </Button>
         </div>
     </Transition>
@@ -36,7 +36,7 @@ import { useI18n } from 'vue-i18n'
 import { useAlertStore } from '../../stores/alert'
 import Button from '../atoms/Button.vue'
 import Close from '../atoms/icons/Close.vue'
-import { ButtonVariant } from '../../types/common'
+import { ButtonVariant, IconFill } from '../../types/common'
 
 const { t } = useI18n()
 const alertStore = useAlertStore()
