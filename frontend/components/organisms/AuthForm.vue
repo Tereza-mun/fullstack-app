@@ -5,10 +5,11 @@
                 <Input
                     v-model="email"
                     :label="t('login.email')"
-                    type="email"
-                    required
+                    type="text"
                     :placeholder="t('login.emailPlaceholder')"
+                    :error="emailError"
                     autocomplete="email"
+                    @input="emailError = ''"
                 />
 
                 <div class="relative">
@@ -16,9 +17,10 @@
                         v-model="password"
                         :label="t('login.password')"
                         :type="showPassword ? 'text' : 'password'"
-                        required
                         :placeholder="t('login.passwordPlaceholder')"
+                        :error="passwordError"
                         autocomplete="current-password"
+                        @input="passwordError = ''"
                     />
                     <Button
                         :variant="ButtonVariant.EYE_ICON"
@@ -67,6 +69,7 @@ import { authService } from '../../services/auth.service'
 import { useAlertStore } from '../../stores/alert'
 import { useAuthStore } from '../../stores/auth'
 import { useCartStore } from '../../stores/cart'
+import { validateEmail } from '../../utils/validators'
 import { ButtonVariant, ButtonTag } from '../../types/common'
 
 const emit = defineEmits<{
@@ -79,6 +82,8 @@ const email = ref('')
 const password = ref('')
 const loading = ref(false)
 const error = ref('')
+const emailError = ref('')
+const passwordError = ref('')
 const showPassword = ref(false)
 const alertStore = useAlertStore()
 const authStore = useAuthStore()
@@ -87,6 +92,33 @@ const cartStore = useCartStore()
 const handleSubmit = async () => {
     loading.value = true
     error.value = ''
+    emailError.value = ''
+    passwordError.value = ''
+
+    // Validate required fields
+    let hasErrors = false
+
+    if (!email.value) {
+        emailError.value = t('validation.required')
+        hasErrors = true
+    } else {
+        // Validate email format
+        const emailValidation = validateEmail(email.value)
+        if (!emailValidation.isValid) {
+            emailError.value = t('validation.invalidEmail')
+            hasErrors = true
+        }
+    }
+
+    if (!password.value) {
+        passwordError.value = t('validation.required')
+        hasErrors = true
+    }
+
+    if (hasErrors) {
+        loading.value = false
+        return
+    }
 
     try {
         const response = await authService.login({

@@ -102,7 +102,8 @@ export default {
         passwordNoUppercase: 'Heslo musí obsahovat alespoň 1 velké písmeno',
         passwordNoNumber: 'Heslo musí obsahovat alespoň 1 číslo',
         passwordNoSpecial: "Heslo musí obsahovat alespoň 1 speciální znak (!{'@'}#$%^&*...)",
-        passwordInvalid: 'Heslo nesplňuje požadavky'
+        passwordInvalid: 'Heslo nesplňuje požadavky',
+        required: 'Povinné pole',
     },
     deliveryInfo: {
         title: 'Dodací údaje',

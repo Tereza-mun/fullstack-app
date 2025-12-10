@@ -102,7 +102,8 @@ export default {
         passwordNoUppercase: 'Password must contain at least 1 uppercase letter',
         passwordNoNumber: 'Password must contain at least 1 number',
         passwordNoSpecial: "Password must contain at least 1 special character (!{'@'}#$%^&*...)",
-        passwordInvalid: 'Password does not meet requirements'
+        passwordInvalid: 'Password does not meet requirements',
+        required: 'Required field',
     },
     deliveryInfo: {
         title: 'Delivery Information',
