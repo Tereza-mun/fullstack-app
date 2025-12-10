@@ -2,7 +2,8 @@
     <header class="bg-gradient-to-br from-primary-dark to-primary-darker px-4 md:px-8 py-4 md:py-6 shadow-[0_4px_20px_rgba(26,26,46,0.3)]">
         <div class="max-w-[1200px] mx-auto flex justify-between items-center">
             <Button :tag="ButtonTag.NUXT_LINK" :to="'/'" :variant="ButtonVariant.HOME">
-                {{ t('header.title') }}
+                <HomeIcon :stroke="IconFill.WHITE" />
+                <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.title') }}</span>
             </Button>
             <div class="flex items-center gap-2 md:gap-6">
                 <div class="relative">
@@ -64,6 +65,7 @@ import Cart from '../atoms/icons/Cart.vue'
 import User from '../atoms/icons/User.vue'
 import UserPlus from '../atoms/icons/UserPlus.vue'
 import LogOut from '../atoms/icons/LogOut.vue'
+import HomeIcon from '../atoms/icons/HomeIcon.vue'
 import CartBadge from '../atoms/CartBadge.vue'
 import { useCartStore } from '../../stores/cart'
 import { useAuthStore } from '../../stores/auth'
