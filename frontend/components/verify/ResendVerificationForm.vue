@@ -9,7 +9,9 @@
                 type="email"
                 :label="t('register.email')"
                 :placeholder="t('register.emailPlaceholder')"
+                :error="emailError"
                 required
+                @blur="validateEmailField"
             />
             <Button
                 type="submit"
@@ -33,14 +35,31 @@ import Button from '../atoms/Button.vue'
 import Input from '../atoms/Input.vue'
 import { ButtonVariant } from '../../types/common'
 import { authService } from '../../services/auth.service'
+import { validateEmail } from '../../utils/validators'
 
 const { t } = useI18n()
 
 const email = ref('')
+const emailError = ref('')
 const loading = ref(false)
 const resendSuccess = ref(false)
 
+const validateEmailField = () => {
+    if (!email.value) {
+        emailError.value = ''
+        return
+    }
+    const result = validateEmail(email.value)
+    emailError.value = result.isValid ? '' : t('validation.invalidEmail')
+}
+
 const handleResend = async () => {
+    // Validate before submitting
+    validateEmailField()
+    if (emailError.value || !email.value) {
+        return
+    }
+
     loading.value = true
     resendSuccess.value = false
 

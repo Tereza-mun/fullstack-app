@@ -74,6 +74,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useCartStore } from '../../stores/cart'
 import { PHONE_PREFIXES } from '../../constants/phonePrefixes'
+import { validateEmail, validatePhoneNumber } from '../../utils/validators'
 import Input from '../atoms/Input.vue'
 import PhonePrefixAutocomplete from '../atoms/PhonePrefixAutocomplete.vue'
 
@@ -83,27 +84,13 @@ const cartStore = useCartStore()
 const emailError = ref<string>('')
 const phoneError = ref<string>('')
 
-const validateEmail = (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return emailRegex.test(email)
-}
-
-const validatePhoneNumber = (phoneNumber: string): boolean => {
-    // Allow only digits
-    const phoneRegex = /^\d+$/
-    if (!phoneRegex.test(phoneNumber)) {
-        return false
-    }
-    // Check if it has between 6-15 digits
-    return phoneNumber.length >= 6 && phoneNumber.length <= 15
-}
-
 const handleEmailUpdate = (value: string | number | null) => {
     const email = String(value ?? '')
     cartStore.updateFormData({ customerEmail: email })
 
-    if (email && !validateEmail(email)) {
-        emailError.value = t('validation.invalidEmail')
+    if (email) {
+        const result = validateEmail(email)
+        emailError.value = result.isValid ? '' : t('validation.invalidEmail')
     } else {
         emailError.value = ''
     }
@@ -113,8 +100,9 @@ const handlePhoneUpdate = (value: string | number | null) => {
     const phoneNumber = String(value ?? '')
     cartStore.updateFormData({ phoneNumber })
 
-    if (phoneNumber && !validatePhoneNumber(phoneNumber)) {
-        phoneError.value = t('validation.invalidPhoneNumber')
+    if (phoneNumber) {
+        const result = validatePhoneNumber(phoneNumber, false)
+        phoneError.value = result.isValid ? '' : t('validation.invalidPhoneNumber')
     } else {
         phoneError.value = ''
     }
