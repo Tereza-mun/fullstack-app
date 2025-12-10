@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import ErrorIcon from '../atoms/ErrorIcon.vue'
+import ErrorIcon from '../atoms/icons/ErrorIcon.vue'
 import ResendVerificationForm from './ResendVerificationForm.vue'
 
 defineProps<{

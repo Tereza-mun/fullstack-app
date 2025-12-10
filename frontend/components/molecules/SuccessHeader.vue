@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import CheckIcon from '../atoms/CheckIcon.vue'
+import CheckIcon from '../atoms/icons/CheckIcon.vue'
 
 interface Props {
     title: string

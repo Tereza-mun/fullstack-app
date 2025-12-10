@@ -1,4 +1,4 @@
-globalThis.__timing__.logStart('Load chunks/nitro/nitro');import http from 'node:http';
+import http from 'node:http';
 import https from 'node:https';
 import { EventEmitter } from 'node:events';
 import { Buffer as Buffer$1 } from 'node:buffer';
@@ -2385,53 +2385,6 @@ function createHooks() {
   return new Hookable();
 }
 
-const isBrowser = "undefined" !== "undefined";
-function createDebugger(hooks, _options = {}) {
-  const options = {
-    inspect: isBrowser,
-    group: isBrowser,
-    filter: () => true,
-    ..._options
-  };
-  const _filter = options.filter;
-  const filter = typeof _filter === "string" ? (name) => name.startsWith(_filter) : _filter;
-  const _tag = options.tag ? `[${options.tag}] ` : "";
-  const logPrefix = (event) => _tag + event.name + "".padEnd(event._id, "\0");
-  const _idCtr = {};
-  const unsubscribeBefore = hooks.beforeEach((event) => {
-    if (filter !== void 0 && !filter(event.name)) {
-      return;
-    }
-    _idCtr[event.name] = _idCtr[event.name] || 0;
-    event._id = _idCtr[event.name]++;
-    console.time(logPrefix(event));
-  });
-  const unsubscribeAfter = hooks.afterEach((event) => {
-    if (filter !== void 0 && !filter(event.name)) {
-      return;
-    }
-    if (options.group) {
-      console.groupCollapsed(event.name);
-    }
-    if (options.inspect) {
-      console.timeLog(logPrefix(event), event.args);
-    } else {
-      console.timeEnd(logPrefix(event));
-    }
-    if (options.group) {
-      console.groupEnd();
-    }
-    _idCtr[event.name]--;
-  });
-  return {
-    /** Stop debugging and remove listeners */
-    close: () => {
-      unsubscribeBefore();
-      unsubscribeAfter();
-    }
-  };
-}
-
 const s$1=globalThis.Headers,i=globalThis.AbortController,l=globalThis.fetch||(()=>{throw new Error("[node-fetch-native] Failed to fetch: `globalThis.fetch` is not available!")});
 
 class FetchError extends Error {
@@ -4304,7 +4257,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "5ed77b22-035b-48b1-886e-d240819ad779",
+    "buildId": "1e33a07b-e821-4d3f-a24f-2f0cf201fc6b",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -4336,7 +4289,7 @@ const _inlineRuntimeConfig = {
   },
   "public": {
     "recaptchaSiteKey": "6Lfx7CUsAAAAAExG1m4Te0u4R7lWlNM76EsASjTu",
-    "apiUrl": "http://localhost:3002",
+    "apiUrl": "http://localhost:3000",
     "environment": "production"
   }
 };
@@ -4737,45 +4690,8 @@ async function errorHandler(error, event) {
   // H3 will handle fallback
 }
 
-function defineNitroPlugin(def) {
-  return def;
-}
-
-const _GW1aT7pvrFCzXE2Pbj_XFZxzx0RVpdwAYYVjE0Jxw = defineNitroPlugin((nitro) => {
-  createDebugger(nitro.hooks, { tag: "nitro-runtime" });
-});
-
-const globalTiming = globalThis.__timing__ || {
-  start: () => 0,
-  end: () => 0,
-  metrics: []
-};
-const timingMiddleware = eventHandler((event) => {
-  const start = globalTiming.start();
-  const _end = event.node.res.end;
-  event.node.res.end = function(chunk, encoding, cb) {
-    const metrics = [
-      ["Generate", globalTiming.end(start)],
-      ...globalTiming.metrics
-    ];
-    const serverTiming = metrics.map((m) => `-;dur=${m[1]};desc="${encodeURIComponent(m[0])}"`).join(", ");
-    if (!event.node.res.headersSent) {
-      event.node.res.setHeader("Server-Timing", serverTiming);
-    }
-    _end.call(event.node.res, chunk, encoding, cb);
-    return this;
-  }.bind(event.node.res);
-});
-const _Bs_RDOYMl_kU6r38fzelVQc6N5TYcKoZccjYkJihHeU = defineNitroPlugin((nitro) => {
-  nitro.h3App.stack.unshift({
-    route: "/",
-    handler: timingMiddleware
-  });
-});
-
 const plugins = [
-  _GW1aT7pvrFCzXE2Pbj_XFZxzx0RVpdwAYYVjE0Jxw,
-_Bs_RDOYMl_kU6r38fzelVQc6N5TYcKoZccjYkJihHeU
+  
 ];
 
 const _SxA8c9 = defineEventHandler(() => {});
@@ -5011,5 +4927,5 @@ function getCacheHeaders(url) {
   return {};
 }
 
-export { $fetch as $, getRequestHeader as A, isEqual as B, setCookie as C, getCookie as D, deleteCookie as E, handler as F, getResponseStatus as a, getQuery as b, createError$1 as c, defineRenderHandler as d, getRouteRules as e, useNitroApp as f, getResponseStatusText as g, hasProtocol as h, isScriptProtocol as i, joinRelativeURL as j, joinURL as k, withTrailingSlash as l, withoutTrailingSlash as m, getContext as n, createHooks as o, parseQuery as p, executeAsync as q, createDebugger as r, sanitizeStatusCode as s, destr as t, useRuntimeConfig as u, klona as v, withQuery as w, toRouteMatcher as x, createRouter$1 as y, defu as z };;globalThis.__timing__.logEnd('Load chunks/nitro/nitro');
+export { $fetch as $, isEqual as A, setCookie as B, getCookie as C, deleteCookie as D, handler as E, getResponseStatus as a, getQuery as b, createError$1 as c, defineRenderHandler as d, getRouteRules as e, useNitroApp as f, getResponseStatusText as g, hasProtocol as h, isScriptProtocol as i, joinRelativeURL as j, joinURL as k, withTrailingSlash as l, withoutTrailingSlash as m, getContext as n, createHooks as o, parseQuery as p, executeAsync as q, destr as r, sanitizeStatusCode as s, klona as t, useRuntimeConfig as u, toRouteMatcher as v, withQuery as w, createRouter$1 as x, defu as y, getRequestHeader as z };
 //# sourceMappingURL=nitro.mjs.map
