@@ -165,6 +165,11 @@ const hasMoreItems = computed(() => {
     return paginatedOptions.value.length < filteredOptions.value.length
 })
 
+// Detect if device is mobile/touch-enabled
+const isMobile = computed(() => {
+    return 'ontouchstart' in window || navigator.maxTouchPoints > 0
+})
+
 // Dropdown actions
 const toggleDropdown = () => {
     if (props.disabled) return
@@ -172,11 +177,14 @@ const toggleDropdown = () => {
     if (isOpen.value) {
         currentPage.value = 1
         searchValue.value = ''
-        nextTick(() => {
-            if (searchInputRef.value && 'focus' in searchInputRef.value) {
-                (searchInputRef.value as any).focus()
-            }
-        })
+        // Only auto-focus search input on desktop, not on mobile/touch devices
+        if (!isMobile.value) {
+            nextTick(() => {
+                if (searchInputRef.value && 'focus' in searchInputRef.value) {
+                    (searchInputRef.value as any).focus()
+                }
+            })
+        }
     }
 }
 
