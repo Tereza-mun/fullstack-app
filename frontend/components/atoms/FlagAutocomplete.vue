@@ -40,6 +40,7 @@
                         :placeholder="searchPlaceholder"
                         @escape="closeDropdown"
                         @enter="selectFirstResult"
+                        @blur="handleSearchBlur"
                     />
 
                     <div class="max-h-60 overflow-auto" ref="listRef">
@@ -190,6 +191,10 @@ const toggleDropdown = () => {
 
 const closeDropdown = () => {
     isOpen.value = false
+    // Remove focus from search input to prevent mobile zoom-in
+    if (searchInputRef.value && 'blur' in searchInputRef.value) {
+        (searchInputRef.value as any).blur()
+    }
 }
 
 const selectOption = (option: FlagOption) => {
@@ -200,6 +205,13 @@ const selectOption = (option: FlagOption) => {
 const selectFirstResult = () => {
     if (filteredOptions.value.length > 0) {
         selectOption(filteredOptions.value[0])
+    }
+}
+
+const handleSearchBlur = () => {
+    // Close dropdown when search input loses focus on mobile to prevent zoom-in
+    if (isMobile.value) {
+        closeDropdown()
     }
 }
 

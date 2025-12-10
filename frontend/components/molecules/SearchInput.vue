@@ -9,6 +9,7 @@
             class="w-full px-4 py-3 pl-10 text-sm outline-none"
             @keydown.escape="$emit('escape')"
             @keydown.enter.prevent="$emit('enter')"
+            @blur="$emit('blur')"
         />
         <svg
             class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
@@ -35,6 +36,7 @@ defineEmits<{
     'update:modelValue': [value: string]
     escape: []
     enter: []
+    blur: []
 }>()
 
 const inputRef = ref<HTMLInputElement | null>(null)
