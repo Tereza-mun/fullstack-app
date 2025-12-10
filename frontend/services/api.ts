@@ -52,34 +52,35 @@ interface Order {
 }
 
 class ApiService {
-  private api: AxiosInstance;
+  private api: AxiosInstance | null = null;
 
-  constructor() {
-    const config = useRuntimeConfig();
-    const baseURL = process.client
-      ? (config.public.apiUrl || '/api')
-      : (config.public.apiUrl || 'http://localhost:3002');
+  private getApi(): AxiosInstance {
+    if (!this.api) {
+      const config = useRuntimeConfig();
+      const baseURL = config.public.apiUrl || 'http://localhost:3002';
 
-    this.api = axios.create({
-      baseURL,
-      withCredentials: true,
-    });
+      this.api = axios.create({
+        baseURL,
+        withCredentials: true,
+      });
+    }
+    return this.api;
   }
 
   get<T>(url: string) {
-    return this.api.get<T>(url).then(res => res.data);
+    return this.getApi().get<T>(url).then(res => res.data);
   }
 
   post<T>(url: string, data: unknown) {
-    return this.api.post<T>(url, data).then(res => res.data);
+    return this.getApi().post<T>(url, data).then(res => res.data);
   }
 
   put<T>(url: string, data: unknown) {
-    return this.api.put<T>(url, data).then(res => res.data);
+    return this.getApi().put<T>(url, data).then(res => res.data);
   }
 
   delete<T>(url: string) {
-    return this.api.delete<T>(url).then(res => res.data);
+    return this.getApi().delete<T>(url).then(res => res.data);
   }
 
   // Orders
