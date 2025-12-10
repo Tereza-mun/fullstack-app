@@ -1,9 +1,9 @@
-import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};export { E as default } from './chunks/nitro/nitro.mjs';
+import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import './timing.js';globalThis.__timing__.logStart('Load main');export { F as default } from './chunks/nitro/nitro.mjs';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
 import 'node:path';
-import 'node:crypto';
+import 'node:crypto';;globalThis.__timing__.logEnd('Load main');
 //# sourceMappingURL=main.mjs.map
