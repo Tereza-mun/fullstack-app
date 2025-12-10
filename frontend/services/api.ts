@@ -55,8 +55,13 @@ class ApiService {
   private api: AxiosInstance;
 
   constructor() {
+    const config = useRuntimeConfig();
+    const baseURL = process.client
+      ? (config.public.apiUrl || '/api')
+      : (config.public.apiUrl || 'http://localhost:3002');
+
     this.api = axios.create({
-      baseURL: "/api",
+      baseURL,
       withCredentials: true,
     });
   }
