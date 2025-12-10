@@ -4257,7 +4257,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "f625a98f-d01d-4e48-88d1-b41eb903569c",
+    "buildId": "002a987c-cbe4-4da0-bfb6-ca3e38082829",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -4289,7 +4289,7 @@ const _inlineRuntimeConfig = {
   },
   "public": {
     "recaptchaSiteKey": "6Lfx7CUsAAAAAExG1m4Te0u4R7lWlNM76EsASjTu",
-    "apiBaseUrl": "http://localhost:3002",
+    "apiUrl": "http://localhost:3002",
     "environment": "production"
   }
 };
