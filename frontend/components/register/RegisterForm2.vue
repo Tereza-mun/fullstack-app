@@ -122,7 +122,7 @@
                         </Button>
                         <Button
                             :variant="ButtonVariant.PRIMARY"
-                            type="submit"
+                            :type="ButtonType.SUBMIT"
                             :disabled="formIncomplete || registerStore.loading"
                             class="w-full sm:flex-1 order-1 sm:order-2">
                             <span v-if="registerStore.loading">{{ t('register.creating') }}</span>
@@ -145,7 +145,7 @@ import Input from '../atoms/Input.vue'
 import Button from '../atoms/Button.vue'
 import CountryAutocomplete from '../atoms/CountryAutocomplete.vue'
 import { COUNTRIES } from '../../constants/countries'
-import { ButtonVariant, ButtonTag } from '../../types/common'
+import { ButtonVariant, ButtonTag, ButtonType } from '../../types/common'
 
 const { t, locale } = useI18n()
 const recaptchaInstance = useReCaptcha()

@@ -27,3 +27,9 @@ export enum ButtonTag {
     NUXT_LINK = 'NuxtLink'
 }
 
+export enum ButtonType {
+    BUTTON = 'button',
+    SUBMIT = 'submit',
+    RESET = 'reset'
+}
+

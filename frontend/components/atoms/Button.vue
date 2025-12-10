@@ -2,6 +2,7 @@
     <component
         :is="componentTag"
         :class="buttonClasses"
+        :type="tag === 'button' ? type : undefined"
         :aria-label="ariaLabel"
         :disabled="tag === 'button' ? disabled : undefined"
         :href="tag === 'a' ? href : undefined"
@@ -15,11 +16,12 @@
 
 <script setup lang="ts">
 import { computed, resolveComponent } from 'vue'
-import { ButtonVariant, ButtonTag } from '../../types/common'
+import { ButtonVariant, ButtonTag, ButtonType } from '../../types/common'
 
 export interface ButtonProps {
     variant?: ButtonVariant
     tag?: ButtonTag
+    type?: ButtonType
     ariaLabel?: string
     disabled?: boolean
     href?: string
@@ -30,6 +32,7 @@ export interface ButtonProps {
 const props = withDefaults(defineProps<ButtonProps>(), {
     variant: ButtonVariant.PRIMARY,
     tag: ButtonTag.BUTTON,
+    type: ButtonType.BUTTON,
     disabled: false
 })
 

@@ -147,7 +147,7 @@
                         </Button>
                         <Button 
                             :variant="ButtonVariant.PRIMARY"
-                            type="submit" 
+                            :type="ButtonType.SUBMIT" 
                             class="w-full sm:flex-1 order-1 sm:order-2"
                             :disabled="formIncomplete">
                             {{ t('register.continue') }}
@@ -181,7 +181,7 @@ import PhonePrefixAutocomplete from '../atoms/PhonePrefixAutocomplete.vue'
 import Button from '../atoms/Button.vue'
 import Eye from '../icons/Eye.vue'
 import EyeSlash from '../icons/EyeSlash.vue'
-import { ButtonVariant, ButtonTag } from '../../types/common'
+import { ButtonVariant, ButtonTag, ButtonType } from '../../types/common'
 
 const { t } = useI18n()
 const registerStore = useRegisterStore()

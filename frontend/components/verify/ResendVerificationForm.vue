@@ -14,7 +14,7 @@
                 @blur="validateEmailField"
             />
             <Button
-                type="submit"
+                :type="ButtonType.SUBMIT"
                 :variant="ButtonVariant.PRIMARY"
                 class="w-full mt-4"
                 :disabled="loading"
@@ -33,7 +33,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Input from '../atoms/Input.vue'
-import { ButtonVariant } from '../../types/common'
+import { ButtonVariant, ButtonType } from '../../types/common'
 import { authService } from '../../services/auth.service'
 import { validateEmail } from '../../utils/validators'
 

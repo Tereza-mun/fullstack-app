@@ -24,6 +24,7 @@
                     />
                     <Button
                         :variant="ButtonVariant.EYE_ICON"
+                        :type="ButtonType.BUTTON"
                         @click="showPassword = !showPassword"
                         :aria-label="showPassword ? 'Hide password' : 'Show password'"
                     >
@@ -36,9 +37,10 @@
                     {{ error }}
                 </div>
 
-                <Button 
-                    :variant="ButtonVariant.PRIMARY" 
-                    type="submit" 
+                <Button
+                    :variant="ButtonVariant.PRIMARY"
+                    :tag="ButtonTag.BUTTON"
+                    :type="ButtonType.SUBMIT"
                     class="w-full">
                     <span v-if="loading">{{ t('login.loading') }}</span>
                     <span v-else>{{ t('login.submit') }}</span>
@@ -70,7 +72,7 @@ import { useAlertStore } from '../../stores/alert'
 import { useAuthStore } from '../../stores/auth'
 import { useCartStore } from '../../stores/cart'
 import { validateEmail } from '../../utils/validators'
-import { ButtonVariant, ButtonTag } from '../../types/common'
+import { ButtonVariant, ButtonTag, ButtonType } from '../../types/common'
 
 const emit = defineEmits<{
     success: []
