@@ -124,7 +124,8 @@
                             :variant="ButtonVariant.PRIMARY"
                             :type="ButtonType.SUBMIT"
                             :disabled="formIncomplete || registerStore.loading"
-                            class="w-full sm:flex-1 order-1 sm:order-2">
+                            class="w-full sm:flex-1 order-1 sm:order-2 flex items-center justify-center gap-2">
+                            <Spinner v-if="registerStore.loading" size="xs" color="white" />
                             <span v-if="registerStore.loading">{{ t('register.creating') }}</span>
                             <span v-else>{{ t('register.createAccount') }}</span>
                         </Button>

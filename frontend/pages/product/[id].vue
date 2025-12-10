@@ -12,8 +12,9 @@
             </Button>
 
             <!-- Loading state -->
-            <div v-if="productsStore.loading" class="flex justify-center items-center py-20">
-                <p class="text-lg text-gray-600">{{ t('products.loading') }}</p>
+            <div v-if="productsStore.loading" class="flex flex-col justify-center items-center py-20 gap-4">
+                <Spinner size="md" />
+                <p class="text-gray-600">{{ t('products.loading') }}</p>
             </div>
 
             <!-- Error state -->
@@ -103,6 +104,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
 import Button from '../../components/atoms/Button.vue'
+import Spinner from '../../components/atoms/Spinner.vue'
 import ScrollToTop from '../../components/atoms/ScrollToTop.vue'
 import { useProductsStore, type ProductName, type ProductDescription } from '../../stores/products'
 import { useCartStore } from '../../stores/cart'

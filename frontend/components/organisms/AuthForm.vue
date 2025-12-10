@@ -41,7 +41,8 @@
                     :variant="ButtonVariant.PRIMARY"
                     :tag="ButtonTag.BUTTON"
                     :type="ButtonType.SUBMIT"
-                    class="w-full">
+                    class="w-full flex items-center justify-center gap-2">
+                    <Spinner v-if="loading" size="xs" color="white" />
                     <span v-if="loading">{{ t('login.loading') }}</span>
                     <span v-else>{{ t('login.submit') }}</span>
                 </Button>
@@ -65,6 +66,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Input from '../atoms/Input.vue'
+import Spinner from '../atoms/Spinner.vue'
 import Eye from '../icons/Eye.vue'
 import EyeSlash from '../icons/EyeSlash.vue'
 import { authService } from '../../services/auth.service'

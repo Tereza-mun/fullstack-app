@@ -16,9 +16,10 @@
             <Button
                 :type="ButtonType.SUBMIT"
                 :variant="ButtonVariant.PRIMARY"
-                class="w-full mt-4"
+                class="w-full mt-4 flex items-center justify-center gap-2"
                 :disabled="loading"
             >
+                <Spinner v-if="loading" size="xs" color="white" />
                 {{ loading ? t('verify.sending') : t('verify.resendButton') }}
             </Button>
             <p v-if="resendSuccess" class="text-green-600 text-sm mt-3 text-center">
@@ -33,6 +34,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Input from '../atoms/Input.vue'
+import Spinner from '../atoms/Spinner.vue'
 import { ButtonVariant, ButtonType } from '../../types/common'
 import { authService } from '../../services/auth.service'
 import { validateEmail } from '../../utils/validators'
