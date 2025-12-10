@@ -14,9 +14,9 @@ export function generateVerificationEmailHtml(data: VerificationEmailData): stri
     };
 
     const content = `
-        <h2 style="color: #ffffff !important; margin: 0 0 20px 0; font-size: 24px;">${t('title')}</h2>
-        <p style="font-size: 16px; color: #ffffff !important; margin: 0 0 20px 0;">${t('greeting')}</p>
-        <p style="font-size: 16px; color: #ffffff !important; margin: 0 0 20px 0;">${t('message')}</p>
+        <h2 style="color: #2c3e50; margin: 0 0 20px 0; font-size: 24px;">${t('title')}</h2>
+        <p style="font-size: 16px; color: #555; margin: 0 0 20px 0;">${t('greeting')}</p>
+        <p style="font-size: 16px; color: #555; margin: 0 0 20px 0;">${t('message')}</p>
         ${EmailTemplateBuilder.buildButton(verificationUrl, t('button'))}
         ${EmailTemplateBuilder.buildLinkBox(verificationUrl, t('orCopy'))}
         ${EmailTemplateBuilder.buildInfoBox([

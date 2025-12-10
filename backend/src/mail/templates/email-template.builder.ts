@@ -15,6 +15,18 @@ export class EmailTemplateBuilder {
             <head>
                 <meta charset="utf-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <meta name="color-scheme" content="light only">
+                <meta name="supported-color-schemes" content="light">
+                <style type="text/css">
+                    :root {
+                        color-scheme: light only;
+                        supported-color-schemes: light;
+                    }
+                    @media (prefers-color-scheme: dark) {
+                        .email-header { color: #ffffff !important; }
+                        .email-content { background-color: #ffffff !important; }
+                    }
+                </style>
             </head>
             <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4;">
                 <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #f4f4f4; padding: 20px;">
@@ -24,12 +36,14 @@ export class EmailTemplateBuilder {
                                 <!-- Header -->
                                 <tr>
                                     <td style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 30px; text-align: center;">
-                                        <h1 style="color: #ffffff !important; margin: 0; font-size: 28px; font-weight: 600;">TechStore</h1>
+                                        <h1 class="email-header" style="color: #ffffff !important; margin: 0; font-size: 28px; font-weight: 600; -webkit-text-fill-color: #ffffff; mso-line-height-rule: exactly;">
+                                            <span style="color: #ffffff !important; -webkit-text-fill-color: #ffffff;">TechStore</span>
+                                        </h1>
                                     </td>
                                 </tr>
                                 <!-- Content -->
                                 <tr>
-                                    <td style="padding: 40px 30px;">
+                                    <td class="email-content" style="padding: 40px 30px; background-color: #ffffff !important;">
                                         ${content}
                                     </td>
                                 </tr>
