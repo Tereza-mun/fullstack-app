@@ -1,6 +1,9 @@
 import { fetchWithRefresh } from '../utils/fetchWithRefresh';
 
-const API_URL = '/api';
+function getApiUrl() {
+    const config = useRuntimeConfig();
+    return config.public.apiUrl || 'http://localhost:3002';
+}
 
 export interface LoginCredentials {
     email: string;
@@ -44,7 +47,7 @@ export interface AuthResponse {
 
 class AuthService {
     async checkEmailExists(email: string): Promise<boolean> {
-        const response = await fetch(`${API_URL}/auth/check-email`, {
+        const response = await fetch(`${getApiUrl()}/auth/check-email`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -61,7 +64,7 @@ class AuthService {
     }
 
     async login(credentials: LoginCredentials): Promise<AuthResponse> {
-        const response = await fetch(`${API_URL}/auth/login`, {
+        const response = await fetch(`${getApiUrl()}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -88,7 +91,7 @@ class AuthService {
     }
 
     async register(registerData: RegisterData): Promise<AuthResponse> {
-        const response = await fetch(`${API_URL}/auth/register`, {
+        const response = await fetch(`${getApiUrl()}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -112,7 +115,7 @@ class AuthService {
 
     async refreshToken(): Promise<boolean> {
         try {
-            const response = await fetch(`${API_URL}/auth/refresh`, {
+            const response = await fetch(`${getApiUrl()}/auth/refresh`, {
                 method: 'POST',
                 credentials: 'include',
             });
@@ -124,7 +127,7 @@ class AuthService {
     }
 
     async getProfile() {
-        const response = await fetchWithRefresh(`${API_URL}/auth/profile`);
+        const response = await fetchWithRefresh(`${getApiUrl()}/auth/profile`);
 
         if (!response.ok) {
             throw new Error('Failed to fetch profile');
@@ -134,7 +137,7 @@ class AuthService {
     }
 
     async logout() {
-        await fetch(`${API_URL}/auth/logout`, {
+        await fetch(`${getApiUrl()}/auth/logout`, {
             method: 'POST',
             credentials: 'include', // Important: send cookies with request
         });
@@ -143,7 +146,7 @@ class AuthService {
     }
 
     async resendVerificationEmail(email: string): Promise<void> {
-        await fetch(`${API_URL}/auth/resend-verification`, {
+        await fetch(`${getApiUrl()}/auth/resend-verification`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -154,7 +157,7 @@ class AuthService {
     }
 
     async verifyEmail(token: string): Promise<{ success: boolean; message?: string }> {
-        const response = await fetch(`${API_URL}/auth/verify-email`, {
+        const response = await fetch(`${getApiUrl()}/auth/verify-email`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

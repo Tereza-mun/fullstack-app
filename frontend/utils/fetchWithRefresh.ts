@@ -1,4 +1,7 @@
-const API_URL = '/api';
+function getApiUrl() {
+    const config = useRuntimeConfig();
+    return config.public.apiUrl || 'http://localhost:3002';
+}
 
 let isRefreshing = false;
 let failedQueue: Array<{ resolve: (value: any) => void; reject: (reason?: any) => void }> = [];
@@ -39,7 +42,7 @@ export async function fetchWithRefresh(url: string, options: RequestInit = {}): 
         isRefreshing = true;
 
         try {
-            const refreshResponse = await fetch(`${API_URL}/auth/refresh`, {
+            const refreshResponse = await fetch(`${getApiUrl()}/auth/refresh`, {
                 method: 'POST',
                 credentials: 'include',
             });
