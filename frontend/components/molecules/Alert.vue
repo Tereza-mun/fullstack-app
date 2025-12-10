@@ -19,21 +19,25 @@
             ]"
         >
             <span class="flex-1 font-medium">{{ alertStore.message }}</span>
-            <button
+            <Button
                 @click="alertStore.hideAlert"
-                :class="['hover:opacity-75 transition-opacity', alertStore.textColor]"
-                aria-label="Close alert"
+                :variant="ButtonVariant.CLOSE"
+                :aria-label="t('common.closeAlert')"
+                :class="alertStore.textColor"
             >
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
+                <Close :stroke="alertStore.textColor === 'text-white' ? '#ffffff' : 'currentColor'" />
+            </Button>
         </div>
     </Transition>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
 import { useAlertStore } from '../../stores/alert'
+import Button from '../atoms/Button.vue'
+import Close from '../atoms/icons/Close.vue'
+import { ButtonVariant } from '../../types/common'
 
+const { t } = useI18n()
 const alertStore = useAlertStore()
 </script>

@@ -2,6 +2,7 @@ export enum IconFill {
     WHITE = '#FFFFFF',
     BLACK = '#000000',
     GREY = '#1F2A37',
+    RED = '#dc2626',
 }
 
 export enum ButtonVariant {

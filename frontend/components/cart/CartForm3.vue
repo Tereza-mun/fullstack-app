@@ -10,11 +10,14 @@
                     <h3 class="font-bold text-red-900 mb-1">{{ t('deliveryInfo.orderError') }}</h3>
                     <p class="text-red-800">{{ errorMessage }}</p>
                 </div>
-                <button @click="errorMessage = ''" class="ml-auto text-red-600 hover:text-red-800">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
+                <Button
+                    @click="errorMessage = ''"
+                    :variant="ButtonVariant.CLOSE"
+                    class="ml-auto"
+                    :aria-label="t('common.closeError')"
+                >
+                    <Close :stroke="IconFill.RED" />
+                </Button>
             </div>
         </div>
 
@@ -112,11 +115,12 @@ import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useCartStore } from '../../stores/cart'
 import Button from '../atoms/Button.vue'
+import Close from '../atoms/icons/Close.vue'
 import OrderReviewField from '../atoms/OrderReviewField.vue'
 import OrderReviewSection from '../molecules/OrderReviewSection.vue'
 import CartItem from './CartItem.vue'
 import OrderSummary from './OrderSummary.vue'
-import { ButtonVariant, ButtonTag } from '../../types/common'
+import { ButtonVariant, ButtonTag, IconFill } from '../../types/common'
 
 const { t } = useI18n()
 const cartStore = useCartStore()
