@@ -24,7 +24,7 @@ export class EmailTemplateBuilder {
                                 <!-- Header -->
                                 <tr>
                                     <td style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 30px; text-align: center;">
-                                        <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 600;">TechStore</h1>
+                                        <h1 style="color: #ffffff !important; margin: 0; font-size: 28px; font-weight: 600;">TechStore</h1>
                                     </td>
                                 </tr>
                                 <!-- Content -->

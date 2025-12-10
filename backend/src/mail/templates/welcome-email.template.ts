@@ -14,10 +14,10 @@ export function generateWelcomeEmailHtml(data: WelcomeEmailData): string {
     };
 
     const content = `
-        <h2 style="color: #2c3e50; margin: 0 0 20px 0; font-size: 24px;">${t('title', { firstName })} 🎉</h2>
-        <p style="font-size: 16px; color: #555; margin: 0 0 20px 0;">${t('verified')}</p>
-        <p style="font-size: 16px; color: #555; margin: 0 0 20px 0;">${t('access')}</p>
-        <p style="font-size: 14px; color: #666; margin-top: 30px;">${t('thanks')}</p>
+        <h2 style="color: #ffffff !important; margin: 0 0 20px 0; font-size: 24px;">${t('title', { firstName })} 🎉</h2>
+        <p style="font-size: 16px; color: #ffffff !important; margin: 0 0 20px 0;">${t('verified')}</p>
+        <p style="font-size: 16px; color: #ffffff !important; margin: 0 0 20px 0;">${t('access')}</p>
+        <p style="font-size: 14px; color: #ffffff !important; margin-top: 30px;">${t('thanks')}</p>
     `;
 
     return EmailTemplateBuilder.buildBaseTemplate({
