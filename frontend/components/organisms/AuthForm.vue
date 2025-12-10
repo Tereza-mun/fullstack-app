@@ -11,14 +11,24 @@
                     autocomplete="email"
                 />
 
-                <Input
-                    v-model="password"
-                    :label="t('login.password')"
-                    type="password"
-                    required
-                    :placeholder="t('login.passwordPlaceholder')"
-                    autocomplete="current-password"
-                />
+                <div class="relative">
+                    <Input
+                        v-model="password"
+                        :label="t('login.password')"
+                        :type="showPassword ? 'text' : 'password'"
+                        required
+                        :placeholder="t('login.passwordPlaceholder')"
+                        autocomplete="current-password"
+                    />
+                    <Button
+                        :variant="ButtonVariant.EYE_ICON"
+                        @click="showPassword = !showPassword"
+                        :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                    >
+                        <Eye v-if="showPassword" />
+                        <EyeSlash v-else />
+                    </Button>
+                </div>
 
                 <div v-if="error" class="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                     {{ error }}
@@ -51,6 +61,8 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Input from '../atoms/Input.vue'
+import Eye from '../icons/Eye.vue'
+import EyeSlash from '../icons/EyeSlash.vue'
 import { authService } from '../../services/auth.service'
 import { useAlertStore } from '../../stores/alert'
 import { useAuthStore } from '../../stores/auth'
@@ -67,6 +79,7 @@ const email = ref('')
 const password = ref('')
 const loading = ref(false)
 const error = ref('')
+const showPassword = ref(false)
 const alertStore = useAlertStore()
 const authStore = useAuthStore()
 const cartStore = useCartStore()

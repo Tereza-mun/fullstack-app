@@ -16,7 +16,8 @@ export enum ButtonVariant {
     ADD_TO_CART = 'addToCart',
     REMOVE_FROM_CART = 'removeFromCart',
     LINK = 'link',
-    CLOSE = 'close'
+    CLOSE = 'close',
+    EYE_ICON = 'eyeIcon'
 }
 
 export enum ButtonTag {

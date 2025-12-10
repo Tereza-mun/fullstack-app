@@ -63,16 +63,26 @@
                     <h3 class="text-lg font-semibold text-primary-dark mb-4 pt-4">{{ t('register.security') }}</h3>
 
                     <div>
-                        <Input
-                            v-model="registerStore.sensitiveData.password"
-                            :label="t('register.password')"
-                            type="password"
-                            required
-                            :placeholder="t('register.passwordPlaceholder')"
-                            :error="passwordValidationError"
-                            autocomplete="new-password"
-                            @blur="validatePasswordField"
-                        />
+                        <div class="relative">
+                            <Input
+                                v-model="registerStore.sensitiveData.password"
+                                :label="t('register.password')"
+                                :type="showPassword ? 'text' : 'password'"
+                                required
+                                :placeholder="t('register.passwordPlaceholder')"
+                                :error="passwordValidationError"
+                                autocomplete="new-password"
+                                @blur="validatePasswordField"
+                            />
+                            <Button
+                                :variant="ButtonVariant.EYE_ICON"
+                                @click="showPassword = !showPassword"
+                                :aria-label="showPassword ? 'Hide password' : 'Show password'"
+                            >
+                                <Eye v-if="showPassword" />
+                                <EyeSlash v-else />
+                            </Button>
+                        </div>
 
                         <!-- Password Strength Indicator -->
                         <div v-if="registerStore.sensitiveData.password" class="mt-3">
@@ -103,16 +113,26 @@
                         </div>
                     </div>
 
-                    <Input
-                        v-model="confirmPassword"
-                        :label="t('register.confirmPassword')"
-                        type="password"
-                        required
-                        :placeholder="t('register.confirmPasswordPlaceholder')"
-                        :error="confirmPasswordError"
-                        autocomplete="new-password"
-                        @blur="validateConfirmPasswordField"
-                    />
+                    <div class="relative">
+                        <Input
+                            v-model="confirmPassword"
+                            :label="t('register.confirmPassword')"
+                            :type="showConfirmPassword ? 'text' : 'password'"
+                            required
+                            :placeholder="t('register.confirmPasswordPlaceholder')"
+                            :error="confirmPasswordError"
+                            autocomplete="new-password"
+                            @blur="validateConfirmPasswordField"
+                        />
+                        <Button
+                            :variant="ButtonVariant.EYE_ICON"
+                            @click="showConfirmPassword = !showConfirmPassword"
+                            :aria-label="showConfirmPassword ? 'Hide password' : 'Show password'"
+                        >
+                            <Eye v-if="showConfirmPassword" />
+                            <EyeSlash v-else />
+                        </Button>
+                    </div>
 
                     <div v-if="error" class="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
                         {{ error }}
@@ -134,12 +154,15 @@
                         </Button>
                     </div>
 
-                    <!-- <div class="text-center text-sm text-gray-600 pt-2">
+                    <div class="text-center text-sm text-gray-600 pt-2">
                         {{ t('register.haveAccount') }}
-                        <a href="#" @click.prevent="goToLogin" class="text-primary hover:text-primary-dark font-medium">
+                        <Button 
+                            :tag="ButtonTag.NUXT_LINK" 
+                            :variant="ButtonVariant.LINK" 
+                            to="/login">
                             {{ t('register.login') }}
-                        </a>
-                    </div> -->
+                        </Button>
+                    </div>
                 </div>
             </form>
         </div>
@@ -156,6 +179,8 @@ import { PHONE_PREFIXES } from '../../constants/phonePrefixes'
 import Input from '../atoms/Input.vue'
 import PhonePrefixAutocomplete from '../atoms/PhonePrefixAutocomplete.vue'
 import Button from '../atoms/Button.vue'
+import Eye from '../icons/Eye.vue'
+import EyeSlash from '../icons/EyeSlash.vue'
 import { ButtonVariant, ButtonTag } from '../../types/common'
 
 const { t } = useI18n()
@@ -169,6 +194,8 @@ const emailError = ref('')
 const phoneError = ref('')
 const passwordValidationError = ref('')
 const confirmPasswordError = ref('')
+const showPassword = ref(false)
+const showConfirmPassword = ref(false)
 
 // Password strength calculation
 const passwordStrength = computed(() => calculatePasswordStrength(registerStore.sensitiveData.password))
