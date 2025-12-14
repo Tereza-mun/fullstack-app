@@ -18,7 +18,8 @@ export enum ButtonVariant {
     REMOVE_FROM_CART = 'removeFromCart',
     LINK = 'link',
     CLOSE = 'close',
-    EYE_ICON = 'eyeIcon'
+    EYE_ICON = 'eyeIcon',
+    SAVE_BUTTON = 'saveButton'
 }
 
 export enum ButtonTag {

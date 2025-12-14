@@ -7,7 +7,7 @@
             :type="type"
             :placeholder="label"
         />
-        <p v-else class="text-lg text-gray-900">{{ displayValue }}</p>
+        <p v-else class="text-lg text-gray-900 h-[48px]">{{ displayValue }}</p>
     </div>
 </template>
 

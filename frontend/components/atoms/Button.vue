@@ -60,7 +60,8 @@ const buttonClasses = computed(() => {
         removeFromCart: `flex items-center gap-1 px-2 py-1 rounded-lg text-white text-xs font-semibold bg-gradient-to-br from-accent to-accent-dark ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer active:scale-95' : ''}`,
         link: `bg-transparent border-none p-0 text-primary font-medium ${baseClasses} hover:text-primary-dark hover:underline cursor-pointer`,
         close: `bg-transparent border-none p-0 ${baseClasses} hover:opacity-75 cursor-pointer`,
-        eyeIcon: `absolute top-10 right-3 text-gray-500 bg-transparent border-none p-0 ${baseClasses} ${!props.disabled ? 'cursor-pointer hover:text-gray-700' : ''}`
+        eyeIcon: `absolute top-10 right-3 text-gray-500 bg-transparent border-none p-0 ${baseClasses} ${!props.disabled ? 'cursor-pointer hover:text-gray-700' : ''}`,
+        saveButton: `py-2 px-3 flex items-center gap-2 bg-green-500 text-white border-none rounded-lg font-sans text-sm font-semibold uppercase tracking-wider whitespace-nowrap ${baseClasses} ${disabledClasses} ${!props.disabled ? 'cursor-pointer hover:scale-[1.02] active:scale-[0.98] hover:bg-green-400' : ''}`
     }
 
     return variantClasses[props.variant]

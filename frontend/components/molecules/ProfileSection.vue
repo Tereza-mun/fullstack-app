@@ -1,18 +1,18 @@
 <template>
     <div class="mb-8">
-        <div class="flex items-center justify-between mb-4 border-b pb-2">
+        <div class="flex items-center justify-between mb-4 border-b pb-2 h-[44px]">
             <h3 class="text-lg font-semibold text-primary-dark">
                 {{ title }}
             </h3>
-            <div class="flex gap-2">
+            <div class="flex gap-4">
                 <Button
                     v-if="isEditing"
-                    :variant="ButtonVariant.PRIMARY"
+                    :variant="ButtonVariant.SAVE_BUTTON"
                     :tag="ButtonTag.BUTTON"
                     :type="ButtonType.BUTTON"
                     :disabled="saving"
                     :aria-label="t('profile.clickToSave', { section: t(`profile.${section}`) })"
-                    class="flex items-center gap-2"
+                    class="max-sm:hidden"
                     @click="handleSave"
                 >
                     <Spinner v-if="saving" size="xs" color="white" />
@@ -40,6 +40,22 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
             <slot :isEditing="isEditing" />
         </div>
+        <Button
+            v-if="isEditing"
+            :variant="ButtonVariant.SAVE_BUTTON"
+            :tag="ButtonTag.BUTTON"
+            :type="ButtonType.BUTTON"
+            :disabled="saving"
+            :aria-label="t('profile.clickToSave', { section: t(`profile.${section}`) })"
+            class="sm:hidden flex items-center gap-2 mt-8"
+            @click="handleSave"
+        >
+            <Spinner v-if="saving" size="xs" color="white" />
+            <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
+            </svg>
+            {{ saving ? t('profile.saving') : t('profile.save') }}
+        </Button>
     </div>
 </template>
 
