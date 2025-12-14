@@ -8,7 +8,7 @@
                 :model-value="cartStore.formData.address"
                 @update:model-value="cartStore.updateFormData({ address: String($event ?? '') })"
                 :label="t('deliveryInfo.address')"
-                type="text"
+                :type="InputType.TEXT"
                 name="address"
                 :placeholder="t('deliveryInfo.addressPlaceholder')"
                 autocomplete="street-address"
@@ -21,7 +21,7 @@
                     :model-value="cartStore.formData.city"
                     @update:model-value="cartStore.updateFormData({ city: String($event ?? '') })"
                     :label="t('deliveryInfo.city')"
-                    type="text"
+                    :type="InputType.TEXT"
                     name="city"
                     :placeholder="t('deliveryInfo.cityPlaceholder')"
                     autocomplete="address-level2"
@@ -32,7 +32,7 @@
                     :model-value="cartStore.formData.postalCode"
                     @update:model-value="cartStore.updateFormData({ postalCode: String($event ?? '') })"
                     :label="t('deliveryInfo.postalCode')"
-                    type="text"
+                    :type="InputType.TEXT"
                     name="postalCode"
                     :placeholder="t('deliveryInfo.postalCodePlaceholder')"
                     autocomplete="postal-code"
@@ -58,6 +58,7 @@ import { useCartStore } from '../../stores/cart'
 import Input from '../atoms/Input.vue'
 import CountryAutocomplete from '../atoms/CountryAutocomplete.vue'
 import { COUNTRIES } from '../../constants/countries'
+import { InputType } from '../../types/common'
 
 const { t } = useI18n()
 const cartStore = useCartStore()

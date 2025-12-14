@@ -9,7 +9,7 @@
                         <Input
                             v-model="registerStore.formData.firstName"
                             :label="t('register.firstName')"
-                            type="text"
+                            :type="InputType.TEXT"
                             required
                             :placeholder="t('register.firstNamePlaceholder')"
                             autocomplete="given-name"
@@ -18,7 +18,7 @@
                         <Input
                             v-model="registerStore.formData.lastName"
                             :label="t('register.lastName')"
-                            type="text"
+                            :type="InputType.TEXT"
                             required
                             :placeholder="t('register.lastNamePlaceholder')"
                             autocomplete="family-name"
@@ -28,7 +28,7 @@
                     <Input
                         v-model="registerStore.sensitiveData.email"
                         :label="t('register.email')"
-                        type="email"
+                        :type="InputType.EMAIL"
                         required
                         :placeholder="t('register.emailPlaceholder')"
                         :error="emailError"
@@ -50,7 +50,7 @@
                             />
                             <Input
                                 v-model="registerStore.formData.phoneNumber"
-                                type="tel"
+                                :type="InputType.TEL"
                                 :placeholder="t('register.phoneNumberPlaceholder')"
                                 :error="phoneError"
                                 autocomplete="tel"
@@ -67,7 +67,7 @@
                             <Input
                                 v-model="registerStore.sensitiveData.password"
                                 :label="t('register.password')"
-                                :type="showPassword ? 'text' : 'password'"
+                                :type="showPassword ? InputType.TEXT : InputType.PASSWORD"
                                 required
                                 :placeholder="t('register.passwordPlaceholder')"
                                 :error="passwordValidationError"
@@ -117,7 +117,7 @@
                         <Input
                             v-model="confirmPassword"
                             :label="t('register.confirmPassword')"
-                            :type="showConfirmPassword ? 'text' : 'password'"
+                            :type="showConfirmPassword ? InputType.TEXT : InputType.PASSWORD"
                             required
                             :placeholder="t('register.confirmPasswordPlaceholder')"
                             :error="confirmPasswordError"
@@ -181,7 +181,7 @@ import PhonePrefixAutocomplete from '../atoms/PhonePrefixAutocomplete.vue'
 import Button from '../atoms/Button.vue'
 import Eye from '../icons/Eye.vue'
 import EyeSlash from '../icons/EyeSlash.vue'
-import { ButtonVariant, ButtonTag, ButtonType } from '../../types/common'
+import { ButtonVariant, ButtonTag, ButtonType, InputType } from '../../types/common'
 
 const { t } = useI18n()
 const registerStore = useRegisterStore()

@@ -6,7 +6,7 @@
         <form @submit.prevent="handleResend">
             <Input
                 v-model="email"
-                type="email"
+                :type="InputType.EMAIL"
                 :label="t('register.email')"
                 :placeholder="t('register.emailPlaceholder')"
                 :error="emailError"
@@ -35,7 +35,7 @@ import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Input from '../atoms/Input.vue'
 import Spinner from '../atoms/Spinner.vue'
-import { ButtonVariant, ButtonType } from '../../types/common'
+import { ButtonVariant, ButtonType, InputType } from '../../types/common'
 import { authService } from '../../services/auth.service'
 import { validateEmail } from '../../utils/validators'
 

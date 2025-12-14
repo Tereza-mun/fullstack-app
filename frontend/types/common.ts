@@ -33,3 +33,17 @@ export enum ButtonType {
     RESET = 'reset'
 }
 
+export enum InputType {
+    TEXT = 'text',
+    PASSWORD = 'password',
+    RADIO = 'radio',
+    CHECKBOX = 'checkbox',
+    EMAIL = 'email',
+    NUMBER = 'number',
+    TEL = 'tel',
+    DATE = 'date',
+    TIME = 'time',
+    DATETIME = 'datetime',
+    DATETIME_LOCAL = 'datetime-local',
+}
+

@@ -5,7 +5,7 @@
                 <Input
                     v-model="email"
                     :label="t('login.email')"
-                    type="text"
+                    :type="InputType.TEXT"
                     :placeholder="t('login.emailPlaceholder')"
                     :error="emailError"
                     autocomplete="email"
@@ -16,7 +16,7 @@
                     <Input
                         v-model="password"
                         :label="t('login.password')"
-                        :type="showPassword ? 'text' : 'password'"
+                        :type="showPassword ? InputType.TEXT : InputType.PASSWORD"
                         :placeholder="t('login.passwordPlaceholder')"
                         :error="passwordError"
                         autocomplete="current-password"
@@ -74,7 +74,7 @@ import { useAlertStore } from '../../stores/alert'
 import { useAuthStore } from '../../stores/auth'
 import { useCartStore } from '../../stores/cart'
 import { validateEmail } from '../../utils/validators'
-import { ButtonVariant, ButtonTag, ButtonType } from '../../types/common'
+import { ButtonVariant, ButtonTag, ButtonType, InputType } from '../../types/common'
 
 const emit = defineEmits<{
     success: []

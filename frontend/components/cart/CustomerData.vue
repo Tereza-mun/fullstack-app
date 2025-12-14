@@ -9,7 +9,7 @@
                     :model-value="cartStore.formData.firstName"
                     @update:model-value="cartStore.updateFormData({ firstName: String($event ?? '') })"
                     :label="t('deliveryInfo.firstName')"
-                    type="text"
+                    :type="InputType.TEXT"
                     name="firstName"
                     :placeholder="t('deliveryInfo.firstNamePlaceholder')"
                     autocomplete="given-name"
@@ -20,7 +20,7 @@
                     :model-value="cartStore.formData.lastName"
                     @update:model-value="cartStore.updateFormData({ lastName: String($event ?? '') })"
                     :label="t('deliveryInfo.lastName')"
-                    type="text"
+                    :type="InputType.TEXT"
                     name="lastName"
                     :placeholder="t('deliveryInfo.lastNamePlaceholder')"
                     autocomplete="family-name"
@@ -33,7 +33,7 @@
                 :model-value="cartStore.formData.customerEmail"
                 @update:model-value="handleEmailUpdate"
                 :label="t('deliveryInfo.email')"
-                type="email"
+                :type="InputType.EMAIL"
                 name="customerEmail"
                 :placeholder="t('deliveryInfo.emailPlaceholder')"
                 autocomplete="email"
@@ -56,7 +56,7 @@
                     <Input
                         :model-value="cartStore.formData.phoneNumber"
                         @update:model-value="handlePhoneUpdate"
-                        type="tel"
+                        :type="InputType.TEL"
                         name="phoneNumber"
                         :placeholder="t('deliveryInfo.phoneNumberPlaceholder')"
                         autocomplete="tel"
@@ -77,6 +77,7 @@ import { PHONE_PREFIXES } from '../../constants/phonePrefixes'
 import { validateEmail, validatePhoneNumber } from '../../utils/validators'
 import Input from '../atoms/Input.vue'
 import PhonePrefixAutocomplete from '../atoms/PhonePrefixAutocomplete.vue'
+import { InputType } from '../../types/common'
 
 const { t } = useI18n()
 const cartStore = useCartStore()

@@ -11,7 +11,7 @@
                             <Input
                                 v-model="registerStore.formData.deliveryAddress"
                                 :label="t('register.address')"
-                                type="text"
+                                :type="InputType.TEXT"
                                 :placeholder="t('register.addressPlaceholder')"
                                 autocomplete="shipping street-address"
                                 required
@@ -21,7 +21,7 @@
                                 <Input
                                     v-model="registerStore.formData.deliveryCity"
                                     :label="t('register.city')"
-                                    type="text"
+                                    :type="InputType.TEXT"
                                     :placeholder="t('register.cityPlaceholder')"
                                     autocomplete="shipping address-level2"
                                     required
@@ -30,7 +30,7 @@
                                 <Input
                                     v-model="registerStore.formData.deliveryPostalCode"
                                     :label="t('register.postalCode')"
-                                    type="text"
+                                    :type="InputType.TEXT"
                                     :placeholder="t('register.postalCodePlaceholder')"
                                     autocomplete="shipping postal-code"
                                     required
@@ -52,7 +52,7 @@
                         <input
                             id="differentBillingAddress"
                             v-model="registerStore.differentBillingAddress"
-                            type="checkbox"
+                            :type="InputType.CHECKBOX"
                             class="mt-1 w-4 h-4 text-primary border-gray-300 rounded focus:ring-2 focus:ring-primary"
                         />
                         <label for="differentBillingAddress" class="text-sm text-gray-700 cursor-pointer">
@@ -68,7 +68,7 @@
                             <Input
                                 v-model="registerStore.formData.billingAddress"
                                 :label="t('register.address')"
-                                type="text"
+                                :type="InputType.TEXT"
                                 :placeholder="t('register.addressPlaceholder')"
                                 autocomplete="billing street-address"
                             />
@@ -77,7 +77,7 @@
                                 <Input
                                     v-model="registerStore.formData.billingCity"
                                     :label="t('register.city')"
-                                    type="text"
+                                    :type="InputType.TEXT"
                                     :placeholder="t('register.cityPlaceholder')"
                                     autocomplete="billing address-level2"
                                 />
@@ -85,7 +85,7 @@
                                 <Input
                                     v-model="registerStore.formData.billingPostalCode"
                                     :label="t('register.postalCode')"
-                                    type="text"
+                                    :type="InputType.TEXT"
                                     :placeholder="t('register.postalCodePlaceholder')"
                                     autocomplete="billing postal-code"
                                 />
@@ -146,7 +146,7 @@ import Input from '../atoms/Input.vue'
 import Button from '../atoms/Button.vue'
 import CountryAutocomplete from '../atoms/CountryAutocomplete.vue'
 import { COUNTRIES } from '../../constants/countries'
-import { ButtonVariant, ButtonTag, ButtonType } from '../../types/common'
+import { ButtonVariant, ButtonTag, ButtonType, InputType } from '../../types/common'
 
 const { t, locale } = useI18n()
 const recaptchaInstance = useReCaptcha()

@@ -62,14 +62,14 @@
             <Input
                 v-model="filtersStore.filters.search"
                 :label="t('filters.search')"
-                type="text"
+                :type="InputType.TEXT"
                 :placeholder="t('filters.searchPlaceholder')"
             />
 
             <Input
                 v-model="filtersStore.filters.minPrice"
                 :label="t('filters.minPrice')"
-                type="number"
+                :type="InputType.NUMBER"
                 min="0"
                 step="0.01"
                 :placeholder="t('filters.minPricePlaceholder')"
@@ -78,7 +78,7 @@
             <Input
                 v-model="filtersStore.filters.maxPrice"
                 :label="t('filters.maxPrice')"
-                type="number"
+                :type="InputType.NUMBER"
                 min="0"
                 step="0.01"
                 :placeholder="t('filters.maxPricePlaceholder')"
@@ -108,7 +108,7 @@ import Select, { type SelectOption } from '../atoms/Select.vue'
 import Button from '../atoms/Button.vue'
 import FilterTag from '../atoms/FilterTag.vue'
 import FilterDrawer from './FilterDrawer.vue'
-import { ButtonVariant } from '../../types/common'
+import { ButtonVariant, InputType } from '../../types/common'
 
 const isDrawerOpen = ref(false)
 

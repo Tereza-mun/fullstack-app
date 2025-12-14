@@ -37,7 +37,7 @@
                     <Input
                         v-model="localFilters.search"
                         :label="t('filters.search')"
-                        type="text"
+                        :type="InputType.TEXT"
                         :placeholder="t('filters.searchPlaceholder')"
                     />
 
@@ -45,7 +45,7 @@
                         <Input
                             v-model="localFilters.minPrice"
                             :label="t('filters.minPrice')"
-                            type="number"
+                            :type="InputType.NUMBER"
                             min="0"
                             step="0.01"
                             :placeholder="t('filters.minPricePlaceholder')"
@@ -54,7 +54,7 @@
                         <Input
                             v-model="localFilters.maxPrice"
                             :label="t('filters.maxPrice')"
-                            type="number"
+                            :type="InputType.NUMBER"
                             min="0"
                             step="0.01"
                             :placeholder="t('filters.maxPricePlaceholder')"
@@ -92,7 +92,7 @@ import Input from '../atoms/Input.vue'
 import Select, { type SelectOption } from '../atoms/Select.vue'
 import Button from '../atoms/Button.vue'
 import Close from '../atoms/icons/Close.vue'
-import { ButtonVariant } from '../../types/common'
+import { ButtonVariant, InputType } from '../../types/common'
 
 interface ProductFilters {
     search: string

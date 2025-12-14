@@ -12,7 +12,7 @@
     >
         <input
             :id="inputId"
-            type="radio"
+            :type="InputType.RADIO"
             :name="name"
             :value="value"
             :checked="isSelected"
@@ -30,6 +30,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { InputType } from '../../types/common'
 
 const props = defineProps<{
     modelValue: string

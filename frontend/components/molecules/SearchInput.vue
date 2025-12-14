@@ -4,7 +4,7 @@
             ref="inputRef"
             :value="modelValue"
             @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-            type="text"
+            :type="InputType.TEXT"
             :placeholder="placeholder"
             class="w-full px-4 py-3 pl-10 text-sm outline-none"
             @keydown.escape="$emit('escape')"
@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { InputType } from '../../types/common'
 
 interface Props {
     modelValue: string
