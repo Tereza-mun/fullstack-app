@@ -273,7 +273,17 @@ export default {
         country: 'Země',
         backToHome: 'Zpět na Hlavní Stránku',
         notLoggedIn: 'Nejste přihlášeni. Přihlaste se prosím pro zobrazení vašeho profilu.',
-        loginButton: 'Přejít na Přihlášení'
+        loginButton: 'Přejít na Přihlášení',
+        save: 'Uložit',
+        cancel: 'Zrušit',
+        clickToSave: 'Klikněte pro uložení úprav v sekci {section}',
+        cancelEdit: 'Zrušit úpravy',
+        edit: 'Upravit sekci {section}',
+        clickToLogin: 'Klikněte pro přihlášení',
+        clickToReturnHome: 'Klikněte pro přechod zpět na hlavní stránku',
+        saving: 'Ukládání...',
+        updateSuccess: 'Úspěšně aktualizováno',
+        updateError: 'Aktualizace selhala. Zkuste to prosím znovu.',
     },
     country: {
         cz: 'Česká Republika',

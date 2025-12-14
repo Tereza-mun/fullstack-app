@@ -13,32 +13,34 @@
                         <CartBadge :count="cartStore.totalItems" />
                     </Button>
                 </div>
-                <div
-                    v-if="!authStore.user"
-                    class="flex items-center gap-2 md:gap-4"
-                >
-                    <Button :tag="ButtonTag.NUXT_LINK" to="/register/1" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.register')">
-                        <UserPlus :stroke="IconFill.WHITE" />
-                        <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isRegisterActive }">{{ t('header.register') }}</span>
-                    </Button>
-                    <Button :tag="ButtonTag.NUXT_LINK" to="/login" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.login')">
-                        <User :stroke="IconFill.WHITE" />
-                        <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isLoginActive }">{{ t('header.login') }}</span>
-                    </Button>
-                </div>
-                <div
-                    v-else
-                    class="flex items-center gap-2 md:gap-4"
-                >
-                    <Button :tag="ButtonTag.NUXT_LINK" to="/profile" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.profile')">
-                        <User :stroke="IconFill.WHITE" />
-                        <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isProfileActive }">{{ authStore.user.firstName }}</span>
-                    </Button>
-                    <Button @click="logout" :variant="ButtonVariant.ICON_BUTTON"  class="text-sm">
-                        <LogOut :stroke="IconFill.WHITE" />
-                        <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.logout') }}</span>
-                    </Button>
-                </div>
+                <ClientOnly>
+                    <div
+                        v-if="!authStore.user"
+                        class="flex items-center gap-2 md:gap-4"
+                    >
+                        <Button :tag="ButtonTag.NUXT_LINK" to="/register/1" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.register')">
+                            <UserPlus :stroke="IconFill.WHITE" />
+                            <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isRegisterActive }">{{ t('header.register') }}</span>
+                        </Button>
+                        <Button :tag="ButtonTag.NUXT_LINK" to="/login" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.login')">
+                            <User :stroke="IconFill.WHITE" />
+                            <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isLoginActive }">{{ t('header.login') }}</span>
+                        </Button>
+                    </div>
+                    <div
+                        v-else
+                        class="flex items-center gap-2 md:gap-4"
+                    >
+                        <Button :tag="ButtonTag.NUXT_LINK" to="/profile" :variant="ButtonVariant.ICON_BUTTON" :aria-label="t('header.profile')">
+                            <User :stroke="IconFill.WHITE" />
+                            <span class="hidden md:block ml-2 text-lg text-white" :class="{ 'underline': isProfileActive }">{{ authStore.user.firstName }}</span>
+                        </Button>
+                        <Button @click="logout" :variant="ButtonVariant.ICON_BUTTON"  class="text-sm">
+                            <LogOut :stroke="IconFill.WHITE" />
+                            <span class="hidden md:block ml-2 text-lg text-white">{{ t('header.logout') }}</span>
+                        </Button>
+                    </div>
+                </ClientOnly>
                
                 <Button
                     @click="toggleLocale"
@@ -58,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Button from '../atoms/Button.vue'
 import Cart from '../atoms/icons/Cart.vue'
@@ -85,10 +87,6 @@ const isCartActive = computed(() => route.path.startsWith('/cart'))
 const isLoginActive = computed(() => route.path === '/login')
 const isRegisterActive = computed(() => route.path.startsWith('/register'))
 const isProfileActive = computed(() => route.path === '/profile')
-
-onMounted(() => {
-    authStore.initAuth()
-})
 
 const toggleLocale = () => {
     locale.value = locale.value === 'en' ? 'cs' : 'en'

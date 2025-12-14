@@ -274,7 +274,16 @@ export default {
         country: 'Country',
         backToHome: 'Back to Home',
         notLoggedIn: 'You are not logged in. Please log in to view your profile.',
-        loginButton: 'Go to Login'
+        loginButton: 'Go to Login',
+        save: 'Save',
+        cancelEdit: 'Cancel Edit',
+        edit: 'Edit section {section}',
+        clickToSave: 'Click to save changes in section {section}',
+        clickToLogin: 'Click to login',
+        clickToReturnHome: 'Click to return to home',
+        saving: 'Saving...',
+        updateSuccess: 'Successfully updated',
+        updateError: 'Update failed. Please try again.',
     },
     country: {
         cz: 'Czech Republic',

@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { MailService } from '../mail/mail.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 import { verifyRecaptcha } from '../utils/recaptcha';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
@@ -334,5 +335,29 @@ export class AuthService {
         await this.mailService.sendVerificationEmail(user.email, verificationToken, user.language);
 
         return { message: 'Verification email sent' };
+    }
+
+    async updateProfile(userId: number, updateProfileDto: UpdateProfileDto) {
+        const updatedUser = await this.prisma.user.update({
+            where: { id: userId },
+            data: updateProfileDto,
+        });
+
+        return {
+            id: updatedUser.id,
+            email: updatedUser.email,
+            firstName: updatedUser.firstName,
+            lastName: updatedUser.lastName,
+            phonePrefix: updatedUser.phonePrefix,
+            phoneNumber: updatedUser.phoneNumber,
+            deliveryAddress: updatedUser.deliveryAddress,
+            deliveryCity: updatedUser.deliveryCity,
+            deliveryPostalCode: updatedUser.deliveryPostalCode,
+            deliveryCountry: updatedUser.deliveryCountry,
+            billingAddress: updatedUser.billingAddress,
+            billingCity: updatedUser.billingCity,
+            billingPostalCode: updatedUser.billingPostalCode,
+            billingCountry: updatedUser.billingCountry,
+        };
     }
 }

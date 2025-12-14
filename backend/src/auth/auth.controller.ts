@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Get, Request, Response, Query } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get, Request, Response, Query, Put } from '@nestjs/common';
 import { Response as ExpressResponse } from 'express';
 import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
@@ -6,6 +6,7 @@ import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { VerifyEmailDto } from './dto/verify-email.dto';
 import { ResendVerificationDto } from './dto/resend-verification.dto';
+import { UpdateProfileDto } from './dto/update-profile.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
 @Controller('auth')
@@ -112,5 +113,11 @@ export class AuthController {
     @Throttle({ default: { limit: 3, ttl: 60000 } })
     async resendVerification(@Body() resendDto: ResendVerificationDto) {
         return this.authService.resendVerificationEmail(resendDto.email);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('profile')
+    async updateProfile(@Request() req, @Body() updateProfileDto: UpdateProfileDto) {
+        return this.authService.updateProfile(req.user.id, updateProfileDto);
     }
 }

@@ -32,9 +32,15 @@ export const useAuthStore = defineStore('auth', () => {
     const verifyErrorMessage = ref('')
 
     const initAuth = () => {
-        if (authService.isAuthenticated()) {
+        // Only access localStorage on client side
+        if (process.client && authService.isAuthenticated()) {
             user.value = authService.getUser()
         }
+    }
+
+    // Auto-initialize on client side when store is created
+    if (process.client) {
+        initAuth()
     }
 
     const setUser = (userData: any) => {
@@ -89,6 +95,16 @@ export const useAuthStore = defineStore('auth', () => {
         }
     }
 
+    const updateUser = async (updateData: Partial<User>) => {
+        try {
+            const updatedUser = await authService.updateProfile(updateData)
+            user.value = updatedUser
+            return { success: true }
+        } catch (error: any) {
+            return { success: false, error: error.message }
+        }
+    }
+
     return {
         user,
         isAuthenticated,
@@ -100,5 +116,6 @@ export const useAuthStore = defineStore('auth', () => {
         setUser,
         logout,
         verifyEmail,
+        updateUser,
     }
 })

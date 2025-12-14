@@ -142,7 +142,9 @@ class AuthService {
             credentials: 'include', // Important: send cookies with request
         });
 
-        localStorage.removeItem('user');
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('user');
+        }
     }
 
     async resendVerificationEmail(email: string): Promise<void> {
@@ -173,7 +175,40 @@ class AuthService {
         return { success: false, message: data.message };
     }
 
+    async updateProfile(updateData: Partial<{
+        firstName?: string;
+        lastName?: string;
+        phonePrefix?: string;
+        phoneNumber?: string;
+        deliveryAddress?: string;
+        deliveryCity?: string;
+        deliveryPostalCode?: string;
+        deliveryCountry?: string;
+        billingAddress?: string;
+        billingCity?: string;
+        billingPostalCode?: string;
+        billingCountry?: string;
+    }>): Promise<any> {
+        const response = await fetchWithRefresh(`${getApiUrl()}/auth/profile`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updateData),
+        });
+
+        if (!response.ok) {
+            const error = await response.json().catch(() => ({ message: 'Update failed' }));
+            throw new Error(error.message || 'Update failed');
+        }
+
+        const updatedUser = await response.json();
+        this.setUser(updatedUser);
+        return updatedUser;
+    }
+
     getUser() {
+        if (typeof window === 'undefined') return null;
         const userStr = localStorage.getItem('user');
         return userStr ? JSON.parse(userStr) : null;
     }
@@ -183,6 +218,7 @@ class AuthService {
     }
 
     private setUser(user: any) {
+        if (typeof window === 'undefined') return;
         localStorage.setItem('user', JSON.stringify(user));
     }
 }
