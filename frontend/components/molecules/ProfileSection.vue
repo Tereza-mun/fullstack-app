@@ -4,7 +4,7 @@
             <h3 class="text-lg font-semibold text-primary-dark">
                 {{ title }}
             </h3>
-            <div class="flex gap-4">
+            <div class="flex gap-2">
                 <Button
                     v-if="isEditing"
                     :variant="ButtonVariant.SAVE_BUTTON"

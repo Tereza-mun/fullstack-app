@@ -56,7 +56,6 @@
                                 :label="t('profile.address')"
                                 :value="profileData.deliveryAddress"
                                 :isEditing="isEditing"
-                                full-width
                                 @update:value="profileData.deliveryAddress = $event"
                             />
                             <ProfileField
@@ -85,7 +84,7 @@
                         v-if="authStore.user.billingAddress"
                         ref="billingAddressSection"
                         :title="t('profile.billingAddress')"
-                        :section="t('profile.billingAddress')"
+                        section="billingAddress"
                         @save="handleSave"
                     >
                         <template #default="{ isEditing }">
@@ -93,7 +92,6 @@
                                 :label="t('profile.address')"
                                 :value="profileData.billingAddress"
                                 :isEditing="isEditing"
-                                full-width
                                 @update:value="profileData.billingAddress = $event"
                             />
                             <ProfileField
