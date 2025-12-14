@@ -144,9 +144,10 @@ import { useRegisterStore } from '../../stores/register'
 import { useAlertStore } from '../../stores/alert'
 import Input from '../atoms/Input.vue'
 import Button from '../atoms/Button.vue'
+import Spinner from '../atoms/Spinner.vue'
 import CountryAutocomplete from '../atoms/CountryAutocomplete.vue'
 import { COUNTRIES } from '../../constants/countries'
-import { ButtonVariant, ButtonTag, ButtonType, InputType } from '../../types/common'
+import { ButtonVariant, ButtonType, InputType } from '../../types/common'
 
 const { t, locale } = useI18n()
 const recaptchaInstance = useReCaptcha()
