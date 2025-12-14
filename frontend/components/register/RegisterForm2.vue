@@ -48,17 +48,11 @@
                     </div>
 
                     <!-- Different Billing Address Checkbox -->
-                    <div class="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
-                        <input
-                            id="differentBillingAddress"
-                            v-model="registerStore.differentBillingAddress"
-                            :type="InputType.CHECKBOX"
-                            class="mt-1 w-4 h-4 text-primary border-gray-300 rounded focus:ring-2 focus:ring-primary"
-                        />
-                        <label for="differentBillingAddress" class="text-sm text-gray-700 cursor-pointer">
-                            {{ t('register.differentBillingAddress') }}
-                        </label>
-                    </div>
+                    <Checkbox
+                        :inputId="'differentBillingAddress'"
+                        v-model="registerStore.differentBillingAddress"
+                        :label="t('register.differentBillingAddress')"
+                    />
 
                     <!-- Billing Address (shown when checkbox is checked) -->
                     <div v-if="registerStore.differentBillingAddress" class="border-t pt-6">
@@ -145,6 +139,7 @@ import { useAlertStore } from '../../stores/alert'
 import Input from '../atoms/Input.vue'
 import Button from '../atoms/Button.vue'
 import Spinner from '../atoms/Spinner.vue'
+import Checkbox from '../atoms/Checkbox.vue'
 import CountryAutocomplete from '../atoms/CountryAutocomplete.vue'
 import { COUNTRIES } from '../../constants/countries'
 import { ButtonVariant, ButtonType, InputType } from '../../types/common'
